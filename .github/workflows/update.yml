@@ -1,0 +1,59 @@
+name: Update dashboard data
+
+# Refreshes docs/data.json and the Excel workbook every weekday after the US close
+# (22:17 UTC = 3:17 pm PDT / 2:17 pm PST). GitHub Pages serves docs/, so the page updates
+# on its own. Also runs when the code changes, or by hand: Actions → "Run workflow".
+on:
+  schedule:
+    - cron: "17 22 * * 1-5"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/data.json"
+      - "docs/AI_Implosion_Dashboard.xlsx"
+      - "data/fred.json"
+      - "docs/backtest.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install openpyxl==3.1.5
+      - name: Fetch prices and rebuild data
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          set -o pipefail
+          if ! python update_dashboard.py 2>&1 | tee run.log; then
+            echo "::error title=Update failed::$(tail -n 6 run.log | tr '\n' ' ' | cut -c1-900)"
+            exit 1
+          fi
+      - name: Commit updated data
+        run: |
+          git config user.name "ai-implosion-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data.json docs/AI_Implosion_Dashboard.xlsx
+          [ -f data/fred.json ] && git add data/fred.json
+          git add -u data
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Data: $(date -u +%F)"
+          for i in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}" 2>push.log; then exit 0; fi
+            git fetch --depth=50 origin "${GITHUB_REF_NAME}" && git rebase "origin/${GITHUB_REF_NAME}" || true
+            sleep 5
+          done
+          echo "::error title=Could not push data::$(tail -n 4 push.log | tr '\n' ' ')"
+          exit 1

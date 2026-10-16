@@ -1,0 +1,57 @@
+name: Backtest
+
+# Replays the live rules on daily data since 1997 and publishes docs/backtest.json
+# (shown at /backtest.html). Runs when the rules or code change, on the 1st of each month,
+# or by hand: Actions → "Backtest" → Run workflow.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 23 1 * *"
+  push:
+    branches: [main]
+    paths:
+      - "backtest.py"
+      - "engine.py"
+      - "config.json"
+      - ".github/workflows/backtest.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run backtest
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          set -o pipefail
+          if ! python backtest.py 2>&1 | tee run.log; then
+            echo "::error title=Backtest failed::$(tail -n 6 run.log | tr '\n' ' ' | cut -c1-900)"
+            exit 1
+          fi
+          echo "::notice title=Backtest summary::$(head -n 12 run.log | tr '\n' ' ' | cut -c1-1500)"
+      - name: Commit results
+        run: |
+          git config user.name "ai-implosion-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/backtest.json
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Backtest: $(date -u +%F)"
+          for i in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}" 2>push.log; then exit 0; fi
+            git fetch --depth=50 origin "${GITHUB_REF_NAME}" && git rebase "origin/${GITHUB_REF_NAME}" || true
+            sleep 5
+          done
+          echo "::error title=Could not push backtest::$(tail -n 4 push.log | tr '\n' ' ')"
+          exit 1

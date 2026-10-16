@@ -1,0 +1,4150 @@
+{
+ "asOf": "2026-10-15",
+ "score": 23,
+ "band": "NORMAL",
+ "triggers": "0 of 9",
+ "factorCount": 9,
+ "lookbackDays": 730,
+ "widenDays": 365,
+ "prevDate": "2026-10-14",
+ "prevScore": 24,
+ "pillars": {
+  "Equity": 17.386927602097078,
+  "Financing": 41.34494748380934,
+  "Credit": 21.054674779155125
+ },
+ "prevPillars": {
+  "Equity": 16.61805840549642,
+  "Financing": 41.13881398144653,
+  "Credit": 23.779266891961395
+ },
+ "currentLevel": "None",
+ "implosionDate": null,
+ "levels": [
+  {
+   "level": "L1",
+   "name": "Warning",
+   "firstDate": null,
+   "active": false
+  },
+  {
+   "level": "L2",
+   "name": "Financing Stress",
+   "firstDate": null,
+   "active": false
+  },
+  {
+   "level": "L3",
+   "name": "Bubble Unwind",
+   "firstDate": null,
+   "active": false
+  },
+  {
+   "level": "L4",
+   "name": "AI Implosion",
+   "firstDate": null,
+   "active": false
+  }
+ ],
+ "concentrated": [
+  {
+   "name": "CCC high-yield spread (bp)",
+   "col": "CCC",
+   "stress": 0.8857142857142857
+  }
+ ],
+ "factors": [
+  {
+   "name": "Nasdaq-100",
+   "col": "NDX",
+   "pillar": "Equity",
+   "weight": 0.18,
+   "type": "DD",
+   "source": "Yahoo ^NDX",
+   "calm": -0.05,
+   "trigger": -0.25,
+   "wcalm": null,
+   "wtrig": null,
+   "lastDate": "2026-10-15",
+   "stale": false,
+   "ref": 31224.4707,
+   "current": 29935.5996,
+   "move": -0.04127759642055362,
+   "triggerPrice": 23418.353025,
+   "band": null,
+   "levelStress": 0.0,
+   "widenStress": null,
+   "stress": 0.0,
+   "status": "CALM",
+   "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
+   "descriptor": "Large-cap tech benchmark",
+   "points": 0.0,
+   "maxPoints": 18.0,
+   "plus10": {
+    "kind": "price",
+    "drawdown": -0.16111111111111112,
+    "price": 26193.86153166667
+   },
+   "prevStress": 0.0,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.10993302580119012
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.015529687429746905
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.03270264236131047
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.08291139241475586
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.17528943198815392
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.3218026990477009
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.14707738209947493
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.027717986963307836
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.0015214020798211964
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.08723075004704116
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.162950143349447
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.1391640136091795
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.0
+    }
+   ]
+  },
+  {
+   "name": "Semiconductors",
+   "col": "SOX",
+   "pillar": "Equity",
+   "weight": 0.18,
+   "type": "DD",
+   "source": "Yahoo ^SOX",
+   "calm": -0.1,
+   "trigger": -0.4,
+   "wcalm": null,
+   "wtrig": null,
+   "lastDate": "2026-10-15",
+   "stale": false,
+   "ref": 14634.7197,
+   "current": 11581.21,
+   "move": -0.2086483214297572,
+   "triggerPrice": 8780.83182,
+   "band": null,
+   "levelStress": 0.3621610714325239,
+   "widenStress": null,
+   "stress": 0.3621610714325239,
+   "status": "WATCH",
+   "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
+   "descriptor": "Chip stocks",
+   "points": 6.51889928578543,
+   "maxPoints": 18.0,
+   "plus10": {
+    "kind": "price",
+    "drawdown": -0.37531498809642383,
+    "price": 9142.09005
+   },
+   "prevStress": 0.33866218155172456,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.08583914550205007
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.04170747352056571
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.06417407083206547
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.07293360044147554
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.1241404097408167
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.046484782805007355
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.34105154515987524
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.30802727070110286
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.42368824916179754
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.1855081037185834
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.1717827981358602
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.32590935786764663
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.38756864153218684
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.32707332504177256
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.3068610713922088
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.2846102409463982
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.11441240199040718
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.007875752709724236
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.1363943285272942
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.3621610714325239
+    }
+   ]
+  },
+  {
+   "name": "AI & tech ETF",
+   "col": "AIQ",
+   "pillar": "Equity",
+   "weight": 0.09,
+   "type": "DD",
+   "source": "Yahoo AIQ (dividend-adjusted)",
+   "calm": -0.05,
+   "trigger": -0.3,
+   "wcalm": null,
+   "wtrig": null,
+   "lastDate": "2026-10-15",
+   "stale": false,
+   "ref": 70.14,
+   "current": 64.09,
+   "move": -0.0862560593099515,
+   "triggerPrice": 49.098,
+   "band": null,
+   "levelStress": 0.145024237239806,
+   "widenStress": null,
+   "stress": 0.145024237239806,
+   "status": "WATCH",
+   "rationale": "A basket of AI and big-data companies. It moves closely with the Nasdaq-100, so it carries a smaller weight.",
+   "descriptor": "AI & big-data stocks",
+   "points": 1.3052181351582541,
+   "maxPoints": 9.0,
+   "plus10": null,
+   "prevStress": 0.15357855717137187,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.0150871186922103
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.05466613844808349
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.24510887033479561
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.05541361757472901
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.02703930992727005
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.011349723058983574
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.06338369707144204
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.11038985263943263
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.07830628614064511
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.04995336690915869
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.136504383510539
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.19246409252005198
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.2655847789591494
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.4073493751165828
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.2730460734937507
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.11635888826711466
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.23455945252352411
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.15015682919874535
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.19863130881094965
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.27276874821784974
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.18209295694325628
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.4524094667807243
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.49347020245223855
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.44157399486740817
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.18722554890219562
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.1387510692899913
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.18266324493869418
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.13761049329911595
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.1319076133447396
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.15129740518962115
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.14274308525805574
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.037810094097519176
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.022982606216139068
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.0018819503849447083
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.145024237239806
+    }
+   ]
+  },
+  {
+   "name": "Data-center infrastructure ETF",
+   "col": "DTCR",
+   "pillar": "Financing",
+   "weight": 0.06,
+   "type": "DD",
+   "source": "Yahoo DTCR (dividend-adjusted)",
+   "calm": -0.1,
+   "trigger": -0.35,
+   "wcalm": null,
+   "wtrig": null,
+   "lastDate": "2026-10-15",
+   "stale": false,
+   "ref": 32.3415,
+   "current": 26.24,
+   "move": -0.1886585346999986,
+   "triggerPrice": 21.021975000000005,
+   "band": null,
+   "levelStress": 0.35463413879999445,
+   "widenStress": null,
+   "stress": 0.35463413879999445,
+   "status": "WATCH",
+   "rationale": "Data-center and digital-infrastructure companies: the physical AI build-out that much of the new debt is financing. Equity prices also reflect broader stock-market moves.",
+   "descriptor": "Data-center infrastructure stocks",
+   "points": 2.1278048327999666,
+   "maxPoints": 6.0,
+   "plus10": null,
+   "prevStress": 0.3484501337291101,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.11567788862477925
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.03190129545881016
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.0800643136527376
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.2111652211554821
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.12335234914892669
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.2062180170987741
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.0986163288653902
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.09737952785121297
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.13695716030487173
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.11469474204968878
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.1048003339362741
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.1320099562481646
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.1567459765317011
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.2272436343397807
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.14066756334740252
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.35463413879999445
+    }
+   ]
+  },
+  {
+   "name": "BBB corporate spread (bp)",
+   "col": "BBB",
+   "pillar": "Financing",
+   "weight": 0.06,
+   "type": "LVL",
+   "source": "FRED BAMLC0A4CBBB x100",
+   "calm": 140,
+   "trigger": 250,
+   "wcalm": 30,
+   "wtrig": 100,
+   "lastDate": "2026-10-14",
+   "stale": false,
+   "ref": 92,
+   "current": 104,
+   "move": 12,
+   "triggerPrice": null,
+   "band": null,
+   "levelStress": 0.0,
+   "widenStress": 0.0,
+   "stress": 0.0,
+   "status": "CALM",
+   "rationale": "Borrowing spreads on the lowest tier of investment-grade corporate debt, where much large-company and AI-related issuance prices.",
+   "descriptor": "Investment-grade borrowing costs",
+   "points": 0.0,
+   "maxPoints": 6.0,
+   "plus10": null,
+   "prevStress": 0.0,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.0
+    }
+   ]
+  },
+  {
+   "name": "CCC high-yield spread (bp)",
+   "col": "CCC",
+   "pillar": "Financing",
+   "weight": 0.06,
+   "type": "LVL",
+   "source": "FRED BAMLH0A3HYC x100",
+   "calm": 900,
+   "trigger": 1500,
+   "wcalm": 150,
+   "wtrig": 500,
+   "lastDate": "2026-10-14",
+   "stale": false,
+   "ref": 822,
+   "current": 1282,
+   "move": 460,
+   "triggerPrice": null,
+   "band": null,
+   "levelStress": 0.6366666666666667,
+   "widenStress": 0.8857142857142857,
+   "stress": 0.8857142857142857,
+   "status": "WARNING",
+   "rationale": "Borrowing spreads on the riskiest rated corporate debt. It covers all CCC-rated borrowers rather than tech alone, but is a useful early-warning signal for vulnerable, highly leveraged companies.",
+   "descriptor": "Risky corporate borrowing costs",
+   "points": 5.314285714285714,
+   "maxPoints": 6.0,
+   "plus10": null,
+   "prevStress": 0.8857142857142857,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.04857142857142857
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.008571428571428572
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.07142857142857142
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.1657142857142857
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.17714285714285713
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.22857142857142856
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.22
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.08
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.10285714285714286
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.12571428571428572
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.11428571428571428
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.13714285714285715
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.07142857142857142
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.03428571428571429
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.025714285714285714
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.017142857142857144
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.10285714285714286
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.14285714285714285
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.05142857142857143
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.19428571428571428
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.09833333333333333
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.13
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.13166666666666665
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.22857142857142856
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.15714285714285714
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.09
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.02
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.03
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.006666666666666667
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.03333333333333333
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.058333333333333334
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.065
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.06333333333333334
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.08666666666666667
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.08
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.07666666666666666
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.12166666666666667
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.11833333333333333
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.11666666666666667
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.125
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.18
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.2885714285714286
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.22857142857142856
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.2257142857142857
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.29714285714285715
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.26571428571428574
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.32571428571428573
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.38857142857142857
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.4085714285714286
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.5142857142857142
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.7085714285714285
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.8028571428571428
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.8857142857142857
+    }
+   ]
+  },
+  {
+   "name": "BDC (private credit) ETF",
+   "col": "BIZD",
+   "pillar": "Credit",
+   "weight": 0.14,
+   "type": "DD",
+   "source": "Yahoo BIZD (dividend-adjusted)",
+   "calm": -0.05,
+   "trigger": -0.25,
+   "wcalm": null,
+   "wtrig": null,
+   "lastDate": "2026-10-15",
+   "stale": false,
+   "ref": 14.5819,
+   "current": 12.23,
+   "move": -0.1612889952612485,
+   "triggerPrice": 10.936425,
+   "band": null,
+   "levelStress": 0.5564449763062426,
+   "widenStress": null,
+   "stress": 0.5564449763062426,
+   "status": "WARNING",
+   "rationale": "Listed business development companies (BDCs), a market proxy for private credit, a major lender to growth and tech firms. Their share prices reflect credit concerns and broader stock-market moves.",
+   "descriptor": "Listed BDCs \u00b7 private-credit proxy",
+   "points": 7.790229668287396,
+   "maxPoints": 14.000000000000002,
+   "plus10": null,
+   "prevStress": 0.6284520535732654,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.5015138630768281
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.39202881654654037
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.39202881654654037
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.43461585938732245
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.45285765229496805
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.4802203416564373
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.2977681234955661
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.21564576632674712
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.23693928774713843
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.3616486877567395
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.33425170931085785
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.28984734499619375
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.26481631337479955
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.20539333008729974
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.2460601842009615
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.3711810532235162
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.5525703097675879
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.5525703097675879
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.6339040179949115
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.7840216295544474
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.7371141620776441
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.8465992086079313
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.7777810161913054
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.877870853592467
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.729604852591226
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.7328623156104482
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.4598526255151932
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.6223485965477745
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.4305697474266042
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.5573364925009774
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.6515971855519511
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.7263473895720032
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.6450822595135061
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.6905838745293815
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.6190911335285523
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.7328623156104482
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.7068369005410815
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.6058555469451851
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.5926199603618184
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.5362829946714761
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.6621925126355274
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.6423048436760639
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.3077119579752981
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.3209818336430777
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.34748729589422506
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.3242735857467129
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.3342174202264449
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.4269693935632531
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.41702555908352107
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.4733625247738628
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.525584800334661
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.6078786029255442
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.5564449763062426
+    }
+   ]
+  },
+  {
+   "name": "Leveraged loan ETF",
+   "col": "BKLN",
+   "pillar": "Credit",
+   "weight": 0.13,
+   "type": "DD",
+   "source": "Yahoo BKLN (dividend-adjusted)",
+   "calm": -0.02,
+   "trigger": -0.08,
+   "wcalm": null,
+   "wtrig": null,
+   "lastDate": "2026-10-15",
+   "stale": false,
+   "ref": 20.57,
+   "current": 20.47,
+   "move": -0.004861448711716121,
+   "triggerPrice": 18.924400000000002,
+   "band": null,
+   "levelStress": 0.0,
+   "widenStress": null,
+   "stress": 0.0,
+   "status": "CALM",
+   "rationale": "Leveraged loans: floating-rate funding for buyouts and below-investment-grade companies.",
+   "descriptor": "Leveraged-loan prices",
+   "points": 0.0,
+   "maxPoints": 13.0,
+   "plus10": {
+    "kind": "price",
+    "drawdown": -0.06615384615384616,
+    "price": 19.209215384615387
+   },
+   "prevStress": 0.0,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.17783827996807733
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.05788466866755374
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.0
+    }
+   ]
+  },
+  {
+   "name": "High-yield spread (bp)",
+   "col": "HY",
+   "pillar": "Credit",
+   "weight": 0.1,
+   "type": "LVL",
+   "source": "FRED BAMLH0A0HYM2 x100",
+   "calm": 400,
+   "trigger": 600,
+   "wcalm": 75,
+   "wtrig": 250,
+   "lastDate": "2026-10-14",
+   "stale": false,
+   "ref": 260,
+   "current": 325,
+   "move": 65,
+   "triggerPrice": null,
+   "band": "Normal",
+   "levelStress": 0.0,
+   "widenStress": 0.0,
+   "stress": 0.0,
+   "status": "CALM",
+   "rationale": "The broad junk-bond spread, the market-wide gauge of credit stress.",
+   "descriptor": "Junk-bond borrowing costs",
+   "points": 0.0,
+   "maxPoints": 10.0,
+   "plus10": {
+    "kind": "spread",
+    "bp": 510.0,
+    "via": "widening"
+   },
+   "prevStress": 0.0,
+   "spark": [
+    {
+     "date": "2025-10-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-10-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-21",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-11-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-19",
+     "stress": 0.0
+    },
+    {
+     "date": "2025-12-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-16",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-23",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-01-30",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-02-27",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-06",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-13",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-20",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-03-27",
+     "stress": 0.017142857142857144
+    },
+    {
+     "date": "2026-04-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-04-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-01",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-08",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-15",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-22",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-05-29",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-05",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-12",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-06-26",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-10",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-17",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-24",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-07-31",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-07",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-14",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-21",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-08-28",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-04",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-11",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-18",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-09-25",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-02",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-09",
+     "stress": 0.0
+    },
+    {
+     "date": "2026-10-15",
+     "stress": 0.0
+    }
+   ]
+  }
+ ],
+ "history": [
+  {
+   "date": "2025-10-17",
+   "equity": 0.0,
+   "financing": 1.6190476190476193,
+   "credit": 18.97620022452863,
+   "score": 7
+  },
+  {
+   "date": "2025-10-20",
+   "equity": 0.0,
+   "financing": 0.7619047619047619,
+   "credit": 18.056326030252606,
+   "score": 7
+  },
+  {
+   "date": "2025-10-21",
+   "equity": 0.0,
+   "financing": 0.6666666666666666,
+   "credit": 15.870165215929482,
+   "score": 6
+  },
+  {
+   "date": "2025-10-22",
+   "equity": 0.0,
+   "financing": 1.3333333333333333,
+   "credit": 16.560395217840398,
+   "score": 6
+  },
+  {
+   "date": "2025-10-23",
+   "equity": 0.0,
+   "financing": 1.2380952380952381,
+   "credit": 15.639223598748767,
+   "score": 6
+  },
+  {
+   "date": "2025-10-24",
+   "equity": 0.0,
+   "financing": 0.2857142857142857,
+   "credit": 14.833522788247475,
+   "score": 6
+  },
+  {
+   "date": "2025-10-27",
+   "equity": 0.0,
+   "financing": 0.0,
+   "credit": 12.302246972968884,
+   "score": 5
+  },
+  {
+   "date": "2025-10-28",
+   "equity": 0.0,
+   "financing": 0.0,
+   "credit": 11.84166116342308,
+   "score": 4
+  },
+  {
+   "date": "2025-10-29",
+   "equity": 0.0,
+   "financing": 0.0,
+   "credit": 13.913648593971448,
+   "score": 5
+  },
+  {
+   "date": "2025-10-30",
+   "equity": 0.0,
+   "financing": 0.0,
+   "credit": 16.215280216884928,
+   "score": 6
+  },
+  {
+   "date": "2025-10-31",
+   "equity": 0.0,
+   "financing": 2.380952380952381,
+   "credit": 14.833522788247475,
+   "score": 6
+  },
+  {
+   "date": "2025-11-03",
+   "equity": 0.0,
+   "financing": 4.285714285714286,
+   "credit": 14.374234403517274,
+   "score": 6
+  },
+  {
+   "date": "2025-11-04",
+   "equity": 0.0,
+   "financing": 5.428571428571429,
+   "credit": 15.754694407339104,
+   "score": 7
+  },
+  {
+   "date": "2025-11-05",
+   "equity": 0.0,
+   "financing": 4.285714285714286,
+   "credit": 15.870165215929482,
+   "score": 7
+  },
+  {
+   "date": "2025-11-06",
+   "equity": 0.0,
+   "financing": 4.761904761904762,
+   "credit": 18.516911839798432,
+   "score": 8
+  },
+  {
+   "date": "2025-11-07",
+   "equity": 0.301742373844206,
+   "financing": 5.523809523809524,
+   "credit": 16.44492440925004,
+   "score": 7
+  },
+  {
+   "date": "2025-11-10",
+   "equity": 0.0,
+   "financing": 4.571428571428571,
+   "credit": 16.44492440925004,
+   "score": 7
+  },
+  {
+   "date": "2025-11-11",
+   "equity": 0.0,
+   "financing": 4.571428571428571,
+   "credit": 15.639223598748767,
+   "score": 7
+  },
+  {
+   "date": "2025-11-12",
+   "equity": 0.0,
+   "financing": 5.238095238095238,
+   "credit": 15.179935214018547,
+   "score": 7
+  },
+  {
+   "date": "2025-11-13",
+   "equity": 1.0187243521224632,
+   "financing": 6.3809523809523805,
+   "credit": 16.32945360065966,
+   "score": 8
+  },
+  {
+   "date": "2025-11-14",
+   "equity": 1.0933227689616698,
+   "financing": 5.904761904761905,
+   "credit": 17.135154411160954,
+   "score": 8
+  },
+  {
+   "date": "2025-11-17",
+   "equity": 2.1710156142866737,
+   "financing": 6.476190476190477,
+   "credit": 20.24248684457573,
+   "score": 10
+  },
+  {
+   "date": "2025-11-18",
+   "equity": 6.291889665355371,
+   "financing": 7.809523809523809,
+   "credit": 20.47213103694082,
+   "score": 12
+  },
+  {
+   "date": "2025-11-19",
+   "equity": 4.451920267810892,
+   "financing": 7.847698811589053,
+   "credit": 19.897371843620263,
+   "score": 11
+  },
+  {
+   "date": "2025-11-20",
+   "equity": 15.543501109429156,
+   "financing": 11.298375223221258,
+   "credit": 20.81724603789629,
+   "score": 17
+  },
+  {
+   "date": "2025-11-21",
+   "equity": 12.733064258825522,
+   "financing": 11.474977239873594,
+   "credit": 18.170499414027358,
+   "score": 15
+  },
+  {
+   "date": "2025-11-24",
+   "equity": 2.646733889956114,
+   "financing": 7.965433489357271,
+   "credit": 15.984338599704238,
+   "score": 9
+  },
+  {
+   "date": "2025-11-25",
+   "equity": 2.4375892303207394,
+   "financing": 7.620851864758885,
+   "credit": 14.029119402561808,
+   "score": 8
+  },
+  {
+   "date": "2025-11-26",
+   "equity": 1.810304747239927,
+   "financing": 7.047619047619048,
+   "credit": 12.302246972968884,
+   "score": 7
+  },
+  {
+   "date": "2025-11-28",
+   "equity": 1.1082723514945805,
+   "financing": 7.333333333333333,
+   "credit": 11.2669019701025,
+   "score": 6
+  },
+  {
+   "date": "2025-12-01",
+   "equity": 1.1232219340274907,
+   "financing": 5.428571428571429,
+   "credit": 12.188073589194152,
+   "score": 6
+  },
+  {
+   "date": "2025-12-02",
+   "equity": 0.6602333629833391,
+   "financing": 5.428571428571429,
+   "credit": 12.417717781559242,
+   "score": 6
+  },
+  {
+   "date": "2025-12-03",
+   "equity": 0.06269854914301098,
+   "financing": 3.7142857142857144,
+   "credit": 9.655500349099958,
+   "score": 4
+  },
+  {
+   "date": "2025-12-04",
+   "equity": 0.0,
+   "financing": 3.619047619047619,
+   "credit": 8.620155346233554,
+   "score": 4
+  },
+  {
+   "date": "2025-12-05",
+   "equity": 0.0,
+   "financing": 2.6666666666666665,
+   "credit": 8.15956953668773,
+   "score": 3
+  },
+  {
+   "date": "2025-12-08",
+   "equity": 0.0,
+   "financing": 2.9523809523809526,
+   "credit": 7.70028115195755,
+   "score": 3
+  },
+  {
+   "date": "2025-12-09",
+   "equity": 0.0,
+   "financing": 3.428571428571428,
+   "credit": 7.00875372523099,
+   "score": 3
+  },
+  {
+   "date": "2025-12-10",
+   "equity": 0.0,
+   "financing": 4.095238095238096,
+   "credit": 6.549465340500789,
+   "score": 3
+  },
+  {
+   "date": "2025-12-11",
+   "equity": 0.0,
+   "financing": 3.523809523809524,
+   "credit": 8.735626154823912,
+   "score": 4
+  },
+  {
+   "date": "2025-12-12",
+   "equity": 0.540786198545401,
+   "financing": 3.428571428571428,
+   "credit": 8.965270347189023,
+   "score": 4
+  },
+  {
+   "date": "2025-12-15",
+   "equity": 1.4966625056995255,
+   "financing": 3.7142857142857144,
+   "credit": 10.11608615864576,
+   "score": 5
+  },
+  {
+   "date": "2025-12-16",
+   "equity": 1.511612088232436,
+   "financing": 4.476190476190476,
+   "credit": 10.692142776781944,
+   "score": 5
+  },
+  {
+   "date": "2025-12-17",
+   "equity": 4.582915671368854,
+   "financing": 6.512484356726722,
+   "credit": 11.61201697105795,
+   "score": 8
+  },
+  {
+   "date": "2025-12-18",
+   "equity": 1.6161096701374544,
+   "financing": 5.004430128270081,
+   "credit": 12.072602780603797,
+   "score": 6
+  },
+  {
+   "date": "2025-12-19",
+   "equity": 0.22699446117967148,
+   "financing": 4.190476190476191,
+   "credit": 13.684004401606359,
+   "score": 6
+  },
+  {
+   "date": "2025-12-22",
+   "equity": 0.0,
+   "financing": 3.8095238095238093,
+   "credit": 13.684004401606359,
+   "score": 6
+  },
+  {
+   "date": "2025-12-23",
+   "equity": 0.0,
+   "financing": 3.1428571428571432,
+   "credit": 14.603878595882364,
+   "score": 6
+  },
+  {
+   "date": "2025-12-24",
+   "equity": 0.0,
+   "financing": 3.3333333333333335,
+   "credit": 14.258763594926918,
+   "score": 6
+  },
+  {
+   "date": "2025-12-26",
+   "equity": 0.0,
+   "financing": 3.8095238095238093,
+   "credit": 12.647361973924351,
+   "score": 5
+  },
+  {
+   "date": "2025-12-29",
+   "equity": 0.0,
+   "financing": 3.619047619047619,
+   "credit": 13.097568384945198,
+   "score": 5
+  },
+  {
+   "date": "2025-12-30",
+   "equity": 0.0,
+   "financing": 3.1428571428571432,
+   "credit": 12.150448269541116,
+   "score": 5
+  },
+  {
+   "date": "2025-12-31",
+   "equity": 0.0,
+   "financing": 4.285714285714286,
+   "credit": 11.914316953097902,
+   "score": 5
+  },
+  {
+   "date": "2026-01-02",
+   "equity": 0.0,
+   "financing": 4.571428571428571,
+   "credit": 10.96719683769382,
+   "score": 5
+  },
+  {
+   "date": "2026-01-05",
+   "equity": 0.0,
+   "financing": 4.095238095238096,
+   "credit": 8.718759632220833,
+   "score": 4
+  },
+  {
+   "date": "2026-01-06",
+   "equity": 0.0,
+   "financing": 3.2380952380952386,
+   "credit": 10.020076722289714,
+   "score": 4
+  },
+  {
+   "date": "2026-01-07",
+   "equity": 0.0,
+   "financing": 2.857142857142857,
+   "credit": 14.398885475014083,
+   "score": 6
+  },
+  {
+   "date": "2026-01-08",
+   "equity": 0.0,
+   "financing": 2.6666666666666665,
+   "credit": 9.428451006366098,
+   "score": 4
+  },
+  {
+   "date": "2026-01-09",
+   "equity": 0.0,
+   "financing": 2.380952380952381,
+   "credit": 10.020076722289714,
+   "score": 4
+  },
+  {
+   "date": "2026-01-12",
+   "equity": 0.0,
+   "financing": 2.2857142857142856,
+   "credit": 10.25750546354855,
+   "score": 4
+  },
+  {
+   "date": "2026-01-13",
+   "equity": 0.0,
+   "financing": 2.2857142857142856,
+   "credit": 11.322691237174244,
+   "score": 5
+  },
+  {
+   "date": "2026-01-14",
+   "equity": 0.0,
+   "financing": 2.1904761904761907,
+   "credit": 8.481330890962013,
+   "score": 4
+  },
+  {
+   "date": "2026-01-15",
+   "equity": 0.0,
+   "financing": 1.5238095238095237,
+   "credit": 6.943882484449874,
+   "score": 3
+  },
+  {
+   "date": "2026-01-16",
+   "equity": 0.0,
+   "financing": 1.1428571428571428,
+   "credit": 7.771639516816747,
+   "score": 3
+  },
+  {
+   "date": "2026-01-20",
+   "equity": 0.0,
+   "financing": 2.2857142857142856,
+   "credit": 10.139439805326946,
+   "score": 4
+  },
+  {
+   "date": "2026-01-21",
+   "equity": 0.0,
+   "financing": 1.4285714285714286,
+   "credit": 8.127133916297193,
+   "score": 3
+  },
+  {
+   "date": "2026-01-22",
+   "equity": 0.0,
+   "financing": 0.2857142857142857,
+   "credit": 8.127133916297193,
+   "score": 3
+  },
+  {
+   "date": "2026-01-23",
+   "equity": 0.0,
+   "financing": 0.857142857142857,
+   "credit": 9.310385348144491,
+   "score": 4
+  },
+  {
+   "date": "2026-01-26",
+   "equity": 0.0,
+   "financing": 0.2857142857142857,
+   "credit": 11.558822553617457,
+   "score": 4
+  },
+  {
+   "date": "2026-01-27",
+   "equity": 0.0,
+   "financing": 0.0,
+   "credit": 11.322691237174244,
+   "score": 4
+  },
+  {
+   "date": "2026-01-28",
+   "equity": 0.0,
+   "financing": 0.0,
+   "credit": 12.624008327243146,
+   "score": 5
+  },
+  {
+   "date": "2026-01-29",
+   "equity": 0.0,
+   "financing": 0.47619047619047616,
+   "credit": 12.387877010799935,
+   "score": 5
+  },
+  {
+   "date": "2026-01-30",
+   "equity": 0.0,
+   "financing": 0.5714285714285714,
+   "credit": 14.044688500349261,
+   "score": 5
+  },
+  {
+   "date": "2026-02-02",
+   "equity": 0.0,
+   "financing": 1.1428571428571428,
+   "credit": 16.88475142174591,
+   "score": 6
+  },
+  {
+   "date": "2026-02-03",
+   "equity": 0.0,
+   "financing": 1.714285714285714,
+   "credit": 20.553868800325017,
+   "score": 8
+  },
+  {
+   "date": "2026-02-04",
+   "equity": 2.312255176273078,
+   "financing": 2.2857142857142856,
+   "credit": 18.659628569516844,
+   "score": 8
+  },
+  {
+   "date": "2026-02-05",
+   "equity": 5.700602411390714,
+   "financing": 4.190476190476191,
+   "credit": 23.393931721721646,
+   "score": 12
+  },
+  {
+   "date": "2026-02-06",
+   "equity": 1.2676739414288407,
+   "financing": 3.428571428571428,
+   "credit": 20.90806577498982,
+   "score": 9
+  },
+  {
+   "date": "2026-02-09",
+   "equity": 0.14847976123857243,
+   "financing": 2.9523809523809526,
+   "credit": 19.015122968997293,
+   "score": 8
+  },
+  {
+   "date": "2026-02-10",
+   "equity": 0.2380152956537918,
+   "financing": 3.428571428571428,
+   "credit": 16.41119136404388,
+   "score": 7
+  },
+  {
+   "date": "2026-02-11",
+   "equity": 0.5663122551762745,
+   "financing": 2.761904761904762,
+   "credit": 16.88475142174591,
+   "score": 7
+  },
+  {
+   "date": "2026-02-12",
+   "equity": 3.5326194886393067,
+   "financing": 3.9047619047619047,
+   "credit": 18.659628569516844,
+   "score": 9
+  },
+  {
+   "date": "2026-02-13",
+   "equity": 2.8289845499785287,
+   "financing": 4.761904761904762,
+   "credit": 20.90806577498982,
+   "score": 10
+  },
+  {
+   "date": "2026-02-17",
+   "equity": 3.7836384979955167,
+   "financing": 2.9523809523809526,
+   "credit": 21.973251548615526,
+   "score": 10
+  },
+  {
+   "date": "2026-02-18",
+   "equity": 2.058571162096626,
+   "financing": 1.714285714285714,
+   "credit": 20.671934458546623,
+   "score": 9
+  },
+  {
+   "date": "2026-02-19",
+   "equity": 2.393960725359004,
+   "financing": 1.8095238095238095,
+   "credit": 23.51199737994325,
+   "score": 10
+  },
+  {
+   "date": "2026-02-20",
+   "equity": 1.5661257228129024,
+   "financing": 1.714285714285714,
+   "credit": 23.9855574376453,
+   "score": 10
+  },
+  {
+   "date": "2026-02-23",
+   "equity": 4.384030715174631,
+   "financing": 2.1904761904761907,
+   "credit": 26.833820244821304,
+   "score": 12
+  },
+  {
+   "date": "2026-02-24",
+   "equity": 2.148106696511837,
+   "financing": 3.2380952380952386,
+   "credit": 25.739536531342,
+   "score": 11
+  },
+  {
+   "date": "2026-02-25",
+   "equity": 0.5663122551762745,
+   "financing": 3.428571428571428,
+   "credit": 21.494611495614915,
+   "score": 9
+  },
+  {
+   "date": "2026-02-26",
+   "equity": 0.6110800223838754,
+   "financing": 4.285714285714286,
+   "credit": 26.581870869602348,
+   "score": 11
+  },
+  {
+   "date": "2026-02-27",
+   "equity": 0.9990673381831741,
+   "financing": 6.476190476190477,
+   "credit": 35.91405527931695,
+   "score": 15
+  },
+  {
+   "date": "2026-03-02",
+   "equity": 1.2975191195672442,
+   "financing": 2.5,
+   "credit": 33.31142109917916,
+   "score": 13
+  },
+  {
+   "date": "2026-03-03",
+   "equity": 3.8808945141282867,
+   "financing": 3.619047619047619,
+   "credit": 31.47537674807816,
+   "score": 14
+  },
+  {
+   "date": "2026-03-04",
+   "equity": 1.5064353665360863,
+   "financing": 2.333333333333334,
+   "credit": 25.05074321127097,
+   "score": 10
+  },
+  {
+   "date": "2026-03-05",
+   "equity": 1.9093452714045913,
+   "financing": 2.4444444444444446,
+   "credit": 25.87850024363784,
+   "score": 11
+  },
+  {
+   "date": "2026-03-06",
+   "equity": 5.706492305485828,
+   "financing": 3.277777777777778,
+   "credit": 29.92459178855464,
+   "score": 14
+  },
+  {
+   "date": "2026-03-09",
+   "equity": 1.6407386681589242,
+   "financing": 3.833333333333334,
+   "credit": 27.29918041674398,
+   "score": 12
+  },
+  {
+   "date": "2026-03-10",
+   "equity": 1.8795000932661792,
+   "financing": 2.5,
+   "credit": 28.482431848591254,
+   "score": 12
+  },
+  {
+   "date": "2026-03-11",
+   "equity": 1.5064353665360863,
+   "financing": 2.5,
+   "credit": 29.429551963995344,
+   "score": 12
+  },
+  {
+   "date": "2026-03-12",
+   "equity": 5.637224198617149,
+   "financing": 3.3888888888888884,
+   "credit": 31.67798916946833,
+   "score": 15
+  },
+  {
+   "date": "2026-03-13",
+   "equity": 7.1657375469912745,
+   "financing": 4.333333333333334,
+   "credit": 32.03348356894875,
+   "score": 16
+  },
+  {
+   "date": "2026-03-16",
+   "equity": 3.5857145429196833,
+   "financing": 4.055555555555556,
+   "credit": 31.32249476998791,
+   "score": 14
+  },
+  {
+   "date": "2026-03-17",
+   "equity": 2.2698325873388945,
+   "financing": 3.4999999999999996,
+   "credit": 26.47012595956148,
+   "score": 11
+  },
+  {
+   "date": "2026-03-18",
+   "equity": 6.05010322608117,
+   "financing": 3.5555555555555554,
+   "credit": 27.063049100300766,
+   "score": 13
+  },
+  {
+   "date": "2026-03-19",
+   "equity": 6.689101180912867,
+   "financing": 4.222222222222222,
+   "credit": 26.589489042598714,
+   "score": 14
+  },
+  {
+   "date": "2026-03-20",
+   "equity": 12.323272858709144,
+   "financing": 4.388888888888888,
+   "credit": 29.429551963995344,
+   "score": 17
+  },
+  {
+   "date": "2026-03-23",
+   "equity": 8.38327716497538,
+   "financing": 4.166666666666666,
+   "credit": 26.82562035904193,
+   "score": 14
+  },
+  {
+   "date": "2026-03-24",
+   "equity": 11.166513565151618,
+   "financing": 4.277777777777778,
+   "credit": 29.547617622216947,
+   "score": 17
+  },
+  {
+   "date": "2026-03-25",
+   "equity": 9.504568402887882,
+   "financing": 4.111111111111112,
+   "credit": 28.126937449110812,
+   "score": 15
+  },
+  {
+   "date": "2026-03-26",
+   "equity": 16.686642749886722,
+   "financing": 4.857142857142857,
+   "credit": 30.139243338140602,
+   "score": 20
+  },
+  {
+   "date": "2026-03-27",
+   "equity": 23.586058297522314,
+   "financing": 8.682424134341291,
+   "credit": 33.68005546411651,
+   "score": 25
+  },
+  {
+   "date": "2026-03-30",
+   "equity": 30.95483119193258,
+   "financing": 10.976806905466683,
+   "credit": 32.95079603868357,
+   "score": 28
+  },
+  {
+   "date": "2026-03-31",
+   "equity": 15.088915384797632,
+   "financing": 5.80952380952381,
+   "credit": 28.246300532148044,
+   "score": 18
+  },
+  {
+   "date": "2026-04-01",
+   "equity": 11.435111823753966,
+   "financing": 4.571428571428571,
+   "credit": 30.803524843739066,
+   "score": 17
+  },
+  {
+   "date": "2026-04-02",
+   "equity": 11.34401675385401,
+   "financing": 5.238095238095238,
+   "credit": 27.606670098046393,
+   "score": 16
+  },
+  {
+   "date": "2026-04-06",
+   "equity": 9.50490365489306,
+   "financing": 4.222222222222222,
+   "credit": 25.638476652747777,
+   "score": 15
+  },
+  {
+   "date": "2026-04-07",
+   "equity": 9.27758236812341,
+   "financing": 4.761904761904762,
+   "credit": 27.236904025594093,
+   "score": 15
+  },
+  {
+   "date": "2026-04-08",
+   "equity": 1.9839582167506042,
+   "financing": 2.9444444444444446,
+   "credit": 27.3601593830782,
+   "score": 12
+  },
+  {
+   "date": "2026-04-09",
+   "equity": 2.357022943480688,
+   "financing": 2.555555555555555,
+   "credit": 28.466862750803802,
+   "score": 12
+  },
+  {
+   "date": "2026-04-10",
+   "equity": 2.3271777653422934,
+   "financing": 3.0,
+   "credit": 27.729925455530473,
+   "score": 12
+  },
+  {
+   "date": "2026-04-13",
+   "equity": 0.5215444879686648,
+   "financing": 3.2222222222222223,
+   "credit": 25.88498736771595,
+   "score": 10
+  },
+  {
+   "date": "2026-04-14",
+   "equity": 0.0,
+   "financing": 1.7222222222222223,
+   "credit": 21.703387186966154,
+   "score": 8
+  },
+  {
+   "date": "2026-04-15",
+   "equity": 0.0,
+   "financing": 1.3333333333333333,
+   "credit": 17.768297721184503,
+   "score": 7
+  },
+  {
+   "date": "2026-04-16",
+   "equity": 0.0,
+   "financing": 1.166666666666667,
+   "credit": 20.350173104272358,
+   "score": 8
+  },
+  {
+   "date": "2026-04-17",
+   "equity": 0.0,
+   "financing": 0.6666666666666666,
+   "credit": 17.399829073547853,
+   "score": 7
+  },
+  {
+   "date": "2026-04-20",
+   "equity": 0.0,
+   "financing": 0.8333333333333334,
+   "credit": 17.645042363700398,
+   "score": 7
+  },
+  {
+   "date": "2026-04-21",
+   "equity": 0.0,
+   "financing": 0.7222222222222222,
+   "credit": 21.3349185393295,
+   "score": 8
+  },
+  {
+   "date": "2026-04-22",
+   "equity": 0.0,
+   "financing": 0.7222222222222222,
+   "credit": 19.98170445663571,
+   "score": 8
+  },
+  {
+   "date": "2026-04-23",
+   "equity": 0.0,
+   "financing": 0.8333333333333334,
+   "credit": 23.42506991729657,
+   "score": 9
+  },
+  {
+   "date": "2026-04-24",
+   "equity": 0.0,
+   "financing": 1.0,
+   "credit": 23.548325274780662,
+   "score": 9
+  },
+  {
+   "date": "2026-04-27",
+   "equity": 0.0,
+   "financing": 0.4444444444444444,
+   "credit": 23.17985662714401,
+   "score": 9
+  },
+  {
+   "date": "2026-04-28",
+   "equity": 0.0,
+   "financing": 0.6111111111111112,
+   "credit": 20.9651524668772,
+   "score": 8
+  },
+  {
+   "date": "2026-04-29",
+   "equity": 0.0,
+   "financing": 0.5,
+   "credit": 22.810090554691733,
+   "score": 9
+  },
+  {
+   "date": "2026-04-30",
+   "equity": 0.0,
+   "financing": 0.5,
+   "credit": 18.01351101133709,
+   "score": 7
+  },
+  {
+   "date": "2026-05-01",
+   "equity": 0.0,
+   "financing": 0.2222222222222222,
+   "credit": 16.291828281006644,
+   "score": 6
+  },
+  {
+   "date": "2026-05-04",
+   "equity": 0.0,
+   "financing": 0.5555555555555556,
+   "credit": 16.169870348338165,
+   "score": 6
+  },
+  {
+   "date": "2026-05-05",
+   "equity": 0.0,
+   "financing": 0.6111111111111112,
+   "credit": 15.431635628249238,
+   "score": 6
+  },
+  {
+   "date": "2026-05-06",
+   "equity": 0.0,
+   "financing": 0.3888888888888889,
+   "credit": 16.53833899597484,
+   "score": 6
+  },
+  {
+   "date": "2026-05-07",
+   "equity": 0.0,
+   "financing": 0.8333333333333334,
+   "credit": 19.48998045151495,
+   "score": 7
+  },
+  {
+   "date": "2026-05-08",
+   "equity": 0.0,
+   "financing": 1.1111111111111112,
+   "credit": 21.08840782436131,
+   "score": 8
+  },
+  {
+   "date": "2026-05-11",
+   "equity": 0.0,
+   "financing": 1.7222222222222223,
+   "credit": 24.531773285022176,
+   "score": 9
+  },
+  {
+   "date": "2026-05-12",
+   "equity": 0.0,
+   "financing": 2.055555555555556,
+   "credit": 23.91679392241733,
+   "score": 9
+  },
+  {
+   "date": "2026-05-13",
+   "equity": 0.0,
+   "financing": 1.7222222222222223,
+   "credit": 25.146752647627018,
+   "score": 10
+  },
+  {
+   "date": "2026-05-14",
+   "equity": 0.0,
+   "financing": 1.2222222222222223,
+   "credit": 24.40851792753807,
+   "score": 9
+  },
+  {
+   "date": "2026-05-15",
+   "equity": 0.0,
+   "financing": 1.9444444444444444,
+   "credit": 24.65502864250626,
+   "score": 9
+  },
+  {
+   "date": "2026-05-18",
+   "equity": 0.0,
+   "financing": 2.333333333333334,
+   "credit": 25.761732010231842,
+   "score": 10
+  },
+  {
+   "date": "2026-05-19",
+   "equity": 0.0,
+   "financing": 2.6666666666666665,
+   "credit": 27.114946092925635,
+   "score": 11
+  },
+  {
+   "date": "2026-05-20",
+   "equity": 0.0,
+   "financing": 2.2222222222222223,
+   "credit": 25.88498736771595,
+   "score": 10
+  },
+  {
+   "date": "2026-05-21",
+   "equity": 0.0,
+   "financing": 2.166666666666667,
+   "credit": 25.761732010231842,
+   "score": 10
+  },
+  {
+   "date": "2026-05-22",
+   "equity": 0.0,
+   "financing": 2.166666666666667,
+   "credit": 27.483414740562285,
+   "score": 11
+  },
+  {
+   "date": "2026-05-26",
+   "equity": 0.0,
+   "financing": 1.9444444444444444,
+   "credit": 25.146752647627018,
+   "score": 10
+  },
+  {
+   "date": "2026-05-27",
+   "equity": 0.0,
+   "financing": 2.0,
+   "credit": 25.146752647627018,
+   "score": 10
+  },
+  {
+   "date": "2026-05-28",
+   "equity": 0.0,
+   "financing": 1.9444444444444444,
+   "credit": 24.90153935747445,
+   "score": 10
+  },
+  {
+   "date": "2026-05-29",
+   "equity": 0.0,
+   "financing": 2.111111111111111,
+   "credit": 24.40851792753807,
+   "score": 9
+  },
+  {
+   "date": "2026-06-01",
+   "equity": 0.0,
+   "financing": 2.555555555555555,
+   "credit": 22.31836654957097,
+   "score": 9
+  },
+  {
+   "date": "2026-06-02",
+   "equity": 0.0,
+   "financing": 2.4444444444444446,
+   "credit": 23.42506991729657,
+   "score": 9
+  },
+  {
+   "date": "2026-06-03",
+   "equity": 0.0,
+   "financing": 2.611111111111111,
+   "credit": 26.991690735441548,
+   "score": 10
+  },
+  {
+   "date": "2026-06-04",
+   "equity": 0.0,
+   "financing": 2.555555555555555,
+   "credit": 23.548325274780662,
+   "score": 9
+  },
+  {
+   "date": "2026-06-05",
+   "equity": 8.717252546661818,
+   "financing": 2.888888888888889,
+   "credit": 26.130200657868496,
+   "score": 14
+  },
+  {
+   "date": "2026-06-08",
+   "equity": 2.5012831479897404,
+   "financing": 2.7222222222222223,
+   "credit": 26.623222087804876,
+   "score": 11
+  },
+  {
+   "date": "2026-06-09",
+   "equity": 4.242164824194562,
+   "financing": 2.8333333333333335,
+   "credit": 24.90153935747445,
+   "score": 12
+  },
+  {
+   "date": "2026-06-10",
+   "equity": 13.109882272833282,
+   "financing": 3.166666666666667,
+   "credit": 24.65502864250626,
+   "score": 16
+  },
+  {
+   "date": "2026-06-11",
+   "equity": 3.0601653835186706,
+   "financing": 3.111111111111111,
+   "credit": 24.531773285022176,
+   "score": 11
+  },
+  {
+   "date": "2026-06-12",
+   "equity": 3.003136583974907,
+   "financing": 2.6666666666666665,
+   "credit": 23.42506991729657,
+   "score": 10
+  },
+  {
+   "date": "2026-06-15",
+   "equity": 0.09466780724265768,
+   "financing": 2.055555555555556,
+   "credit": 25.515221295263668,
+   "score": 10
+  },
+  {
+   "date": "2026-06-16",
+   "equity": 2.2731679498146593,
+   "financing": 2.4444444444444446,
+   "credit": 24.531773285022176,
+   "score": 11
+  },
+  {
+   "date": "2026-06-17",
+   "equity": 2.626746506986034,
+   "financing": 2.166666666666667,
+   "credit": 27.975138745683044,
+   "score": 12
+  },
+  {
+   "date": "2026-06-18",
+   "equity": 0.0,
+   "financing": 2.555555555555555,
+   "credit": 27.729925455530473,
+   "score": 11
+  },
+  {
+   "date": "2026-06-22",
+   "equity": 0.0,
+   "financing": 2.611111111111111,
+   "credit": 29.4516081858609,
+   "score": 11
+  },
+  {
+   "date": "2026-06-23",
+   "equity": 3.7445109780439125,
+   "financing": 3.111111111111111,
+   "credit": 28.466862750803802,
+   "score": 13
+  },
+  {
+   "date": "2026-06-24",
+   "equity": 3.6988879384088986,
+   "financing": 3.5555555555555554,
+   "credit": 29.573566118529403,
+   "score": 13
+  },
+  {
+   "date": "2026-06-25",
+   "equity": 2.797832905617333,
+   "financing": 3.7777777777777777,
+   "credit": 29.081842113408644,
+   "score": 13
+  },
+  {
+   "date": "2026-06-26",
+   "equity": 4.033482259411842,
+   "financing": 4.055555555555556,
+   "credit": 26.74518002047336,
+   "score": 12
+  },
+  {
+   "date": "2026-06-29",
+   "equity": 2.7522098659823193,
+   "financing": 3.722222222222222,
+   "credit": 23.91679392241733,
+   "score": 11
+  },
+  {
+   "date": "2026-06-30",
+   "equity": 1.1668092386655304,
+   "financing": 3.888888888888889,
+   "credit": 24.040049279901417,
+   "score": 10
+  },
+  {
+   "date": "2026-07-01",
+   "equity": 3.4251497005988027,
+   "financing": 3.7777777777777777,
+   "credit": 22.548010741936082,
+   "score": 11
+  },
+  {
+   "date": "2026-07-02",
+   "equity": 10.420991353989663,
+   "financing": 6.613254899535698,
+   "credit": 22.924263938466467,
+   "score": 14
+  },
+  {
+   "date": "2026-07-06",
+   "equity": 5.655628264724236,
+   "financing": 5.319138465026888,
+   "credit": 23.676770331527244,
+   "score": 12
+  },
+  {
+   "date": "2026-07-07",
+   "equity": 13.126033326952136,
+   "financing": 7.048900020098026,
+   "credit": 24.67967971400309,
+   "score": 16
+  },
+  {
+   "date": "2026-07-08",
+   "equity": 10.06670279107071,
+   "financing": 6.299530015614618,
+   "credit": 25.306335899948518,
+   "score": 15
+  },
+  {
+   "date": "2026-07-09",
+   "equity": 5.121660636534093,
+   "financing": 4.111111111111112,
+   "credit": 25.807141878778623,
+   "score": 13
+  },
+  {
+   "date": "2026-07-10",
+   "equity": 5.501250451065421,
+   "financing": 3.888888888888889,
+   "credit": 22.423457959636373,
+   "score": 11
+  },
+  {
+   "date": "2026-07-13",
+   "equity": 13.585101069803992,
+   "financing": 6.9573973583991835,
+   "credit": 23.4263673421122,
+   "score": 16
+  },
+  {
+   "date": "2026-07-14",
+   "equity": 9.970182964071222,
+   "financing": 6.435779107338879,
+   "credit": 22.29760775252104,
+   "score": 14
+  },
+  {
+   "date": "2026-07-15",
+   "equity": 13.324760480760025,
+   "financing": 7.079317595040433,
+   "credit": 20.918445173514794,
+   "score": 15
+  },
+  {
+   "date": "2026-07-16",
+   "equity": 20.89460823128095,
+   "financing": 10.350555787455766,
+   "credit": 18.53767063684839,
+   "score": 18
+  },
+  {
+   "date": "2026-07-17",
+   "equity": 26.17948114389114,
+   "financing": 11.205507371849404,
+   "credit": 20.29178898756937,
+   "score": 21
+  },
+  {
+   "date": "2026-07-20",
+   "equity": 24.96476593727526,
+   "financing": 10.492084473509268,
+   "credit": 22.17305497022131,
+   "score": 21
+  },
+  {
+   "date": "2026-07-21",
+   "equity": 13.850926658312071,
+   "financing": 7.620544295513007,
+   "credit": 21.92135455599064,
+   "score": 16
+  },
+  {
+   "date": "2026-07-22",
+   "equity": 15.179734312704204,
+   "financing": 7.075332224629573,
+   "credit": 23.55092012441193,
+   "score": 17
+  },
+  {
+   "date": "2026-07-23",
+   "equity": 20.256364379558747,
+   "financing": 8.934700587406876,
+   "credit": 25.556738889363583,
+   "score": 20
+  },
+  {
+   "date": "2026-07-24",
+   "equity": 28.708500611066768,
+   "financing": 10.11174497163089,
+   "credit": 25.055932910533468,
+   "score": 24
+  },
+  {
+   "date": "2026-07-27",
+   "equity": 31.33014584781976,
+   "financing": 12.319456867668919,
+   "credit": 23.55092012441193,
+   "score": 25
+  },
+  {
+   "date": "2026-07-28",
+   "equity": 39.0703398015317,
+   "financing": 14.679290871304238,
+   "credit": 21.170145587745484,
+   "score": 28
+  },
+  {
+   "date": "2026-07-29",
+   "equity": 49.58979387071978,
+   "financing": 18.120931163925476,
+   "credit": 23.676770331527244,
+   "score": 34
+  },
+  {
+   "date": "2026-07-30",
+   "equity": 32.742278612432585,
+   "financing": 12.795647343859395,
+   "credit": 24.053023528057622,
+   "score": 26
+  },
+  {
+   "date": "2026-07-31",
+   "equity": 31.345570408187246,
+   "financing": 16.49298152234009,
+   "credit": 24.30342651747269,
+   "score": 26
+  },
+  {
+   "date": "2026-08-03",
+   "equity": 25.064282516282272,
+   "financing": 14.437391733899323,
+   "credit": 20.041385998154322,
+   "score": 21
+  },
+  {
+   "date": "2026-08-04",
+   "equity": 13.03319585230193,
+   "financing": 9.911072534698535,
+   "credit": 17.284358264957493,
+   "score": 14
+  },
+  {
+   "date": "2026-08-05",
+   "equity": 15.463728747354127,
+   "financing": 12.312133238806412,
+   "credit": 20.29178898756937,
+   "score": 17
+  },
+  {
+   "date": "2026-08-06",
+   "equity": 15.568661225272917,
+   "financing": 12.647692077774177,
+   "credit": 15.278539500005822,
+   "score": 15
+  },
+  {
+   "date": "2026-08-07",
+   "equity": 11.164835126787247,
+   "financing": 10.906258581227293,
+   "credit": 11.643155166632903,
+   "score": 11
+  },
+  {
+   "date": "2026-08-10",
+   "equity": 14.28890532989826,
+   "financing": 12.485657893477583,
+   "credit": 12.771914756224062,
+   "score": 13
+  },
+  {
+   "date": "2026-08-11",
+   "equity": 13.68941427230504,
+   "financing": 13.09544054778507,
+   "credit": 12.269811352578326,
+   "score": 13
+  },
+  {
+   "date": "2026-08-12",
+   "equity": 10.29776710217739,
+   "financing": 10.00631062993663,
+   "credit": 13.148167952754463,
+   "score": 11
+  },
+  {
+   "date": "2026-08-13",
+   "equity": 8.812425698527125,
+   "financing": 8.903101793876814,
+   "credit": 10.013589598211631,
+   "score": 9
+  },
+  {
+   "date": "2026-08-14",
+   "equity": 9.646333311234233,
+   "financing": 7.523809523809523,
+   "credit": 12.145258570278617,
+   "score": 10
+  },
+  {
+   "date": "2026-08-17",
+   "equity": 8.016308377077305,
+   "financing": 8.095238095238095,
+   "credit": 14.526033106945043,
+   "score": 10
+  },
+  {
+   "date": "2026-08-18",
+   "equity": 15.419428501076652,
+   "financing": 11.579964706999647,
+   "credit": 14.025227128114933,
+   "score": 14
+  },
+  {
+   "date": "2026-08-19",
+   "equity": 17.210986019057778,
+   "financing": 12.401626098857218,
+   "credit": 13.523123724469215,
+   "score": 15
+  },
+  {
+   "date": "2026-08-20",
+   "equity": 16.60241859085798,
+   "financing": 12.300642768431848,
+   "credit": 13.148167952754463,
+   "score": 15
+  },
+  {
+   "date": "2026-08-21",
+   "equity": 16.68963921347975,
+   "financing": 13.150746166469004,
+   "credit": 13.148167952754463,
+   "score": 15
+  },
+  {
+   "date": "2026-08-24",
+   "equity": 21.5493616660801,
+   "financing": 14.333535785880306,
+   "credit": 11.2669019701025,
+   "score": 16
+  },
+  {
+   "date": "2026-08-25",
+   "equity": 18.47668290199357,
+   "financing": 12.351781545603739,
+   "credit": 11.894855580863572,
+   "score": 15
+  },
+  {
+   "date": "2026-08-26",
+   "equity": 18.2767173433249,
+   "financing": 12.476250843859042,
+   "credit": 12.145258570278617,
+   "score": 15
+  },
+  {
+   "date": "2026-08-27",
+   "equity": 14.131696746392889,
+   "financing": 11.837236986534338,
+   "credit": 11.894855580863572,
+   "score": 13
+  },
+  {
+   "date": "2026-08-28",
+   "equity": 18.254955527269793,
+   "financing": 13.422381533971917,
+   "credit": 12.269811352578326,
+   "score": 15
+  },
+  {
+   "date": "2026-08-31",
+   "equity": 17.567960878019743,
+   "financing": 14.73301809631294,
+   "credit": 10.38984279474201,
+   "score": 14
+  },
+  {
+   "date": "2026-09-01",
+   "equity": 21.55595139208556,
+   "financing": 17.04875278188207,
+   "credit": 12.395661559693682,
+   "score": 17
+  },
+  {
+   "date": "2026-09-02",
+   "equity": 20.743347428544094,
+   "financing": 17.63583866519723,
+   "credit": 12.521511766808995,
+   "score": 17
+  },
+  {
+   "date": "2026-09-03",
+   "equity": 19.234499117218142,
+   "financing": 15.384027451092999,
+   "credit": 12.395661559693682,
+   "score": 16
+  },
+  {
+   "date": "2026-09-04",
+   "equity": 15.721085268565696,
+   "financing": 14.680300925465817,
+   "credit": 12.64606454910873,
+   "score": 14
+  },
+  {
+   "date": "2026-09-08",
+   "equity": 14.330690343543662,
+   "financing": 13.42784259940237,
+   "credit": 15.028136510590778,
+   "score": 14
+  },
+  {
+   "date": "2026-09-09",
+   "equity": 14.174347211384614,
+   "financing": 14.602014366032742,
+   "credit": 16.031045893066604,
+   "score": 15
+  },
+  {
+   "date": "2026-09-10",
+   "equity": 18.39556272598023,
+   "financing": 18.141765371485704,
+   "credit": 17.033955275542446,
+   "score": 18
+  },
+  {
+   "date": "2026-09-11",
+   "equity": 15.300390959480778,
+   "financing": 16.445725416923423,
+   "credit": 16.155598675366335,
+   "score": 16
+  },
+  {
+   "date": "2026-09-14",
+   "equity": 22.195954259561628,
+   "financing": 21.209492742260245,
+   "credit": 15.779345478835936,
+   "score": 20
+  },
+  {
+   "date": "2026-09-15",
+   "equity": 23.609262064620793,
+   "financing": 21.92025872699312,
+   "credit": 15.90519568595129,
+   "score": 20
+  },
+  {
+   "date": "2026-09-16",
+   "equity": 22.862272145226353,
+   "financing": 20.485942063234404,
+   "credit": 15.528942489420869,
+   "score": 20
+  },
+  {
+   "date": "2026-09-17",
+   "equity": 16.901019916523634,
+   "financing": 18.012340034880754,
+   "credit": 12.896467538523773,
+   "score": 16
+  },
+  {
+   "date": "2026-09-18",
+   "equity": 14.239271343017043,
+   "financing": 18.01937949398644,
+   "credit": 15.779345478835936,
+   "score": 15
+  },
+  {
+   "date": "2026-09-21",
+   "equity": 7.09285170241188,
+   "financing": 14.768215391841391,
+   "credit": 14.651883314060399,
+   "score": 11
+  },
+  {
+   "date": "2026-09-22",
+   "equity": 4.386166958838307,
+   "financing": 14.165472196639591,
+   "credit": 15.528942489420869,
+   "score": 10
+  },
+  {
+   "date": "2026-09-23",
+   "equity": 6.536644022444987,
+   "financing": 18.191325754982362,
+   "credit": 17.53476125437254,
+   "score": 13
+  },
+  {
+   "date": "2026-09-24",
+   "equity": 6.928335394064708,
+   "financing": 20.709532128483023,
+   "credit": 18.03556723320265,
+   "score": 14
+  },
+  {
+   "date": "2026-09-25",
+   "equity": 5.332697961566671,
+   "financing": 22.36772302724718,
+   "credit": 17.91101445090292,
+   "score": 13
+  },
+  {
+   "date": "2026-09-28",
+   "equity": 8.625588668793137,
+   "financing": 26.143343765160953,
+   "credit": 18.41182042973303,
+   "score": 15
+  },
+  {
+   "date": "2026-09-29",
+   "equity": 6.744358010591752,
+   "financing": 27.31464291419768,
+   "credit": 17.158508057842138,
+   "score": 14
+  },
+  {
+   "date": "2026-09-30",
+   "equity": 6.6238153699152935,
+   "financing": 29.539306346040746,
+   "credit": 18.161417440317983,
+   "score": 15
+  },
+  {
+   "date": "2026-10-01",
+   "equity": 4.216509607801119,
+   "financing": 33.25646467792009,
+   "credit": 18.070597703224436,
+   "score": 15
+  },
+  {
+   "date": "2026-10-02",
+   "equity": 0.7746822327117509,
+   "financing": 31.193835430373646,
+   "credit": 19.886992445095288,
+   "score": 13
+  },
+  {
+   "date": "2026-10-05",
+   "equity": 0.0,
+   "financing": 31.515031181373214,
+   "credit": 20.795189816030707,
+   "score": 13
+  },
+  {
+   "date": "2026-10-06",
+   "equity": 0.0,
+   "financing": 30.23413084913016,
+   "credit": 22.352099594777137,
+   "score": 14
+  },
+  {
+   "date": "2026-10-07",
+   "equity": 0.957515936115479,
+   "financing": 31.31306452052245,
+   "credit": 23.649524410399188,
+   "score": 15
+  },
+  {
+   "date": "2026-10-08",
+   "equity": 6.166696647913075,
+   "financing": 35.02188916937771,
+   "credit": 21.83312966852834,
+   "score": 17
+  },
+  {
+   "date": "2026-10-09",
+   "equity": 5.493412148790662,
+   "financing": 31.45082354015151,
+   "credit": 23.00081200258816,
+   "score": 17
+  },
+  {
+   "date": "2026-10-12",
+   "equity": 9.326845328995722,
+   "financing": 32.440264351492964,
+   "credit": 22.741327039463766,
+   "score": 18
+  },
+  {
+   "date": "2026-10-13",
+   "equity": 9.661786764733929,
+   "financing": 35.42266570372875,
+   "credit": 23.779266891961395,
+   "score": 20
+  },
+  {
+   "date": "2026-10-14",
+   "equity": 16.61805840549642,
+   "financing": 41.13881398144653,
+   "credit": 23.779266891961395,
+   "score": 24
+  },
+  {
+   "date": "2026-10-15",
+   "equity": 17.386927602097078,
+   "financing": 41.34494748380934,
+   "credit": 21.054674779155125,
+   "score": 23
+  }
+ ],
+ "weekly": [
+  {
+   "weekEnding": "2026-04-24",
+   "high": 9
+  },
+  {
+   "weekEnding": "2026-05-01",
+   "high": 9
+  },
+  {
+   "weekEnding": "2026-05-08",
+   "high": 8
+  },
+  {
+   "weekEnding": "2026-05-15",
+   "high": 10
+  },
+  {
+   "weekEnding": "2026-05-22",
+   "high": 11
+  },
+  {
+   "weekEnding": "2026-05-29",
+   "high": 10
+  },
+  {
+   "weekEnding": "2026-06-05",
+   "high": 14
+  },
+  {
+   "weekEnding": "2026-06-12",
+   "high": 16
+  },
+  {
+   "weekEnding": "2026-06-19",
+   "high": 12
+  },
+  {
+   "weekEnding": "2026-06-26",
+   "high": 13
+  },
+  {
+   "weekEnding": "2026-07-03",
+   "high": 14
+  },
+  {
+   "weekEnding": "2026-07-10",
+   "high": 16
+  },
+  {
+   "weekEnding": "2026-07-17",
+   "high": 21
+  },
+  {
+   "weekEnding": "2026-07-24",
+   "high": 24
+  },
+  {
+   "weekEnding": "2026-07-31",
+   "high": 34
+  },
+  {
+   "weekEnding": "2026-08-07",
+   "high": 21
+  },
+  {
+   "weekEnding": "2026-08-14",
+   "high": 13
+  },
+  {
+   "weekEnding": "2026-08-21",
+   "high": 15
+  },
+  {
+   "weekEnding": "2026-08-28",
+   "high": 16
+  },
+  {
+   "weekEnding": "2026-09-04",
+   "high": 17
+  },
+  {
+   "weekEnding": "2026-09-11",
+   "high": 18
+  },
+  {
+   "weekEnding": "2026-09-18",
+   "high": 20
+  },
+  {
+   "weekEnding": "2026-09-25",
+   "high": 14
+  },
+  {
+   "weekEnding": "2026-10-02",
+   "high": 15
+  },
+  {
+   "weekEnding": "2026-10-09",
+   "high": 17
+  },
+  {
+   "weekEnding": "2026-10-16",
+   "high": 24
+  }
+ ],
+ "sample": false,
+ "editorNote": "",
+ "model": {
+  "version": "1.3",
+  "changed": "2026-10-15",
+  "changelog": [
+   {
+    "version": "1.0",
+    "date": "2026-10-15",
+    "note": "Launch: 8 gauges, 1-year highs."
+   },
+   {
+    "version": "1.1",
+    "date": "2026-10-15",
+    "note": "Oracle and CoreWeave replaced by the data-center ETF, BBB and CCC spreads; dividend-adjusted prices; spread widening test; 2-year highs."
+   },
+   {
+    "version": "1.2",
+    "date": "2026-10-15",
+    "note": "Financing Strain alert can also trigger on CCC spreads; stale-data flags."
+   },
+   {
+    "version": "1.3",
+    "date": "2026-10-15",
+    "note": "Wording and disclosure updates only; no change to scores."
+   }
+  ],
+  "note": "Every run recalculates the full history under the current version."
+ },
+ "notes": [],
+ "generatedAt": "2026-10-16T06:01+00:00"
+}

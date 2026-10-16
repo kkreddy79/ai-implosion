@@ -1,0 +1,157 @@
+{
+  "lookbackDays": 730,
+  "widenDays": 365,
+  "factors": [
+    {
+      "name": "Nasdaq-100",
+      "col": "NDX",
+      "yahoo": "^NDX",
+      "source": "Yahoo ^NDX",
+      "pillar": "Equity",
+      "weight": 0.18,
+      "type": "DD",
+      "calm": -0.05,
+      "trigger": -0.25,
+      "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
+      "descriptor": "Large-cap tech benchmark"
+    },
+    {
+      "name": "Semiconductors",
+      "col": "SOX",
+      "yahoo": "^SOX",
+      "source": "Yahoo ^SOX",
+      "pillar": "Equity",
+      "weight": 0.18,
+      "type": "DD",
+      "calm": -0.1,
+      "trigger": -0.4,
+      "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
+      "descriptor": "Chip stocks"
+    },
+    {
+      "name": "AI & tech ETF",
+      "col": "AIQ",
+      "yahoo": "AIQ",
+      "source": "Yahoo AIQ (dividend-adjusted)",
+      "pillar": "Equity",
+      "weight": 0.09,
+      "type": "DD",
+      "calm": -0.05,
+      "trigger": -0.3,
+      "rationale": "A basket of AI and big-data companies. It moves closely with the Nasdaq-100, so it carries a smaller weight.",
+      "descriptor": "AI & big-data stocks"
+    },
+    {
+      "name": "Data-center infrastructure ETF",
+      "col": "DTCR",
+      "yahoo": "DTCR",
+      "source": "Yahoo DTCR (dividend-adjusted)",
+      "pillar": "Financing",
+      "weight": 0.06,
+      "type": "DD",
+      "calm": -0.1,
+      "trigger": -0.35,
+      "rationale": "Data-center and digital-infrastructure companies: the physical AI build-out that much of the new debt is financing. Equity prices also reflect broader stock-market moves.",
+      "descriptor": "Data-center infrastructure stocks"
+    },
+    {
+      "name": "BBB corporate spread (bp)",
+      "col": "BBB",
+      "fred": "BAMLC0A4CBBB",
+      "source": "FRED BAMLC0A4CBBB x100",
+      "pillar": "Financing",
+      "weight": 0.06,
+      "type": "LVL",
+      "calm": 140,
+      "trigger": 250,
+      "wcalm": 30,
+      "wtrig": 100,
+      "rationale": "Borrowing spreads on the lowest tier of investment-grade corporate debt, where much large-company and AI-related issuance prices.",
+      "descriptor": "Investment-grade borrowing costs"
+    },
+    {
+      "name": "CCC high-yield spread (bp)",
+      "col": "CCC",
+      "fred": "BAMLH0A3HYC",
+      "source": "FRED BAMLH0A3HYC x100",
+      "pillar": "Financing",
+      "weight": 0.06,
+      "type": "LVL",
+      "calm": 900,
+      "trigger": 1500,
+      "wcalm": 150,
+      "wtrig": 500,
+      "rationale": "Borrowing spreads on the riskiest rated corporate debt. It covers all CCC-rated borrowers rather than tech alone, but is a useful early-warning signal for vulnerable, highly leveraged companies.",
+      "descriptor": "Risky corporate borrowing costs"
+    },
+    {
+      "name": "BDC (private credit) ETF",
+      "col": "BIZD",
+      "yahoo": "BIZD",
+      "source": "Yahoo BIZD (dividend-adjusted)",
+      "pillar": "Credit",
+      "weight": 0.14,
+      "type": "DD",
+      "calm": -0.05,
+      "trigger": -0.25,
+      "rationale": "Listed business development companies (BDCs), a market proxy for private credit, a major lender to growth and tech firms. Their share prices reflect credit concerns and broader stock-market moves.",
+      "descriptor": "Listed BDCs · private-credit proxy"
+    },
+    {
+      "name": "Leveraged loan ETF",
+      "col": "BKLN",
+      "yahoo": "BKLN",
+      "source": "Yahoo BKLN (dividend-adjusted)",
+      "pillar": "Credit",
+      "weight": 0.13,
+      "type": "DD",
+      "calm": -0.02,
+      "trigger": -0.08,
+      "rationale": "Leveraged loans: floating-rate funding for buyouts and below-investment-grade companies.",
+      "descriptor": "Leveraged-loan prices"
+    },
+    {
+      "name": "High-yield spread (bp)",
+      "col": "HY",
+      "fred": "BAMLH0A0HYM2",
+      "source": "FRED BAMLH0A0HYM2 x100",
+      "pillar": "Credit",
+      "weight": 0.1,
+      "type": "LVL",
+      "calm": 400,
+      "trigger": 600,
+      "wcalm": 75,
+      "wtrig": 250,
+      "rationale": "The broad junk-bond spread, the market-wide gauge of credit stress.",
+      "descriptor": "Junk-bond borrowing costs"
+    }
+  ],
+  "editorNote": "",
+  "model": {
+    "version": "1.3",
+    "changed": "2026-10-15",
+    "changelog": [
+      {
+        "version": "1.0",
+        "date": "2026-10-15",
+        "note": "Launch: 8 gauges, 1-year highs."
+      },
+      {
+        "version": "1.1",
+        "date": "2026-10-15",
+        "note": "Oracle and CoreWeave replaced by the data-center ETF, BBB and CCC spreads; dividend-adjusted prices; spread widening test; 2-year highs."
+      },
+      {
+        "version": "1.2",
+        "date": "2026-10-15",
+        "note": "Financing Strain alert can also trigger on CCC spreads; stale-data flags."
+      },
+      {
+        "version": "1.3",
+        "date": "2026-10-15",
+        "note": "Wording and disclosure updates only; no change to scores."
+      }
+    ],
+    "note": "Every run recalculates the full history under the current version."
+  }
+}
