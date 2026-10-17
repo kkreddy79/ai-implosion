@@ -14,10 +14,10 @@ Rules
 
 Alert levels (L1-L4) are independent tripwires, not a ladder.
 - Start: the level's conditions hold for 5 straight trading days (the start date is the first of those days).
-- Exit (v1.4): an alert stays active while its conditions hold, unless the Nasdaq-100 has rebounded
-  RECOVERY (20%) from its lowest close since that alert started. At the start the rebound is 0%, so this
-  rule can never delay or move a start date (including the implosion date = first L4 start).
-- Shock flag (v1.4, not a level): score >= SHOCK_SCORE (60) on a day when no level is active.
+- Exit (v1.4): an alert is shown as active while its conditions hold, except in recovery mode: the
+  Nasdaq-100 is RECOVERY (20%) or more above its lowest close since its 2-year high. Start dates
+  (including the implosion date = first L4 start) are computed exactly as before and never move.
+- Shock flag (v1.4, not a level): score >= SHOCK_SCORE (60) on a day when no level has confirmed yet.
 """
 import bisect, csv, datetime as dt, io, json, math, os, random, time, urllib.parse, urllib.request
 
@@ -265,35 +265,55 @@ def score_rows(dates, series, cfg, missing="zero"):
     return rows, ctx
 
 
-def confirm_levels(rows, ndx):
+def recovery_flags(rows, ndx, lookback_days):
+    """Recovery mode: the Nasdaq-100 is RECOVERY (20%) or more above its lowest close since its 2-year high,
+    i.e. the market has already bounced well off the bottom of the current drawdown. Returns (flag, rebound) per day."""
+    n = len(rows)
+    flag, reb, j = [0] * n, [0.0] * n, 0
+    for i in range(n):
+        lo_d = rows[i]["date"] - dt.timedelta(days=lookback_days)
+        while rows[j]["date"] < lo_d:
+            j += 1
+        hi, hv = None, None
+        for x in range(j, i + 1):
+            if ndx[x] is not None and (hv is None or ndx[x] >= hv):
+                hi, hv = x, ndx[x]
+        if hi is None or ndx[i] is None:
+            continue
+        trough = min(v for v in ndx[hi:i + 1] if v is not None)
+        reb[i] = ndx[i] / trough - 1 if trough else 0.0
+        flag[i] = int(round(reb[i], 9) >= RECOVERY)  # rounding: exactly +20% counts, as in Excel
+    return flag, reb
+
+
+def confirm_levels(rows, ndx, lookback_days=730):
     """Confirmed streaks, active days and shock days, shared by the live page and the backtest.
 
     conf[k][i]   day i is inside a confirmed streak of level k+1 (5-day start, runs while conditions hold)
-    active[k][i] conf, and the Nasdaq-100 has not rebounded RECOVERY from its low since the streak started
+    active[k][i] conf, and not in recovery mode (see recovery_flags)
     starts[k]    first day of each streak (unchanged by the exit rule)
-    shock[i]     score >= SHOCK_SCORE with no level active
+    shock[i]     score >= SHOCK_SCORE and no level confirmed as known that day (a streak counts as confirmed
+                 only from its 5th day, so the flag can fire before an alert confirms, never with hindsight)
     ndx          Nasdaq-100 closes with blank days carried forward
     """
     n = len(rows)
+    rec, _ = recovery_flags(rows, ndx, lookback_days)
     conf = [[0] * n for _ in range(4)]
+    known = [[0] * n for _ in range(4)]
     active = [[0] * n for _ in range(4)]
     starts = [[] for _ in range(4)]
     for k in range(4):
-        low = None
+        s0 = None
         for i in range(n):
             on = int(rows[i]["L"][k] and (rows[i]["LS"][k] or (i > 0 and conf[k][i - 1])))
             conf[k][i] = on
             if not on:
-                low = None
                 continue
             if i == 0 or not conf[k][i - 1]:
-                starts[k].append(i)
-                low = ndx[i]
-            elif ndx[i] is not None:
-                low = ndx[i] if low is None else min(low, ndx[i])
-            rebound = ndx[i] / low - 1 if ndx[i] and low else 0.0
-            active[k][i] = int(round(rebound, 9) < RECOVERY)  # rounding: exactly +20% pauses, as in Excel
-    shock = [int((rows[i]["score"] or 0) >= SHOCK_SCORE and not any(active[k][i] for k in range(4))) for i in range(n)]
+                starts[k].append(i); s0 = i
+            known[k][i] = int(i - s0 >= 4)
+            active[k][i] = int(not rec[i])
+    shock = [int((rows[i]["score"] or 0) >= SHOCK_SCORE and not any(known[k][i] for k in range(4))) for i in range(n)]
     return conf, active, starts, shock
 
 
@@ -328,14 +348,15 @@ def compute(dates, series, cfg):
 
 
     latest, maxd = rows[-1], dates[-1]
-    conf, act, lv_starts, shock = confirm_levels(rows, ctx.eff["NDX"])
+    conf, act, lv_starts, shock = confirm_levels(rows, ctx.eff["NDX"], LB)
+    rec_flag, rec_reb = recovery_flags(rows, ctx.eff["NDX"], LB)
     levels = []
     for k in range(4):
         starts = [r["date"] for r in rows if r["LS"][k]]
         on = bool(n >= 5 and conf[k][-1])
         levels.append({"level": f"L{k+1}", "name": LEVEL_NAMES[k], "firstDate": starts[0].isoformat() if starts else None,
                        "active": bool(on and act[k][-1]),
-                       # conditions still met, but the Nasdaq-100 has rebounded RECOVERY from its low since the start
+                       # conditions still met, but in recovery mode (Nasdaq-100 20%+ above its low since its 2-year high)
                        "paused": bool(on and not act[k][-1]),
                        "streakStart": rows[lv_starts[k][-1]]["date"].isoformat() if on and lv_starts[k] else None})
     shock_days = [rows[i]["date"] for i in range(n) if shock[i] and rows[i]["date"] > maxd - dt.timedelta(days=364)]
@@ -444,7 +465,7 @@ def compute(dates, series, cfg):
             "currentLevel": current, "implosionDate": implosion, "levels": levels, "concentrated": concentrated,
             "shock": {"active": bool(shock[-1]), "threshold": SHOCK_SCORE,
                       "lastDate": shock_days[-1].isoformat() if shock_days else None, "daysLastYear": len(shock_days)},
-            "exitRule": {"rebound": RECOVERY},
+            "exitRule": {"rebound": RECOVERY, "recoveryMode": bool(rec_flag[-1]), "currentRebound": rec_reb[-1]},
             "factors": factors, "history": history, "weekly": weekly}
 
 

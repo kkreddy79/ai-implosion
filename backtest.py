@@ -30,6 +30,7 @@ PROXIES = {
 # ICE BofA spreads on FRED only go back ~3 years (licensing), so older history uses Moody's Baa
 # corporate yield minus the 10-year Treasury, scaled to join each ICE series where it begins.
 SPREAD_PROXY = ("BAA10Y", "Moody's Baa corporate spread over 10-year Treasury (BAA10Y)")
+STABILITY_DAYS = 30   # re-run as if FRED's 3-year window began this many days later; report alert dates that move
 
 # Candidate lower-redundancy weights, tested side by side with the live ones. AIQ tracks the Nasdaq (0.97) and
 # BBB tracks HY (0.86), so they give weight to the indicators that add independent information.
@@ -73,6 +74,25 @@ def splice(real, chain):
     return out, used
 
 
+def splice_median(real, prox, sym, label):
+    """Back-fill a spread with a stand-in scaled by the MEDIAN ratio over every day both exist.
+    FRED serves only the last ~3 years of the ICE spreads, so the first real day moves forward daily; joining on
+    that single day (as `splice` does) rescaled the whole pre-2023 history each run. The median over the overlap
+    barely moves from one day to the next."""
+    out = {d: v for d, v in real.items() if v is not None}
+    if not out:
+        return {d: v for d, v in prox.items() if v is not None}, [{"symbol": sym, "label": label, "from": min(prox).isoformat() if prox else None, "until": None}]
+    first = min(out)
+    ratios = sorted(out[d] / prox[d] for d in out if prox.get(d))
+    if not ratios:
+        return out, []
+    k = ratios[len(ratios) // 2]
+    added = {d: v * k for d, v in prox.items() if d < first and v is not None}
+    out.update(added)
+    return out, ([{"symbol": sym, "label": label, "from": min(added).isoformat(), "until": first.isoformat(),
+                   "scale": round(k, 3), "overlapDays": len(ratios)}] if added else [])
+
+
 def fetch_history(cfg):
     F = cfg["factors"]
     px, proxies = {}, []
@@ -91,10 +111,15 @@ def fetch_history(cfg):
     baa = fred.get(SPREAD_PROXY[0], {})
     if not baa:
         raise RuntimeError("Moody's Baa spread (BAA10Y) unavailable; cannot back-fill credit spreads")
+    shifted = {}
     for f in F:
         if "fred" in f:
-            series, used = splice(fred.get(f["fred"], {}), [(SPREAD_PROXY[0], SPREAD_PROXY[1], baa)])
+            real = fred.get(f["fred"], {})
+            series, used = splice_median(real, baa, SPREAD_PROXY[0], SPREAD_PROXY[1])
             px[f["col"]] = series
+            # stability check: the same splice if FRED's window started STABILITY_DAYS later
+            cut = min(real) + dt.timedelta(days=STABILITY_DAYS) if real else None
+            shifted[f["col"]], _ = splice_median({d: v for d, v in real.items() if cut and d >= cut}, baa, SPREAD_PROXY[0], SPREAD_PROXY[1])
             for u in used:
                 proxies.append({"col": f["col"], "name": f["name"], **u})
     master = F[0]["col"]
@@ -102,7 +127,8 @@ def fetch_history(cfg):
     per_year = len(dates) / max(1, (dates[-1] - dates[0]).days / 365.25)
     if per_year < 200:
         raise RuntimeError(f"History is not daily ({per_year:.0f} rows a year); refusing to publish a misleading backtest")
-    return dates, {f["col"]: [px[f["col"]].get(d) for d in dates] for f in F}, proxies
+    alt = {f["col"]: [(shifted if f["col"] in shifted else px)[f["col"]].get(d) for d in dates] for f in F}
+    return dates, {f["col"]: [px[f["col"]].get(d) for d in dates] for f in F}, proxies, alt
 
 
 def synthetic(cfg):
@@ -135,8 +161,8 @@ def analyse(dates, series, cfg, proxies, sample):
     rows, _ = engine.score_rows(dates, series, cfg, missing="exclude")
     n = len(rows)
     ndx = engine.carried(series["NDX"])
-    # conf: inside a 5-day-confirmed streak; act: conf and not paused by the exit rule (Nasdaq-100 rebound)
-    conf, act, starts, shock = engine.confirm_levels(rows, ndx)
+    # conf: inside a 5-day-confirmed streak; act: conf and not in recovery mode (exit rule)
+    conf, act, starts, shock = engine.confirm_levels(rows, ndx, cfg["lookbackDays"])
     first_scored = next((r["date"] for r in rows if r["score"] is not None), None)
     first_i = next((i for i, r in enumerate(rows) if r["score"] is not None), n)
 
@@ -383,11 +409,18 @@ def analyse(dates, series, cfg, proxies, sample):
 def main():
     cfg = engine.load_config()
     sample = "--sample" in sys.argv
+    alt_series = None
     if sample:
         dates, series, proxies = synthetic(cfg)
     else:
-        dates, series, proxies = fetch_history(cfg)
+        dates, series, proxies, alt_series = fetch_history(cfg)
     out = analyse(dates, series, cfg, proxies, sample)
+    if alt_series:
+        r2 = analyse(dates, alt_series, cfg, proxies, sample)
+        moved = [{"episode": e["name"], "level": l["level"], "date": l["date"], "shifted": l2["date"]}
+                 for e, e2 in zip(out["episodes"], r2["episodes"]) for l, l2 in zip(e["levels"], e2["levels"]) if l["date"] != l2["date"]]
+        out["spliceStability"] = {"days": STABILITY_DAYS, "moved": moved, "latestScore": r2["latestScore"]}
+        print(f"splice stability ({STABILITY_DAYS}d): {len(moved)} level dates move", moved)
     alt_cfg = json.loads(json.dumps(cfg))
     for f in alt_cfg["factors"]:
         f["weight"] = ALT_WEIGHTS[f["col"]]

@@ -205,8 +205,8 @@ dash[f"B{NR}"] = ("How it works: Prices: drawdown = dividend-adjusted close ÷ h
                "Levels need 5 straight trading days: L1 Score≥50 · L2 Score≥60 + (BIZD≥80% + BKLN≥50%, or CCC≥80%) · "
                "L3 Score≥70 + SOX≥83% + AIQ≥80% · L4 Score≥75 + NDX=100% + (HY≥500bp or BIZD=100%). "
                "Implosion date = first day of the first L4 streak. "
-               f"Levels are independent tripwires; an active level pauses once the Nasdaq-100 rebounds {engine.RECOVERY:.0%} from its low since the level began. "
-               f"Shock flag: Score≥{engine.SHOCK_SCORE} with no level active. Blue cells are editable.")
+               f"Levels are independent tripwires; they show PAUSED in recovery mode (Nasdaq-100 {engine.RECOVERY:.0%}+ above its low since its 2-year high). "
+               f"Shock flag: Score≥{engine.SHOCK_SCORE} with no level confirmed. Blue cells are editable.")
 dash[f"B{NR}"].font = font(size=9, italic=True, color="475569"); dash[f"B{NR}"].alignment = Alignment(wrap_text=True, vertical="top")
 dash.row_dimensions[NR].height = 36; dash.row_dimensions[NR + 1].height = 36
 
@@ -225,16 +225,17 @@ for j, h in enumerate(["Level", "Name", "First date (5-day start)", "Active now"
     c = trk.cell(11, 2 + j, h); c.font = font(bold=True, color="FFFFFF"); c.fill = fill(SLATE); c.border = box
 names = ["Warning", "Financing Stress", "Bubble Unwind", "AI Implosion"]
 REB = engine.RECOVERY
+NDXC = col(COLS[0])
+# recovery mode: Nasdaq-100 >= 20% above its lowest close since its 2-year high (same rule as engine.recovery_flags)
+hi_val = f'_xlfn.MAXIFS({NDXC},{col("Date")},">="&C4-{LB},{col("Date")},"<="&C4)'
+hi_date = f'_xlfn.MAXIFS({col("Date")},{NDXC},{hi_val},{col("Date")},">="&C4-{LB},{col("Date")},"<="&C4)'
+trough = f'_xlfn.MINIFS({NDXC},{col("Date")},">="&{hi_date},{col("Date")},"<="&C4)'
 for i in range(4):
     rr = 12 + i; L = f"L{i+1}"
     held = f'COUNTIFS({col("Date")},">="&LARGE({col("Date")},5),{col(L)},1)=5'
-    # current run start = the day after the last day this level's conditions failed (or the first row)
-    run0 = f'IF(COUNTIF({col(L)},0),_xlfn.MAXIFS({col("Date")},{col(L)},0)+1,MIN({col("Date")}))'
-    low = f'_xlfn.MINIFS({col(COLS[0])},{col("Date")},">="&{run0})'
-    rebound = f'INDEX({col(COLS[0])},MATCH(C4,{col("Date")},0))/{low}-1'
     vals = [L, names[i],
             f'=IF(COUNTIF({col(L+"S")},1),_xlfn.MINIFS({col("Date")},{col(L+"S")},1),"")',
-            f'=IF({held},IF(IFERROR({rebound},0)>={REB},"PAUSED (rebound)","YES"),"NO")']
+            f'=IF({held},IF(C21="ON","PAUSED (recovery)","YES"),"NO")']
     for j, v in enumerate(vals):
         c = trk.cell(rr, 2 + j, v); c.font = font(); c.border = box
     trk.cell(rr, 4).number_format = "dd-mmm-yyyy"
@@ -243,11 +244,14 @@ trk["C17"] = '=IF(E15="YES","L4 AI Implosion",IF(E14="YES","L3 Bubble Unwind",IF
 trk["B18"] = "AI Implosion date"; trk["B18"].font = font(bold=True, color=RED)
 trk["C18"] = "=D15"; trk["C18"].number_format = "dd-mmm-yyyy"; trk["C18"].font = font(bold=True, color=RED)
 trk["B19"] = "Shock flag"; trk["B19"].font = font(bold=True)
-trk["C19"] = f'=IF(AND(N(C5)>={engine.SHOCK_SCORE},C17="None"),"ON","off")'
-trk["B20"] = (f"Levels are independent tripwires, not a ladder. An active level pauses once the Nasdaq-100 is {REB:.0%} above its "
-              f"lowest close since that level's run began; start dates never move. Shock flag = score ≥ {engine.SHOCK_SCORE} with no level active (not a level).")
-trk["B20"].font = font(italic=True, size=9, color="64748B")
-trk.merge_cells("B20:F22"); trk["B20"].alignment = Alignment(wrap_text=True, vertical="top")
+trk["C19"] = f'=IF(AND(N(C5)>={engine.SHOCK_SCORE},COUNTIF(E12:E15,"NO")=4),"ON","off")'
+trk["B21"] = "Recovery mode"; trk["B21"].font = font(bold=True)
+trk["C21"] = f'=IF(IFERROR(ROUND(INDEX({NDXC},MATCH(C4,{col("Date")},0))/{trough}-1,9),0)>={REB},"ON","off")'
+trk["D21"] = f'=IFERROR(INDEX({NDXC},MATCH(C4,{col("Date")},0))/{trough}-1,"")'; trk["D21"].number_format = "+0.0%"
+trk["B23"] = (f"Levels are independent tripwires, not a ladder. Recovery mode = Nasdaq-100 {REB:.0%}+ above its lowest close since its 2-year high; "
+              f"active levels show PAUSED then, and start dates never move. Shock flag = score ≥ {engine.SHOCK_SCORE} with no level confirmed (not a level).")
+trk["B23"].font = font(italic=True, size=9, color="64748B")
+trk.merge_cells("B23:F25"); trk["B23"].alignment = Alignment(wrap_text=True, vertical="top")
 
 # ---------------- CHARTDATA ----------------
 cd["A1"] = "Factor"; cd["B1"] = "Stress"

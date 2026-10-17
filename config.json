@@ -154,7 +154,7 @@
       {
         "version": "1.4",
         "date": "2026-10-17",
-        "note": "Alert exit rule: an active alert pauses once the Nasdaq-100 rebounds 20% from its low since the alert began (start dates, including the implosion date, never move). New shock flag for score 60+ with no alert. Score shown with its range under thresholds 20% tighter/looser. Backtest now judges every alert by one rule, labels results in-sample, and keeps an out-of-sample record from 16 Oct 2026. Alert start triggers, thresholds and weights unchanged."
+        "note": "Exit rule: alerts pause in recovery mode, when the Nasdaq-100 is 20% or more above its lowest close since its 2-year high (start dates, including the implosion date, never move). New shock flag for an index of 60+ before any alert has confirmed. Index shown with its range under thresholds 20% tighter/looser. Backtest now judges every alert by one rule, is labelled in-sample, and keeps an out-of-sample record from 16 Oct 2026. Alert start triggers, thresholds and weights unchanged."
       }
     ],
     "note": "Every run recalculates the full history under the current version. Thresholds were shaped on the same history the backtest replays, so the backtest is in-sample; only alerts after the out-of-sample date are a true test.",

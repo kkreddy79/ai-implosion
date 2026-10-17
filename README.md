@@ -46,9 +46,10 @@ The spreads need a free FRED API key saved as the repository secret `FRED_API_KE
   L1 Score ≥ 50 · L2 Score ≥ 60 and (BIZD ≥ 0.8 with BKLN ≥ 0.5, or CCC ≥ 0.8) · L3 Score ≥ 70, SOX ≥ 0.83, AIQ ≥ 0.8 ·
   L4 Score ≥ 75, NDX = 1, (HY ≥ 500bp or BIZD = 1).
 - Levels are independent tripwires, not a ladder (L4 can fire before L3; L2 can be skipped). L1–L2 are the early warnings, L3–L4 late confirmations.
-- Exit rule (v1.4): an active level pauses once the Nasdaq-100 is 20% above its lowest close since that level's streak began.
-  At a streak's start the rebound is 0%, so start dates, including the Implosion date, never move.
-- Shock flag (v1.4, not a level): score ≥ 60 on a day with no active level. Catches fast sell-offs (April 2025) that never hold 5 days.
+- Exit rule (v1.4), "recovery mode": while the Nasdaq-100 is 20%+ above its lowest close since its 2-year high, levels whose
+  conditions still hold are shown as PAUSED instead of active. Start dates, including the Implosion date, are computed as before and never move.
+- Shock flag (v1.4, not a level): score ≥ 60 on a day when no level has confirmed yet (a streak counts from its 5th day, so no hindsight).
+  Catches fast sell-offs (April 2025) that never hold 5 days.
 - Score range: `data.json` → `scoreRange` is today's score with every threshold 20% tighter / looser.
 - An indicator that hasn't updated for more than 3 trading days is flagged as stale on the page.
 - Concentrated stress: the page calls out any indicator at ≥ 75% stress while no level is active.
