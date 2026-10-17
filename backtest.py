@@ -134,16 +134,24 @@ def synthetic(cfg):
 def analyse(dates, series, cfg, proxies, sample):
     rows, _ = engine.score_rows(dates, series, cfg, missing="exclude")
     n = len(rows)
-    # confirmed[k][i]: day i is inside a 5-day-confirmed streak of level k+1
-    conf = [[0] * n for _ in range(4)]
-    for k in range(4):
-        for i in range(n):
-            conf[k][i] = int(rows[i]["L"][k] and (rows[i]["LS"][k] or (i > 0 and conf[k][i - 1])))
-    # distinct streak starts
-    starts = [[i for i in range(n) if conf[k][i] and (i == 0 or not conf[k][i - 1])] for k in range(4)]
-    first_scored = next((r["date"] for r in rows if r["score"] is not None), None)
-
     ndx = engine.carried(series["NDX"])
+    # conf: inside a 5-day-confirmed streak; act: conf and not paused by the exit rule (Nasdaq-100 rebound)
+    conf, act, starts, shock = engine.confirm_levels(rows, ndx)
+    first_scored = next((r["date"] for r in rows if r["score"] is not None), None)
+    first_i = next((i for i, r in enumerate(rows) if r["score"] is not None), n)
+
+    # Nasdaq-100 2-year high (and the day it was set), for drawdowns and "days after the peak"
+    hi2, hi2_i, j = [], [], 0
+    for i in range(n):
+        lo_d = rows[i]["date"] - dt.timedelta(days=730)
+        while rows[j]["date"] < lo_d:
+            j += 1
+        cand = [x for x in range(j, i + 1) if ndx[x]]
+        b = max(cand, key=lambda x: ndx[x]) if cand else None
+        hi2.append(ndx[b] if b is not None else None); hi2_i.append(b)
+
+    def dd_at(i):
+        return ndx[i] / hi2[i] - 1 if ndx[i] and hi2[i] else 0.0
 
     def in_window(i, a, b):
         return a <= rows[i]["date"] <= b
@@ -178,11 +186,13 @@ def analyse(dates, series, cfg, proxies, sample):
             i0 = hit[0] if hit else None
             lv.append({"level": f"L{k+1}", "date": rows[i0]["date"].isoformat() if i0 is not None else None,
                        "daysFromPeak": (rows[i0]["date"] - rows[pk]["date"]).days if i0 is not None else None,
-                       "daysActive": sum(conf[k][i] for i in idx)})
+                       "daysActive": sum(act[k][i] for i in idx), "daysConfirmed": sum(conf[k][i] for i in idx)})
+        sh = [i for i in idx if shock[i]]
         episodes.append({"name": name, "description": desc, "from": a.isoformat(), "to": b.isoformat(),
                          "ndxPeak": rows[pk]["date"].isoformat(), "ndxTrough": rows[tr]["date"].isoformat(),
                          "ndxDrawdown": dd, "maxScore": rows[ms]["score"] if ms is not None else None,
                          "maxScoreDate": rows[ms]["date"].isoformat() if ms is not None else None,
+                         "shockDate": rows[sh[0]]["date"].isoformat() if sh else None, "shockDays": len(sh),
                          "levels": lv, "proxyUsed": sorted({p["col"] for p in proxies
                                                      if p.get("until") and p["from"] <= b.isoformat() and p["until"] > a.isoformat()})})
         wt = {f["col"]: f["weight"] for f in cfg["factors"]}
@@ -208,7 +218,7 @@ def analyse(dates, series, cfg, proxies, sample):
         if r["score"] is None:
             continue
         wk = r["date"] + dt.timedelta(days=4 - r["date"].weekday())
-        lvl = max([k + 1 for k in range(4) if conf[k][i]], default=0)
+        lvl = max([k + 1 for k in range(4) if act[k][i]], default=0)
         w = weekly.setdefault(wk, {"date": wk.isoformat(), "score": 0, "level": 0})
         w["score"] = max(w["score"], r["score"]); w["level"] = max(w["level"], lvl)
     timeline = [weekly[k] for k in sorted(weekly)]
@@ -262,14 +272,6 @@ def analyse(dates, series, cfg, proxies, sample):
             outcomes.append({"level": f"L{k+1}", "date": d0.isoformat(), "fwdWorst": worst, "kind": kind,
                              "complete": i + HORIZON < n})
     # ---- missed declines: Nasdaq-100 bear markets (20%+ below its 2-year high) with no alert
-    first_i = next((i for i, r in enumerate(rows) if r["score"] is not None), n)
-    hi2 = []
-    for i in range(n):
-        lo_d = rows[i]["date"] - dt.timedelta(days=730)
-        j = i
-        while j > 0 and rows[j - 1]["date"] >= lo_d:
-            j -= 1
-        hi2.append(max(v for v in ndx[j:i + 1] if v) if any(ndx[j:i + 1]) else None)
     spans, cur = [], None
     for i in range(first_i, n):
         dd = ndx[i] / hi2[i] - 1 if ndx[i] and hi2[i] else 0
@@ -282,12 +284,82 @@ def analyse(dates, series, cfg, proxies, sample):
     for a, b in spans:
         tr = min(range(a, b + 1), key=lambda i: ndx[i] / hi2[i])
         look = [i for i in range(max(first_i, a - 60), b + 1) if conf[0][i]]
+        sh = [i for i in range(max(first_i, a - 60), b + 1) if shock[i]]
         declines.append({"from": rows[a]["date"].isoformat(), "to": rows[b]["date"].isoformat(),
                          "worst": ndx[tr] / hi2[tr] - 1, "alerted": bool(look),
-                         "firstAlert": rows[look[0]]["date"].isoformat() if look else None})
+                         "firstAlert": rows[look[0]]["date"].isoformat() if look else None,
+                         "firstShock": rows[sh[0]]["date"].isoformat() if sh else None})
+
+    # ---- alert episodes: one uniform test for every alert, wherever it falls in time.
+    # Days with any level active are merged into one alert episode when gaps are <= MERGE trading days,
+    # so a cluster of back-to-back streaks counts once. Each episode is then judged on the Nasdaq-100:
+    #   early warning  - a further fall of 10%+ within ~6 months of the alert's first day
+    #   confirmation   - no further 10% fall, but it began with the Nasdaq-100 already 20%+ below its 2-year high
+    #   false alarm    - neither
+    MERGE, BEAR = 20, -0.20
+
+    def spans_of(flag):
+        out, cur = [], None
+        for i in range(first_i, n):
+            if not flag(i):
+                continue
+            if cur and i - cur[1] <= MERGE + 1:
+                cur[1] = i
+            else:
+                cur = [i, i]; out.append(cur)
+        return out
+
+    def judge(a, b, extra):
+        p0 = ndx[a]
+        fwd = [ndx[j] for j in range(a, min(n, a + HORIZON + 1)) if ndx[j]]
+        worst = min(fwd) / p0 - 1 if fwd and p0 else 0.0
+        dd0 = dd_at(a)
+        verdict = "early" if worst <= FALL else "confirm" if dd0 <= BEAR else "false"
+        pk = hi2_i[a]
+        return {"start": rows[a]["date"].isoformat(), "end": rows[b]["date"].isoformat(),
+                "tradingDays": b - a + 1, "ndxFromHighAtStart": dd0,
+                "ndxPeak": rows[pk]["date"].isoformat() if pk is not None else None,
+                "daysFromPeak": (rows[a]["date"] - rows[pk]["date"]).days if pk is not None else None,
+                "fwdWorst": worst, "verdict": verdict, "complete": a + HORIZON < n,
+                "inWindow": next((nm for nm, x, y, _ in EPISODES if x <= rows[a]["date"].isoformat() <= y), None), **extra}
+
+    alert_eps = []
+    for a, b in spans_of(lambda i: any(act[k][i] for k in range(4))):
+        hit = [k for k in range(4) if any(act[k][i] for i in range(a, b + 1))]
+        firsts = {f"L{k+1}": rows[next(i for i in range(a, b + 1) if act[k][i])]["date"].isoformat() for k in hit}
+        alert_eps.append(judge(a, b, {"maxLevel": max(hit) + 1, "levels": firsts}))
+    shock_eps = []
+    for a, b in spans_of(lambda i: shock[i]):
+        shock_eps.append(judge(a, b, {"maxScore": max(rows[i]["score"] or 0 for i in range(a, b + 1))}))
+
+    # ---- levels are independent tripwires: where did they fire out of order or skip a level?
+    ladder = []
+    for e in episodes:
+        ds = [l["date"] for l in e["levels"]]
+        for hi_k in range(1, 4):
+            if not ds[hi_k]:
+                continue
+            for lo_k in range(hi_k):
+                if not ds[lo_k]:
+                    ladder.append({"episode": e["name"], "kind": "skipped", "fired": f"L{hi_k+1}", "missing": f"L{lo_k+1}"})
+                elif ds[lo_k] > ds[hi_k]:
+                    ladder.append({"episode": e["name"], "kind": "order", "fired": f"L{hi_k+1}", "before": f"L{lo_k+1}",
+                                   "firedDate": ds[hi_k], "laterDate": ds[lo_k]})
+
+    # ---- in-sample vs out-of-sample: rules were shaped on this history up to the freeze date
+    frozen = (cfg.get("model") or {}).get("outOfSampleFrom")
+    oos = {"from": frozen,
+           "alerts": [x for x in alert_eps if frozen and x["start"] >= frozen],
+           "shocks": [x for x in shock_eps if frozen and x["start"] >= frozen]}
+
+    # ---- spreads: before the ICE series begin, all spread gauges share one stand-in (Moody's Baa)
+    sp = [p for p in proxies if p["symbol"] == SPREAD_PROXY[0] and p.get("until")]
+    spread_standin = {"cols": sorted({p["col"] for p in sp}), "label": SPREAD_PROXY[1],
+                      "until": min(p["until"] for p in sp) if sp else None,
+                      "weight": sum(f["weight"] for f in cfg["factors"] if f["col"] in {p["col"] for p in sp}) / sum(f["weight"] for f in cfg["factors"])}
 
     scored = [r for r in rows if r["score"] is not None]
-    days_by_level = [sum(conf[k]) for k in range(4)]
+    days_by_level = [sum(act[k]) for k in range(4)]
     return {
         "generatedAt": dt.datetime.now(dt.timezone.utc).isoformat(timespec="minutes"),
         "sample": sample, "dataStart": dates[0].isoformat(), "dataEnd": dates[-1].isoformat(),
@@ -298,6 +370,11 @@ def analyse(dates, series, cfg, proxies, sample):
         "timeline": timeline, "correlation": correlation, "pillarCorrelation": pc,
         "rules": {"lookbackDays": cfg["lookbackDays"], "widenDays": cfg["widenDays"]},
         "outcomeRule": {"horizonDays": HORIZON, "fall": FALL},
+        "alertEpisodes": alert_eps, "shockEpisodes": shock_eps,
+        "episodeRule": {"mergeDays": MERGE, "horizonDays": HORIZON, "fall": FALL, "bear": BEAR,
+                        "exitRebound": engine.RECOVERY, "shockScore": engine.SHOCK_SCORE},
+        "ladderBreaks": ladder, "outOfSample": oos, "spreadStandIn": spread_standin,
+        "inSample": True,
         "alertOutcomes": outcomes, "nasdaqDeclines": declines,
         "latestScore": rows[-1]["score"],
     }
@@ -325,22 +402,14 @@ def main():
                              for e in r["episodes"]]}
     out["comparison"] = [summary("Current weights", cfg, out), summary("Lower-redundancy weights", alt_cfg, alt)]
 
-    def scaled(k):
-        c2 = json.loads(json.dumps(cfg))
-        for f in c2["factors"]:
-            if f["type"] == "DD":           # price thresholds: k < 1 means alarms at smaller falls
-                f["calm"] *= k; f["trigger"] *= k
-            else:                           # spread thresholds and widening steps
-                f["calm"] *= (1 + (k - 1) / 2); f["trigger"] *= (1 + (k - 1) / 2)
-                f["wcalm"] *= k; f["wtrig"] *= k
-        return c2
     sens = []
     for label, k in (("Thresholds 20% tighter", 0.8), ("Current thresholds", 1.0), ("Thresholds 20% looser", 1.2)):
-        r = out if k == 1.0 else analyse(dates, series, scaled(k), proxies, sample)
+        r = out if k == 1.0 else analyse(dates, series, engine.scaled_cfg(cfg, k), proxies, sample)
         sens.append({"name": label, "latestScore": r["latestScore"],
                      "l4Episodes": [e["name"] for e in r["episodes"] if e["levels"][3]["date"]],
                      "outsideByLevel": [sum(1 for x in r["outsideEpisodes"] if x["level"] == f"L{j+1}") for j in range(4)],
-                     "streaksByLevel": r["streaksByLevel"]})
+                     "streaksByLevel": r["streaksByLevel"],
+                     "alertVerdicts": {v: sum(1 for x in r["alertEpisodes"] if x["verdict"] == v) for v in ("early", "confirm", "false")}})
     out["sensitivity"] = sens
     out["notes"] = engine.FETCH_NOTES
     out["model"] = cfg.get("model")
@@ -354,6 +423,13 @@ def main():
     oc = out["alertOutcomes"]
     print("outcomes:", {k: sum(1 for o in oc if o["kind"] == k) for k in ("during", "followed", "false")},
           "declines:", [(x["from"], round(x["worst"], 2), x["alerted"]) for x in out["nasdaqDeclines"]])
+    ae = out["alertEpisodes"]
+    print("alert episodes:", {v: sum(1 for x in ae if x["verdict"] == v) for v in ("early", "confirm", "false")})
+    for x in ae:
+        print(f"  {x['start']} -> {x['end']} max L{x['maxLevel']} dd {x['ndxFromHighAtStart']:.0%} fwd {x['fwdWorst']:.0%} {x['verdict']} {x['inWindow'] or ''}")
+    print("shock episodes:", [(x["start"], x["maxScore"], x["verdict"]) for x in out["shockEpisodes"]])
+    print("ladder breaks:", out["ladderBreaks"])
+    print("spread stand-in:", out["spreadStandIn"])
     for v in out["comparison"]:
         print(f"[{v['name']}] streaks {v['streaksByLevel']} outside {v['outsideByLevel']}")
         for e in v["episodes"]:

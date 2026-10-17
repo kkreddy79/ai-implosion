@@ -204,7 +204,9 @@ dash[f"B{NR}"] = ("How it works: Prices: drawdown = dividend-adjusted close ÷ h
                "Score = weighted stress × 100. "
                "Levels need 5 straight trading days: L1 Score≥50 · L2 Score≥60 + (BIZD≥80% + BKLN≥50%, or CCC≥80%) · "
                "L3 Score≥70 + SOX≥83% + AIQ≥80% · L4 Score≥75 + NDX=100% + (HY≥500bp or BIZD=100%). "
-               "Implosion date = first day of the first L4 streak. Blue cells are editable.")
+               "Implosion date = first day of the first L4 streak. "
+               f"Levels are independent tripwires; an active level pauses once the Nasdaq-100 rebounds {engine.RECOVERY:.0%} from its low since the level began. "
+               f"Shock flag: Score≥{engine.SHOCK_SCORE} with no level active. Blue cells are editable.")
 dash[f"B{NR}"].font = font(size=9, italic=True, color="475569"); dash[f"B{NR}"].alignment = Alignment(wrap_text=True, vertical="top")
 dash.row_dimensions[NR].height = 36; dash.row_dimensions[NR + 1].height = 36
 
@@ -222,11 +224,17 @@ trk["B10"] = "LEVELS"; trk["B10"].font = font(bold=True, size=11, color=SLATE)
 for j, h in enumerate(["Level", "Name", "First date (5-day start)", "Active now"]):
     c = trk.cell(11, 2 + j, h); c.font = font(bold=True, color="FFFFFF"); c.fill = fill(SLATE); c.border = box
 names = ["Warning", "Financing Stress", "Bubble Unwind", "AI Implosion"]
+REB = engine.RECOVERY
 for i in range(4):
     rr = 12 + i; L = f"L{i+1}"
+    held = f'COUNTIFS({col("Date")},">="&LARGE({col("Date")},5),{col(L)},1)=5'
+    # current run start = the day after the last day this level's conditions failed (or the first row)
+    run0 = f'IF(COUNTIF({col(L)},0),_xlfn.MAXIFS({col("Date")},{col(L)},0)+1,MIN({col("Date")}))'
+    low = f'_xlfn.MINIFS({col(COLS[0])},{col("Date")},">="&{run0})'
+    rebound = f'INDEX({col(COLS[0])},MATCH(C4,{col("Date")},0))/{low}-1'
     vals = [L, names[i],
             f'=IF(COUNTIF({col(L+"S")},1),_xlfn.MINIFS({col("Date")},{col(L+"S")},1),"")',
-            f'=IF(COUNTIFS({col("Date")},">="&LARGE({col("Date")},5),{col(L)},1)=5,"YES","NO")']
+            f'=IF({held},IF(IFERROR({rebound},0)>={REB},"PAUSED (rebound)","YES"),"NO")']
     for j, v in enumerate(vals):
         c = trk.cell(rr, 2 + j, v); c.font = font(); c.border = box
     trk.cell(rr, 4).number_format = "dd-mmm-yyyy"
@@ -234,6 +242,12 @@ trk["B17"] = "Current level"; trk["B17"].font = font(bold=True)
 trk["C17"] = '=IF(E15="YES","L4 AI Implosion",IF(E14="YES","L3 Bubble Unwind",IF(E13="YES","L2 Financing Stress",IF(E12="YES","L1 Warning","None"))))'
 trk["B18"] = "AI Implosion date"; trk["B18"].font = font(bold=True, color=RED)
 trk["C18"] = "=D15"; trk["C18"].number_format = "dd-mmm-yyyy"; trk["C18"].font = font(bold=True, color=RED)
+trk["B19"] = "Shock flag"; trk["B19"].font = font(bold=True)
+trk["C19"] = f'=IF(AND(N(C5)>={engine.SHOCK_SCORE},C17="None"),"ON","off")'
+trk["B20"] = (f"Levels are independent tripwires, not a ladder. An active level pauses once the Nasdaq-100 is {REB:.0%} above its "
+              f"lowest close since that level's run began; start dates never move. Shock flag = score ≥ {engine.SHOCK_SCORE} with no level active (not a level).")
+trk["B20"].font = font(italic=True, size=9, color="64748B")
+trk.merge_cells("B20:F22"); trk["B20"].alignment = Alignment(wrap_text=True, vertical="top")
 
 # ---------------- CHARTDATA ----------------
 cd["A1"] = "Factor"; cd["B1"] = "Stress"

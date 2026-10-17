@@ -45,8 +45,17 @@ The spreads need a free FRED API key saved as the repository secret `FRED_API_KE
 - Levels must hold for 5 straight trading days:
   L1 Score ≥ 50 · L2 Score ≥ 60 and (BIZD ≥ 0.8 with BKLN ≥ 0.5, or CCC ≥ 0.8) · L3 Score ≥ 70, SOX ≥ 0.83, AIQ ≥ 0.8 ·
   L4 Score ≥ 75, NDX = 1, (HY ≥ 500bp or BIZD = 1).
+- Levels are independent tripwires, not a ladder (L4 can fire before L3; L2 can be skipped). L1–L2 are the early warnings, L3–L4 late confirmations.
+- Exit rule (v1.4): an active level pauses once the Nasdaq-100 is 20% above its lowest close since that level's streak began.
+  At a streak's start the rebound is 0%, so start dates, including the Implosion date, never move.
+- Shock flag (v1.4, not a level): score ≥ 60 on a day with no active level. Catches fast sell-offs (April 2025) that never hold 5 days.
+- Score range: `data.json` → `scoreRange` is today's score with every threshold 20% tighter / looser.
 - An indicator that hasn't updated for more than 3 trading days is flagged as stale on the page.
 - Concentrated stress: the page calls out any indicator at ≥ 75% stress while no level is active.
+- Backtest honesty: thresholds were shaped on the replayed history, so results are in-sample. `config.json` → `model.outOfSampleFrom`
+  starts the out-of-sample record; alerts after it are the real test. Every alert episode (streaks merged when < 20 trading days apart)
+  is judged by one rule: early warning (Nasdaq-100 falls 10%+ more within ~6 months), late confirmation (began 20%+ below the 2-year high)
+  or false alarm. Before 2023-10-16 the three spread gauges share one stand-in (Moody's Baa), so they act as one signal.
 - Weights were checked against a lower-redundancy alternative in the backtest (same implosions caught, but more false alarms), so the current weights stay.
 - Implosion date = first day of the first L4 streak.
 

@@ -49,6 +49,11 @@ td small.dq { display:inline-block; font-weight:800; border-radius:6px; padding:
 .prose { font-size:14.5px; line-height:1.65; color:#3f3f46; max-width:860px; }
 .prose li { margin:4px 0; }
 .button { display:inline-flex; padding:11px 18px; border-radius:999px; background:#35205f; color:#fff; font-weight:800; font-size:14px; text-decoration:none; }
+.honest { background:#FFFBEB; border:1px solid #FDE68A; border-radius:14px; padding:6px 20px 10px; margin-top:18px; }
+.honest h2 { margin-top:16px; }
+.honest li { margin:8px 0; }
+.insample { margin:12px 0 0; display:inline-block; background:#FEF3C7; color:#92400E; border:1px solid #FDE68A; border-radius:8px; padding:8px 12px; font-weight:700; font-size:14px; }
+.vEarly { color:var(--green); font-weight:800; } .vConfirm { color:var(--orange); font-weight:800; } .vFalse { color:var(--red); font-weight:800; }
 footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
 .err { padding:40px 0; color:var(--red); font-weight:700; }
 @media (max-width:900px) { .kpis { grid-template-columns:1fr 1fr; } }
@@ -88,7 +93,7 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
       '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Weekly peak stress score over time with confirmed levels">' + bands + grid + years +
       '<path d="' + path + '" fill="none" stroke="#1E293B" stroke-width="1.4" stroke-linejoin="round"/>' + lv + '</svg>' +
       '<div class="legend"><span><i style="background:#6366F1;opacity:.25"></i>Known sell-off windows</span>' +
-      LN.map(function (n, k) { return '<span><i style="background:' + LC[k] + '"></i>' + n + ' confirmed</span>'; }).join("") + '</div></div>';
+      LN.map(function (n, k) { return '<span><i style="background:' + LC[k] + '"></i>' + n + ' active</span>'; }).join("") + '</div></div>';
   }
 
   function episodes(d) {
@@ -102,7 +107,7 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
       var dq = e.dataQuality ? '<small class="dq dq' + e.dataQuality.split(" ")[0] + '">' + esc(e.dataQuality) + (e.standInShare ? ' (' + pct(e.standInShare) + ' of weight)' : '') + '</small>' : '';
       return '<tr><td class="ep">' + esc(e.name) + dq + '<small>' + esc(e.description) + '</small>' + prox + '</td>' +
         '<td>' + pct(e.ndxDrawdown) + '<small>' + fd(e.ndxPeak) + ' → ' + fd(e.ndxTrough) + '</small></td>' +
-        '<td>' + (e.maxScore == null ? "—" : '<b>' + e.maxScore + '</b>') + '<small>' + fd(e.maxScoreDate) + '</small></td>' + cells + '</tr>';
+        '<td>' + (e.maxScore == null ? "—" : '<b>' + e.maxScore + '</b>') + '<small>' + fd(e.maxScoreDate) + '</small>' + (e.shockDate ? '<small>shock flag ' + fd(e.shockDate) + '</small>' : '') + '</td>' + cells + '</tr>';
     }).join("");
     return '<div class="panel"><table><thead><tr><th>Episode</th><th>Nasdaq-100 fall</th><th>Peak score</th><th>L1</th><th>L2</th><th>L3</th><th>L4</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
@@ -161,24 +166,112 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
     return 'the two weightings flag different implosions; the current weights stay until that is reviewed.';
   }
 
+
+  function months(days) { if (days == null) return "—"; var a = Math.abs(days), t = a < 45 ? a + " days" : Math.round(a / 30.4) + " months"; return days < 0 ? t + " before the peak" : t + " after it"; }
+  var VERDICT = { early: ["Early warning", "vEarly"], confirm: ["Late confirmation", "vConfirm"], "false": ["False alarm", "vFalse"] };
+
+  function honest(d) {
+    var out = [];
+    var oos = d.outOfSample || {};
+    out.push('<li><b>The thresholds were tuned on this same history.</b> They were shaped by these very episodes, not chosen blind and then validated, so this page shows the rules <i>fit</i> past crises, not that they would have <i>predicted</i> them.' +
+      (oos.from ? ' The only true test is what happens next: the out-of-sample record starts ' + fd(oos.from) + ' and so far holds ' + (oos.alerts || []).length + ' alert' + ((oos.alerts || []).length === 1 ? '' : 's') + ' and ' + (oos.shocks || []).length + ' shock flag' + ((oos.shocks || []).length === 1 ? '' : 's') + '.' : '') + '</li>');
+    var missed = (d.nasdaqDeclines || []).filter(function (x) { return !x.alerted; });
+    missed.forEach(function (m) {
+      var ep = d.episodes.filter(function (e) { return e.from <= m.from && m.from <= e.to; })[0];
+      out.push('<li><b>It missed ' + (ep ? esc(ep.name) : 'the ' + fd(m.from) + ' fall') + '.</b> The Nasdaq-100 fell ' + pct(-m.worst) + (ep && ep.maxScore != null ? ' and the score hit ' + ep.maxScore : '') +
+        ', yet no level confirmed' + (ep && ep.maxScore != null ? (ep.maxScore >= 50 ? ': the score never held 50+ for 5 straight trading days' : ': the score stayed below the first alert level of 50') : '') + '. This system is built to detect credit-driven stress, not fast equity drawdowns.' +
+        (m.firstShock ? ' The new <b>shock flag</b> (score ≥ ' + ((d.episodeRule || {}).shockScore || 60) + ' with no level active, not an alert) would have fired on ' + fd(m.firstShock) + '.' : '') + '</li>');
+    });
+    var late = d.episodes.filter(function (e) { return e.levels[2].date || e.levels[3].date; }).map(function (e) {
+      var hi = [e.levels[2], e.levels[3]].filter(function (l) { return l.date; }).map(function (l) { return l.daysFromPeak; });
+      var l1 = e.levels[0].daysFromPeak;
+      return esc(e.name) + ': L1 ' + months(l1) + ', first L3/L4 ' + months(Math.min.apply(null, hi));
+    });
+    if (late.length) out.push('<li><b>The loudest alerts are late.</b> L3 and L4 are confirmations of damage already under way, not early warnings; the quieter L1 is the early signal. Timing against the Nasdaq-100 peak: ' + late.join('; ') + '.</li>');
+    var lb = d.ladderBreaks || [];
+    if (lb.length) {
+      var txt = lb.map(function (x) { return esc(x.episode) + ': ' + (x.kind === "order" ? x.fired + ' fired before ' + x.before + ' (' + fd(x.firedDate) + ' vs ' + fd(x.laterDate) + ')' : x.fired + ' fired without ' + x.missing); });
+      out.push('<li><b>The levels don’t escalate.</b> Each is an independent tripwire with its own conditions, so don’t read them as a staircase. ' + txt.join('; ') + '.</li>');
+    }
+    var ae = d.alertEpisodes || [];
+    if (ae.length) {
+      var c = function (v) { return ae.filter(function (x) { return x.verdict === v; }).length; };
+      var falses = ae.filter(function (x) { return x.verdict === "false"; }).map(function (x) { return fd(x.start); });
+      var oc = d.alertOutcomes || [], ocF = oc.filter(function (o) { return o.kind === "false"; }).length;
+      var gfc = d.episodes.filter(function (e) { return (e.standInShare || 0) > 0.35; }).map(function (e) { return esc(e.name) + ' (' + pct(e.standInShare) + ')'; });
+      out.push('<li><b>False alarms happen.</b> Merging back-to-back streaks into ' + ae.length + ' alert episodes and judging each by the same rule: ' + c("early") + ' gave early warning, ' + c("confirm") + ' only confirmed a bear market already under way, and <b>' + c("false") + ' led nowhere</b>' + (falses.length ? ' (' + falses.join(', ') + ')' : '') + '.' +
+        (oc.length ? ' Counted streak by streak, ' + ocF + ' of ' + oc.length + ' streak starts were false alarms.' : '') +
+        (gfc.length ? ' Several headline episodes run mostly on stand-in data: ' + gfc.join(', ') + ' of the weight, so treat their precision as illustrative, not proven.' : '') + '</li>');
+    }
+    var sv = d.sensitivity || [];
+    if (sv.length === 3) {
+      var cur = sv[1], tight = sv[0], loose = sv[2];
+      var gained = tight.l4Episodes.filter(function (x) { return cur.l4Episodes.indexOf(x) < 0; });
+      var lost = cur.l4Episodes.filter(function (x) { return loose.l4Episodes.indexOf(x) < 0; });
+      out.push('<li><b>Thresholds move the story.</b> Tightening every threshold 20% ' + (gained.length ? 'turns ' + esc(gained.join(', ')) + ' into L4 episodes and ' : '') + 'moves today’s reading from ' + cur.latestScore + ' to ' + tight.latestScore +
+        '; loosening them 20% ' + (lost.length ? 'drops ' + esc(lost.join(', ')) + ' from the L4 list and ' : '') + 'takes today to ' + loose.latestScore + '. Small choices, big narrative swings.</li>');
+    }
+    var ss = d.spreadStandIn;
+    if (ss && ss.until && ss.cols.length) out.push('<li><b>Before ' + fd(ss.until) + ', the ' + ss.cols.length + ' credit-spread gauges are one signal.</b> ' + esc(ss.cols.join(', ')) + ' all use the same stand-in (Moody’s Baa spread), scaled to join each series, so ' + pct(ss.weight) + ' of the weight counts one investment-grade measure three times, and the CCC and high-yield conditions in L2 and L4 run on it too.</li>');
+    if (d.episodeRule) out.push('<li><b>Alerts now stand down in recoveries.</b> An active level pauses once the Nasdaq-100 is ' + pct(d.episodeRule.exitRebound) + ' above its lowest close since that alert began. Before this rule, L4 stayed on for months after the 2002 and 2009 bottoms. Start dates are unaffected.</li>');
+    return '<section class="honest"><h2>How to read this backtest — honestly</h2><ul class="prose">' + out.join("") + '</ul></section>';
+  }
+
+  function alertTable(d) {
+    var ae = d.alertEpisodes;
+    if (!ae || !ae.length) return "";
+    var r = d.episodeRule;
+    return '<h2>Every alert, judged the same way</h2><p class="prose">Days with any level active, merged when less than ' + r.mergeDays + ' trading days apart. <span class="vEarly">Early warning</span>: the Nasdaq-100 fell a further ' + pct(-r.fall) + '+ within about 6 months (' + r.horizonDays + ' trading days). <span class="vConfirm">Late confirmation</span>: no further fall, but it began with the Nasdaq-100 already ' + pct(-r.bear) + '+ below its 2-year high. <span class="vFalse">False alarm</span>: neither. The same test applies inside and outside the named sell-off windows.</p>' +
+      '<div class="panel"><table><thead><tr><th>Alert episode</th><th>Highest level</th><th>Nasdaq-100 at start</th><th>Days after the 2-yr high</th><th>Worst next 6 months</th><th>Verdict</th></tr></thead><tbody>' +
+      ae.map(function (x) {
+        var v = VERDICT[x.verdict];
+        return '<tr><td>' + fd(x.start) + ' → ' + fd(x.end) + '<small>' + (x.inWindow ? esc(x.inWindow) : 'outside the named windows') + ' · ' + x.tradingDays + ' trading days</small></td>' +
+          '<td class="hit L' + x.maxLevel + '">' + LN[x.maxLevel - 1] + '</td><td>' + pct(x.ndxFromHighAtStart) + '</td><td>' + (x.daysFromPeak == null ? "—" : x.daysFromPeak) + '</td><td>' + pct(x.fwdWorst) + (x.complete ? '' : '<small>window not complete</small>') + '</td><td class="' + v[1] + '">' + v[0] + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
+  }
+
+  function shockTable(d) {
+    var se = d.shockEpisodes;
+    if (!se) return "";
+    var r = d.episodeRule;
+    return '<h2>Shock flags</h2><p class="prose">Days when the score reached ' + r.shockScore + '+ while no level was active, merged the same way. Not an alert level: a heads-up for fast sell-offs that never hold long enough to confirm one, and for re-flares while an alert is paused.</p>' +
+      (se.length ? '<div class="panel"><table><thead><tr><th>Shock</th><th>Peak score</th><th>Nasdaq-100 at start</th><th>Worst next 6 months</th><th>Verdict</th></tr></thead><tbody>' +
+      se.map(function (x) { var v = VERDICT[x.verdict]; return '<tr><td>' + fd(x.start) + ' → ' + fd(x.end) + '<small>' + (x.inWindow ? esc(x.inWindow) : 'outside the named windows') + '</small></td><td>' + x.maxScore + '</td><td>' + pct(x.ndxFromHighAtStart) + '</td><td>' + pct(x.fwdWorst) + '</td><td class="' + v[1] + '">' + v[0] + '</td></tr>'; }).join("") +
+      '</tbody></table></div>' : '<p class="prose">None.</p>');
+  }
+
+  function oosBlock(d) {
+    var o = d.outOfSample;
+    if (!o || !o.from) return "";
+    var items = (o.alerts || []).map(function (x) { return '<li>' + fd(x.start) + ': ' + LN[x.maxLevel - 1] + ' — ' + VERDICT[x.verdict][0] + (x.complete ? '' : ' (still being judged)') + '</li>'; })
+      .concat((o.shocks || []).map(function (x) { return '<li>' + fd(x.start) + ': shock flag, peak ' + x.maxScore + '</li>'; }));
+    return '<h2>Out-of-sample record</h2><p class="prose">Everything above is in-sample. From ' + fd(o.from) + ' the alert rules are frozen, so every alert after that date is a genuine test.</p>' +
+      (items.length ? '<ul class="prose">' + items.join("") + '</ul>' : '<p class="prose"><b>No alerts or shock flags yet.</b></p>');
+  }
+
   function render(d) {
     var hitL4 = d.episodes.filter(function (e) { return e.levels[3].date; }).map(function (e) { return e.name; });
     var falseL4 = d.outsideEpisodes.filter(function (x) { return x.level === "L4"; }).length;
     var pc = d.pillarCorrelation;
+    var ae = function (v) { return (d.alertEpisodes || []).filter(function (x) { return x.verdict === v; }).length; };
     document.getElementById("app").innerHTML =
       '<div class="eyebrow">AI Implosion Dashboard · backtest</div><h1>How the rules did in past crashes</h1>' +
       '<p class="lede">The live rules replayed on daily market data from ' + fd(d.dataStart) + ' to ' + fd(d.dataEnd) +
       '. Scoring starts ' + fd(d.firstScored) + ', after a 2-year warm-up for the rolling highs.</p>' +
+      '<p class="insample">In-sample: the thresholds were shaped on this same history, so this shows fit, not forecasting power.</p> ' +
       (d.sample ? '<p class="note">Synthetic test data — not real market history.</p>' : "") +
       (d.notes || []).map(function (n) { return '<p class="note">' + esc(n) + '</p>'; }).join("") +
       '<section class="kpis">' +
         '<div class="card"><div class="label">L4 fired in</div><div class="value">' + hitL4.length + ' of ' + d.episodes.length + '</div><p class="sub">' + (hitL4.length ? esc(hitL4.join(", ")) : "no episode") + '</p></div>' +
-        '<div class="card"><div class="label">L4 outside episodes</div><div class="value">' + falseL4 + '</div><p class="sub">confirmed L4 streaks outside the known sell-off windows</p></div>' +
+        (d.alertEpisodes ? '<div class="card"><div class="label">Alert episodes</div><div class="value" style="font-size:20px"><span class="vEarly">' + ae("early") + '</span> · <span class="vConfirm">' + ae("confirm") + '</span> · <span class="vFalse">' + ae("false") + '</span></div><p class="sub">early warning · late confirmation · false alarm, one rule for all ' + d.alertEpisodes.length + '</p></div>'
+          : '<div class="card"><div class="label">L4 outside episodes</div><div class="value">' + falseL4 + '</div><p class="sub">confirmed L4 streaks outside the known sell-off windows</p></div>') +
         '<div class="card"><div class="label">Streaks by level</div><div class="value" style="font-size:20px">' + d.streaksByLevel.join(" · ") + '</div><p class="sub">L1 · L2 · L3 · L4, each lasting ≥ 5 trading days · ' + d.daysByLevel.join(" / ") + ' trading days at each level since ' + d.firstScored.slice(0, 4) + '</p></div>' +
         '<div class="card"><div class="label">Pillars move together</div><div class="value" style="font-size:20px">' + [pc["eq-fin"], pc["eq-cr"], pc["fin-cr"]].map(function (v) { return v == null ? "—" : v.toFixed(2); }).join(" · ") + '</div><p class="sub">correlation of Equity–Financing · Equity–Credit · Financing–Credit</p></div>' +
       '</section>' +
+      honest(d) +
       timeline(d) +
       '<h2>Episode by episode</h2><p class="prose">First confirmed date for each level inside each sell-off window, and how long after the Nasdaq-100 peak it came. A dash means the level never confirmed.</p>' + episodes(d) +
+      alertTable(d) + shockTable(d) + oosBlock(d) +
       '<h2>Alarms outside the known sell-offs</h2><p class="prose">Confirmed levels that started outside the windows above. Some are real stress the list doesn’t name; the rest are false alarms.</p>' + outside(d) +
       comparison(d) +
       '<h2>Do the indicators double-count?</h2><p class="prose">Correlation of daily stress between indicators (1 = always move together), measured only over days when both are real data, not stand-ins. High values inside a pillar mean those weights effectively count one risk more than once.</p>' + heat(d) +
@@ -189,7 +282,8 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
           d.proxies.filter(function (p) { return p.until; }).map(function (p) { return '<b>' + esc(p.col) + '</b> ← ' + esc(p.label) + ' (' + fd(p.from) + ' to ' + fd(p.until) + ')'; }).join("; ") +
           '. Before any stand-in exists, that indicator is left out and the weights are re-balanced.</li>' +
         '<li>Every episode before late 2023 relies partly on stand-ins, and the credit-spread stand-in is the broadest one: Baa spreads move with, but less than, high-yield and CCC spreads. Treat older results as indicative, not exact.</li>' +
-        '<li>Episode windows are set by hand around well-known sell-offs; their start and end dates are approximate.</li>' +
+        '<li>Episode windows are set by hand around well-known sell-offs; their start and end dates are approximate. The alert-episode verdicts above do not use them.</li>' +
+        '<li>Levels are independent tripwires (L4 can fire before L3). An active level pauses once the Nasdaq-100 rebounds 20% from its low since the level began; first-confirmed dates never move.</li>' +
       '</ul><p><a class="button" href="./">← Back to the live dashboard</a></p></div>' +
       '<footer>Built by KK Reddy · Backtest run ' + esc(d.generatedAt.replace("T", " ").replace("+00:00", " UTC")) + ' · For information only; not financial advice.</footer>';
   }
