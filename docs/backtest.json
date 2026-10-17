@@ -1,5 +1,5 @@
 {
-"generatedAt": "2026-10-17T23:06+00:00",
+"generatedAt": "2026-10-17T23:18+00:00",
 "sample": false,
 "dataStart": "1997-01-02",
 "dataEnd": "2026-10-16",
@@ -66,6 +66,7 @@
 "from": "1996-12-23",
 "until": "2023-10-17",
 "scale": 0.689,
+"medianNow": 0.689,
 "overlapDays": 748
 },
 {
@@ -76,6 +77,7 @@
 "from": "1996-12-23",
 "until": "2023-10-17",
 "scale": 5.383,
+"medianNow": 5.383,
 "overlapDays": 748
 },
 {
@@ -86,6 +88,7 @@
 "from": "1996-12-23",
 "until": "2023-10-17",
 "scale": 1.861,
+"medianNow": 1.861,
 "overlapDays": 748
 }
 ],
@@ -503,57 +506,31 @@
 ],
 "outsideEpisodes": [
 {
-"level": "L3",
-"date": "2003-05-09",
-"days": 37,
-"score": 70
-},
-{
-"level": "L2",
-"date": "2003-07-31",
-"days": 9,
-"score": 64
-},
-{
-"level": "L1",
-"date": "2003-09-24",
-"days": 7,
-"score": 53
-},
-{
-"level": "L2",
-"date": "2009-11-19",
-"days": 8,
-"score": 61
-},
-{
-"level": "L1",
-"date": "2010-01-28",
-"days": 14,
-"score": 52
-},
-{
 "level": "L1",
 "date": "2010-05-20",
 "days": 5,
+"activeDays": 5,
 "score": 56
 },
 {
 "level": "L1",
 "date": "2010-06-04",
 "days": 5,
+"activeDays": 5,
 "score": 55
 },
 {
 "level": "L1",
 "date": "2010-06-24",
 "days": 11,
+"activeDays": 11,
 "score": 50
 },
 {
 "level": "L2",
 "date": "2010-06-29",
 "days": 5,
+"activeDays": 5,
 "score": 61
 }
 ],
@@ -2700,7 +2677,7 @@
 },
 {
 "date": "2007-03-23",
-"score": 7,
+"score": 6,
 "level": 0
 },
 {
@@ -3630,7 +3607,7 @@
 },
 {
 "date": "2010-10-15",
-"score": 34,
+"score": 35,
 "level": 0
 },
 {
@@ -8336,6 +8313,17 @@ null
 "HY"
 ],
 "label": "Moody's Baa corporate spread over 10-year Treasury (BAA10Y)",
+"calibration": "median ratio, 17 Oct 2023 \u2013 16 Oct 2026",
+"scales": {
+"BBB": 0.689,
+"CCC": 5.383,
+"HY": 1.861
+},
+"mediansNow": {
+"BBB": 0.689,
+"CCC": 5.383,
+"HY": 1.861
+},
 "until": "2023-10-17",
 "weight": 0.22
 },
@@ -8718,14 +8706,7 @@ null
 "latestScore": 29,
 "spliceStability": {
 "days": 30,
-"moved": [
-{
-"episode": "Dot-com bust",
-"level": "L4",
-"date": "2000-12-05",
-"shifted": "2000-12-06"
-}
-],
+"moved": [],
 "latestScore": 29
 },
 "comparison": [
@@ -8755,9 +8736,9 @@ null
 375
 ],
 "outsideByLevel": [
-5,
 3,
 1,
+0,
 0
 ],
 "episodes": [
@@ -8997,10 +8978,10 @@ null
 333
 ],
 "outsideByLevel": [
-5,
-4,
+3,
+1,
 0,
-2
+1
 ],
 "episodes": [
 {
@@ -9224,10 +9205,10 @@ null
 "COVID crash"
 ],
 "outsideByLevel": [
-8,
-5,
-1,
-1
+6,
+4,
+0,
+0
 ],
 "streaksByLevel": [
 22,
@@ -9249,9 +9230,9 @@ null
 "Global financial crisis"
 ],
 "outsideByLevel": [
-5,
 3,
 1,
+0,
 0
 ],
 "streaksByLevel": [
@@ -9274,8 +9255,8 @@ null
 "Global financial crisis"
 ],
 "outsideByLevel": [
-3,
-3,
+1,
+0,
 0,
 0
 ],
