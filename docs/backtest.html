@@ -178,7 +178,7 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
     var missed = (d.nasdaqDeclines || []).filter(function (x) { return !x.alerted; });
     missed.forEach(function (m) {
       var ep = d.episodes.filter(function (e) { return e.from <= m.from && m.from <= e.to; })[0];
-      out.push('<li><b>It missed ' + (ep ? esc(ep.name) : 'the ' + fd(m.from) + ' fall') + '.</b> The Nasdaq-100 fell ' + pct(-m.worst) + (ep && ep.maxScore != null ? ' and the score hit ' + ep.maxScore : '') +
+      out.push('<li><b>It missed the ' + (ep ? esc(ep.name) : fd(m.from) + ' fall') + '.</b> The Nasdaq-100 fell ' + pct(-m.worst) + (ep && ep.maxScore != null ? ' and the score hit ' + ep.maxScore : '') +
         ', yet no level confirmed' + (ep && ep.maxScore != null ? (ep.maxScore >= 50 ? ': the score never held 50+ for 5 straight trading days' : ': the score stayed below the first alert level of 50') : '') + '. This system is built to detect credit-driven stress, not fast equity drawdowns.' +
         (m.firstShock ? ' The new <b>shock flag</b> (score ≥ ' + ((d.episodeRule || {}).shockScore || 60) + ' with no level confirmed; not an alert) would have fired on ' + fd(m.firstShock) + '.' : '') + '</li>');
     });
@@ -197,10 +197,8 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
     if (ae.length) {
       var c = function (v) { return ae.filter(function (x) { return x.verdict === v; }).length; };
       var falses = ae.filter(function (x) { return x.verdict === "false"; }).map(function (x) { return fd(x.start); });
-      var oc = d.alertOutcomes || [], ocF = oc.filter(function (o) { return o.kind === "false"; }).length;
       var gfc = d.episodes.filter(function (e) { return (e.standInShare || 0) > 0.35; }).map(function (e) { return esc(e.name) + ' (' + pct(e.standInShare) + ')'; });
       out.push('<li><b>False alarms happen.</b> Merging back-to-back streaks into ' + ae.length + ' alert episodes and judging each by the same rule: ' + c("early") + ' gave early warning, ' + c("confirm") + ' only confirmed a bear market already under way, and <b>' + c("false") + ' led nowhere</b>' + (falses.length ? ' (' + falses.join(', ') + ')' : '') + '.' +
-        (oc.length ? ' Counted streak by streak, ' + ocF + ' of ' + oc.length + ' streak starts were false alarms.' : '') +
         (gfc.length ? ' Several headline episodes run mostly on stand-in data: ' + gfc.join(', ') + ' of the weight, so treat their precision as illustrative, not proven.' : '') + '</li>');
     }
     var sv = d.sensitivity || [];
@@ -208,8 +206,8 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
       var cur = sv[1], tight = sv[0], loose = sv[2];
       var gained = tight.l4Episodes.filter(function (x) { return cur.l4Episodes.indexOf(x) < 0; });
       var lost = cur.l4Episodes.filter(function (x) { return loose.l4Episodes.indexOf(x) < 0; });
-      out.push('<li><b>Thresholds move the story.</b> Tightening every threshold 20% ' + (gained.length ? 'turns ' + esc(gained.join(', ')) + ' into L4 episodes and ' : '') + 'moves today’s reading from ' + cur.latestScore + ' to ' + tight.latestScore +
-        '; loosening them 20% ' + (lost.length ? 'drops ' + esc(lost.join(', ')) + ' from the L4 list and ' : '') + 'takes today to ' + loose.latestScore + '. Small choices, big narrative swings.</li>');
+      out.push('<li><b>Thresholds move the story.</b> Tightening every threshold 20% ' + (gained.length ? 'turns the ' + esc(gained.join(' and the ')) + (gained.length === 1 ? ' into an L4 episode' : ' into L4 episodes') + ' and ' : '') + 'moves today’s reading from ' + cur.latestScore + ' to ' + tight.latestScore +
+        '; loosening them 20% ' + (lost.length ? 'drops the ' + esc(lost.join(' and the ')) + ' from the L4 list and ' : '') + 'takes today to ' + loose.latestScore + '. Small choices, big narrative swings.</li>');
     }
     var ss = d.spreadStandIn;
     if (ss && ss.until && ss.cols.length) out.push('<li><b>Before ' + fd(ss.until) + ', the ' + ss.cols.length + ' credit-spread gauges are one signal.</b> ' + esc(ss.cols.join(', ')) + ' all use the same stand-in (Moody’s Baa spread) times a fixed ratio (' + (ss.calibration ? esc(ss.calibration) : 'median ratio') + '), so ' + pct(ss.weight) + ' of the weight counts one investment-grade measure three times, and the CCC and high-yield conditions in L2 and L4 run on it too. The ratios come from a calm credit period; in crises junk spreads widen proportionally more than Baa, so older spread stress is probably <i>understated</i>.</li>');
