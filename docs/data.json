@@ -9,7 +9,7 @@
  "prevDate": "2026-10-15",
  "prevScore": 23,
  "pillars": {
-  "Equity": 26.83935102060596,
+  "Equity": 26.83931178895353,
   "Financing": 42.86042332459474,
   "Credit": 23.909009373523602
  },
@@ -25,25 +25,33 @@
    "level": "L1",
    "name": "Warning",
    "firstDate": null,
-   "active": false
+   "active": false,
+   "paused": false,
+   "streakStart": null
   },
   {
    "level": "L2",
    "name": "Financing Stress",
    "firstDate": null,
-   "active": false
+   "active": false,
+   "paused": false,
+   "streakStart": null
   },
   {
    "level": "L3",
    "name": "Bubble Unwind",
    "firstDate": null,
-   "active": false
+   "active": false,
+   "paused": false,
+   "streakStart": null
   },
   {
    "level": "L4",
    "name": "AI Implosion",
    "firstDate": null,
-   "active": false
+   "active": false,
+   "paused": false,
+   "streakStart": null
   }
  ],
  "concentrated": [
@@ -53,6 +61,17 @@
    "stress": 0.8742857142857143
   }
  ],
+ "shock": {
+  "active": false,
+  "threshold": 60,
+  "lastDate": null,
+  "daysLastYear": 0
+ },
+ "exitRule": {
+  "rebound": 0.2,
+  "recoveryMode": false,
+  "currentRebound": 0.0
+ },
  "factors": [
   {
    "name": "Nasdaq-100",
@@ -68,22 +87,22 @@
    "lastDate": "2026-10-16",
    "stale": false,
    "ref": 31224.4707,
-   "current": 29187.5488,
-   "move": -0.06523479355568396,
+   "current": 29187.5508,
+   "move": -0.06523472950335718,
    "triggerPrice": 23418.353025,
    "band": null,
-   "levelStress": 0.07617396777841977,
+   "levelStress": 0.07617364751678589,
    "widenStress": null,
-   "stress": 0.07617396777841977,
+   "stress": 0.07617364751678589,
    "status": "WATCH",
    "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
    "descriptor": "Large-cap tech benchmark",
-   "points": 1.3711314200115559,
+   "points": 1.371125655302146,
    "maxPoints": 18.0,
    "plus10": {
     "kind": "price",
-    "drawdown": -0.17634590466679506,
-    "price": 25718.16316666667
+    "drawdown": -0.17634584061446829,
+    "price": 25718.16516666667
    },
    "prevStress": 0.0,
    "spark": [
@@ -293,7 +312,7 @@
     },
     {
      "date": "2026-10-16",
-     "stress": 0.07617396777841977
+     "stress": 0.07617364751678589
     }
    ]
   },
@@ -311,17 +330,17 @@
    "lastDate": "2026-10-16",
    "stale": false,
    "ref": 14634.7197,
-   "current": 11137.2871,
-   "move": -0.23898186447670744,
+   "current": 11137.29,
+   "move": -0.23898166631780438,
    "triggerPrice": 8780.83182,
    "band": null,
-   "levelStress": 0.4632728815890247,
+   "levelStress": 0.46327222105934784,
    "widenStress": null,
-   "stress": 0.4632728815890247,
+   "stress": 0.46327222105934784,
    "status": "WATCH",
    "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
    "descriptor": "Chip stocks",
-   "points": 8.338911868602445,
+   "points": 8.33889997906826,
    "maxPoints": 18.0,
    "plus10": null,
    "prevStress": 0.3621610714325239,
@@ -532,7 +551,7 @@
     },
     {
      "date": "2026-10-16",
-     "stress": 0.4632728815890247
+     "stress": 0.46327222105934784
     }
    ]
   },
@@ -3126,7 +3145,7 @@
    "date": "2026-04-27",
    "equity": 0.0,
    "financing": 0.4444444444444444,
-   "credit": 23.178559202328383,
+   "credit": 23.17985662714401,
    "score": 9
   },
   {
@@ -3280,7 +3299,7 @@
    "date": "2026-05-28",
    "equity": 0.0,
    "financing": 1.9444444444444444,
-   "credit": 24.90024193265883,
+   "credit": 24.90153935747445,
    "score": 10
   },
   {
@@ -3336,7 +3355,7 @@
    "date": "2026-06-09",
    "equity": 4.242164824194562,
    "financing": 2.8333333333333335,
-   "credit": 24.90024193265883,
+   "credit": 24.90153935747445,
    "score": 12
   },
   {
@@ -3964,7 +3983,7 @@
   },
   {
    "date": "2026-10-16",
-   "equity": 26.83935102060596,
+   "equity": 26.83931178895353,
    "financing": 42.86042332459474,
    "credit": 23.909009373523602,
    "score": 29
@@ -4076,11 +4095,16 @@
    "high": 29
   }
  ],
+ "scoreRange": {
+  "tight": 40,
+  "loose": 20,
+  "pct": 0.2
+ },
  "sample": false,
  "editorNote": "",
  "model": {
-  "version": "1.3",
-  "changed": "2026-10-15",
+  "version": "1.4",
+  "changed": "2026-10-17",
   "changelog": [
    {
     "version": "1.0",
@@ -4101,10 +4125,16 @@
     "version": "1.3",
     "date": "2026-10-15",
     "note": "Wording and disclosure updates only; no change to scores."
+   },
+   {
+    "version": "1.4",
+    "date": "2026-10-17",
+    "note": "Exit rule: alerts pause in recovery mode, when the Nasdaq-100 is 20% or more above its lowest close since its 2-year high (start dates, including the implosion date, never move). New shock flag for an index of 60+ before any alert has confirmed. Index shown with its range under thresholds 20% tighter/looser. Backtest now judges every alert by one rule, is labelled in-sample, and keeps an out-of-sample record from 16 Oct 2026. Alert start triggers, thresholds and weights unchanged."
    }
   ],
-  "note": "Every run recalculates the full history under the current version."
+  "note": "Every run recalculates the full history under the current version. Thresholds were shaped on the same history the backtest replays, so the backtest is in-sample; only alerts after the out-of-sample date are a true test.",
+  "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-10-16T22:45+00:00"
+ "generatedAt": "2026-10-17T23:29+00:00"
 }
