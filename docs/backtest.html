@@ -212,7 +212,7 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
         '; loosening them 20% ' + (lost.length ? 'drops ' + esc(lost.join(', ')) + ' from the L4 list and ' : '') + 'takes today to ' + loose.latestScore + '. Small choices, big narrative swings.</li>');
     }
     var ss = d.spreadStandIn;
-    if (ss && ss.until && ss.cols.length) out.push('<li><b>Before ' + fd(ss.until) + ', the ' + ss.cols.length + ' credit-spread gauges are one signal.</b> ' + esc(ss.cols.join(', ')) + ' all use the same stand-in (Moody’s Baa spread), scaled to join each series, so ' + pct(ss.weight) + ' of the weight counts one investment-grade measure three times, and the CCC and high-yield conditions in L2 and L4 run on it too.</li>');
+    if (ss && ss.until && ss.cols.length) out.push('<li><b>Before ' + fd(ss.until) + ', the ' + ss.cols.length + ' credit-spread gauges are one signal.</b> ' + esc(ss.cols.join(', ')) + ' all use the same stand-in (Moody’s Baa spread) times a fixed ratio (' + (ss.calibration ? esc(ss.calibration) : 'median ratio') + '), so ' + pct(ss.weight) + ' of the weight counts one investment-grade measure three times, and the CCC and high-yield conditions in L2 and L4 run on it too. The ratios come from a calm credit period; in crises junk spreads widen proportionally more than Baa, so older spread stress is probably <i>understated</i>.</li>');
     var st = d.spliceStability;
     if (st) out.push('<li><b>Stand-in drift check.</b> Re-running everything as if FRED’s spread window began ' + st.days + ' days later ' +
       (st.moved.length ? 'moves ' + st.moved.length + ' alert date' + (st.moved.length === 1 ? '' : 's') + ': ' + st.moved.map(function (m) { return esc(m.episode) + ' ' + m.level + ' ' + fd(m.date) + ' → ' + fd(m.shifted); }).join('; ') + '. Treat those dates as approximate.'
@@ -286,7 +286,7 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
           d.proxies.filter(function (p) { return p.until; }).map(function (p) { return '<b>' + esc(p.col) + '</b> ← ' + esc(p.label) + ' (' + fd(p.from) + ' to ' + fd(p.until) + ')'; }).join("; ") +
           '. Before any stand-in exists, that indicator is left out and the weights are re-balanced.</li>' +
         '<li>Every episode before late 2023 relies partly on stand-ins, and the credit-spread stand-in is the broadest one: Baa spreads move with, but less than, high-yield and CCC spreads. Treat older results as indicative, not exact.</li>' +
-        '<li>The spread stand-in is scaled by the median ratio to the real series over every day both exist. FRED’s 3-year window moves forward daily; joining on its first day instead let the whole pre-2023 history shift from one run to the next.</li>' +
+        '<li>The spread stand-in is scaled by a fixed ratio to each real series (' + esc((d.spreadStandIn || {}).calibration || 'median ratio') + '). FRED’s 3-year window moves forward daily; joining on its first day, as before v1.4, let the whole pre-2023 history shift from one run to the next.</li>' +
         '<li>Episode windows are set by hand around well-known sell-offs; their start and end dates are approximate. The alert-episode verdicts above do not use them.</li>' +
         '<li>Levels are independent tripwires (L4 can fire before L3). Levels pause in recovery mode (Nasdaq-100 20%+ above its lowest close since its 2-year high); first-confirmed dates never move.</li>' +
       '</ul><p><a class="button" href="./">← Back to the live dashboard</a></p></div>' +

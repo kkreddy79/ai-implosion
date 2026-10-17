@@ -31,6 +31,12 @@ PROXIES = {
 # corporate yield minus the 10-year Treasury, scaled to join each ICE series where it begins.
 SPREAD_PROXY = ("BAA10Y", "Moody's Baa corporate spread over 10-year Treasury (BAA10Y)")
 STABILITY_DAYS = 30   # re-run as if FRED's 3-year window began this many days later; report alert dates that move
+# Fixed stand-in scales (ICE spread / Moody's Baa spread): median ratio over the ICE history FRED served on
+# 2026-10-17 (2023-10-17 to 2026-10-16, 748 days). Frozen so the replay doesn't drift as FRED's window rolls.
+# That overlap was a calm credit period; in crises high-yield and CCC spreads widen proportionally more than Baa,
+# so the stand-in likely UNDERSTATES spread stress before late 2023.
+SPREAD_SCALE = {"BBB": 0.689, "CCC": 5.383, "HY": 1.861}
+SPREAD_CALIBRATION = "median ratio, 17 Oct 2023 – 16 Oct 2026"
 
 # Candidate lower-redundancy weights, tested side by side with the live ones. AIQ tracks the Nasdaq (0.97) and
 # BBB tracks HY (0.86), so they give weight to the indicators that add independent information.
@@ -74,7 +80,7 @@ def splice(real, chain):
     return out, used
 
 
-def splice_median(real, prox, sym, label):
+def splice_median(real, prox, sym, label, k=None):
     """Back-fill a spread with a stand-in scaled by the MEDIAN ratio over every day both exist.
     FRED serves only the last ~3 years of the ICE spreads, so the first real day moves forward daily; joining on
     that single day (as `splice` does) rescaled the whole pre-2023 history each run. The median over the overlap
@@ -86,11 +92,12 @@ def splice_median(real, prox, sym, label):
     ratios = sorted(out[d] / prox[d] for d in out if prox.get(d))
     if not ratios:
         return out, []
-    k = ratios[len(ratios) // 2]
+    live_k = ratios[len(ratios) // 2]
+    k = k or live_k
     added = {d: v * k for d, v in prox.items() if d < first and v is not None}
     out.update(added)
     return out, ([{"symbol": sym, "label": label, "from": min(added).isoformat(), "until": first.isoformat(),
-                   "scale": round(k, 3), "overlapDays": len(ratios)}] if added else [])
+                   "scale": round(k, 3), "medianNow": round(live_k, 3), "overlapDays": len(ratios)}] if added else [])
 
 
 def fetch_history(cfg):
@@ -115,11 +122,11 @@ def fetch_history(cfg):
     for f in F:
         if "fred" in f:
             real = fred.get(f["fred"], {})
-            series, used = splice_median(real, baa, SPREAD_PROXY[0], SPREAD_PROXY[1])
+            series, used = splice_median(real, baa, SPREAD_PROXY[0], SPREAD_PROXY[1], SPREAD_SCALE.get(f["col"]))
             px[f["col"]] = series
             # stability check: the same splice if FRED's window started STABILITY_DAYS later
             cut = min(real) + dt.timedelta(days=STABILITY_DAYS) if real else None
-            shifted[f["col"]], _ = splice_median({d: v for d, v in real.items() if cut and d >= cut}, baa, SPREAD_PROXY[0], SPREAD_PROXY[1])
+            shifted[f["col"]], _ = splice_median({d: v for d, v in real.items() if cut and d >= cut}, baa, SPREAD_PROXY[0], SPREAD_PROXY[1], SPREAD_SCALE.get(f["col"]))
             for u in used:
                 proxies.append({"col": f["col"], "name": f["name"], **u})
     master = F[0]["col"]
@@ -235,7 +242,9 @@ def analyse(dates, series, cfg, proxies, sample):
                 j = i
                 while j + 1 < n and conf[k][j + 1]:
                     j += 1
-                outside.append({"level": f"L{k+1}", "date": d.isoformat(), "days": j - i + 1, "score": rows[i]["score"]})
+                live = sum(act[k][i:j + 1])
+                if live:  # a streak paused by recovery mode for its whole run never showed as an alert
+                    outside.append({"level": f"L{k+1}", "date": d.isoformat(), "days": j - i + 1, "activeDays": live, "score": rows[i]["score"]})
     outside.sort(key=lambda x: x["date"])
 
     # weekly timeline (Friday week-ending)
@@ -380,7 +389,8 @@ def analyse(dates, series, cfg, proxies, sample):
 
     # ---- spreads: before the ICE series begin, all spread gauges share one stand-in (Moody's Baa)
     sp = [p for p in proxies if p["symbol"] == SPREAD_PROXY[0] and p.get("until")]
-    spread_standin = {"cols": sorted({p["col"] for p in sp}), "label": SPREAD_PROXY[1],
+    spread_standin = {"cols": sorted({p["col"] for p in sp}), "label": SPREAD_PROXY[1], "calibration": SPREAD_CALIBRATION,
+                      "scales": {p["col"]: p.get("scale") for p in sp}, "mediansNow": {p["col"]: p.get("medianNow") for p in sp},
                       "until": min(p["until"] for p in sp) if sp else None,
                       "weight": sum(f["weight"] for f in cfg["factors"] if f["col"] in {p["col"] for p in sp}) / sum(f["weight"] for f in cfg["factors"])}
 
