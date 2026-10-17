@@ -197,9 +197,9 @@ footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); co
     if (ae.length) {
       var c = function (v) { return ae.filter(function (x) { return x.verdict === v; }).length; };
       var falses = ae.filter(function (x) { return x.verdict === "false"; }).map(function (x) { return fd(x.start); });
-      var gfc = d.episodes.filter(function (e) { return (e.standInShare || 0) > 0.35; }).map(function (e) { return esc(e.name) + ' (' + pct(e.standInShare) + ')'; });
+      var gfc = d.episodes.filter(function (e) { return (e.standInShare || 0) > 0.35; }).map(function (e) { return esc(e.name) + ' ' + pct(e.standInShare); });
       out.push('<li><b>False alarms happen.</b> Merging back-to-back streaks into ' + ae.length + ' alert episodes and judging each by the same rule: ' + c("early") + ' gave early warning, ' + c("confirm") + ' only confirmed a bear market already under way, and <b>' + c("false") + ' led nowhere</b>' + (falses.length ? ' (' + falses.join(', ') + ')' : '') + '.' +
-        (gfc.length ? ' Several headline episodes run mostly on stand-in data: ' + gfc.join(', ') + ' of the weight, so treat their precision as illustrative, not proven.' : '') + '</li>');
+        (gfc.length ? ' Several headline episodes run mostly on stand-in data (share of the weight: ' + gfc.join(', ') + '), so treat their precision as illustrative, not proven.' : '') + '</li>');
     }
     var sv = d.sensitivity || [];
     if (sv.length === 3) {
