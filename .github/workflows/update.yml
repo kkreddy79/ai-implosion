@@ -14,6 +14,8 @@ on:
       - "docs/AI_Implosion_Dashboard.xlsx"
       - "data/fred.json"
       - "docs/backtest.json"
+      - "docs/snapshots/**"
+      - "docs/signal-log.csv"
 
 permissions:
   contents: write
@@ -46,6 +48,7 @@ jobs:
           git config user.name "ai-implosion-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data.json docs/AI_Implosion_Dashboard.xlsx
+          [ -d docs/snapshots ] && git add docs/snapshots docs/signal-log.csv
           [ -f data/fred.json ] && git add data/fred.json
           git add -u data
           if git diff --cached --quiet; then echo "No change"; exit 0; fi

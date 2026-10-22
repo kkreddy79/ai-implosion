@@ -66,3 +66,8 @@ pip install openpyxl
 FRED_API_KEY=... python update_dashboard.py   # live data
 python update_dashboard.py --sample           # offline demo data
 ```
+
+## Published record and consistency checks
+- **Checks before publishing** (`snapshot.check`): every run reconciles the figures `docs/data.json` will publish. The headline must equal the weighted gauge contributions, and each component must equal its gauges' weighted average. The chart's last point must be the headline and the previous close must match the chart. The band must match the score, and the stale flags must match the data dates. Any mismatch stops the run before anything is written, so the page keeps the last good reading. Run `python snapshot.py` to check the published file by hand.
+- **Daily snapshots** (`docs/snapshots/<date>.json`): one per trading day, never overwritten. Each holds the score, components, alert state, every gauge's raw value, its stress score, weight, contribution and data date, and the methodology version and calculation time. If a later run changes that day's numbers (for example a late FRED release), the new calculation is saved beside it as `<date>.rev<N>.json`.
+- **Signal log** (`docs/signal-log.csv`): one row per published calculation, revisions included. It is appended to, never edited. The prospective record starts on 21 Oct 2026; earlier readings are backtest replays, not live records.
