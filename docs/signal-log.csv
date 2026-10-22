@@ -1,0 +1,2 @@
+asOf,calculatedAt,modelVersion,score,band,prevScore,equity,financing,credit,alert,shock,rangeLoose,rangeTight,staleGauges,revision,snapshot
+2026-10-21,2026-10-22T02:05+00:00,1.4,26,ELEVATED,28,18.18,46.61,26.76,None,0,19,36,,0,snapshots/2026-10-21.json
