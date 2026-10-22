@@ -55,6 +55,8 @@ dates, series = engine.get_data(cfg, SAMPLE)
 NAN = None
 n = len(dates)
 summary = engine.write_json(dates, series, cfg, JSON_OUT, SAMPLE)
+import snapshot
+print(snapshot.record(summary))  # immutable daily snapshot + signal log (docs/snapshots/, docs/signal-log.csv)
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 
 hist["A1"] = ("SAMPLE DATA — illustrative random-walk prices, NOT real market history. Run update_dashboard.py to load real data." if SAMPLE else

@@ -20,6 +20,7 @@ Alert levels (L1-L4) are independent tripwires, not a ladder.
 - Shock flag (v1.4, not a level): score >= SHOCK_SCORE (60) on a day when no level has confirmed yet.
 """
 import bisect, csv, datetime as dt, io, json, math, os, random, time, urllib.parse, urllib.request
+import snapshot
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FRED_CACHE = os.path.join(HERE, "data", "fred.json")
@@ -482,6 +483,11 @@ def write_json(dates, series, cfg, path, sample=False):
     out["model"] = cfg.get("model")
     out["notes"] = FETCH_NOTES + STALE_NOTES
     out["generatedAt"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="minutes")
+    # Every published figure must reconcile (snapshot.check); if not, stop before writing, so the
+    # page keeps the last good reading instead of an inconsistent one.
+    problems = snapshot.check(out)
+    if problems:
+        raise RuntimeError("Consistency check failed, data.json not written:\n  " + "\n  ".join(problems))
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as f:
         json.dump(out, f, indent=1)
