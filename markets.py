@@ -2,8 +2,8 @@
 
 Six headline numbers, each with its last 45 dated daily closes, read from Yahoo Finance with the same fetcher
 as the index (engine.fetch_yahoo). When KKReckons publishes an edition it keeps the closes from before that
-edition's date (close, change on the day and the week, a 30-day line), so each edition shows the numbers of its day. Not part of the index: a failed asset is left
-out with a note and never stops the index update.
+edition's date (close, change on the day and the week, a 30-day line), so each edition shows the numbers of
+its day. Not part of the index: a failed asset is left out with a note and never stops the index update.
 
 Usage: python markets.py [out.json]
 """
