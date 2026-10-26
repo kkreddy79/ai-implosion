@@ -24,7 +24,7 @@ three ICE BofA spreads from FRED (×100 for bp), then writes:
 
 - `docs/data.json` — read by the page (`docs/index.html`)
 - `docs/markets.json` — not part of the index: six headline numbers for KKReckons' edition strip (Nifty 50, S&P 500,
-  US 10-year yield, Brent, gold, USD/INR: close, previous close, the close a week earlier, last 30 closes), from
+  US 10-year yield, Brent, gold, USD/INR: the latest close and the last 45 dated closes), from
   Yahoo Finance by `markets.py` in the same daily run. A failed asset is left out with a note; it never stops the index.
 - `docs/AI_Implosion_Dashboard.xlsx` — the full Excel 365 workbook (live formulas, 4 charts), downloadable from the page
 - `data/fred.json` — cached spread history, so a FRED outage only carries the last value forward

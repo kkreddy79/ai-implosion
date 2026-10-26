@@ -1,8 +1,8 @@
 """Daily market snapshot for KKReckons' edition strip: writes docs/markets.json.
 
-Six headline numbers (close, the previous close, the close a week earlier and the last 30 closes), read from
-Yahoo Finance with the same fetcher as the index (engine.fetch_yahoo). KKReckons saves a copy into each edition
-when it is published, so editions keep the numbers of their day. Not part of the index: a failed asset is left
+Six headline numbers, each with its last 45 dated daily closes, read from Yahoo Finance with the same fetcher
+as the index (engine.fetch_yahoo). When KKReckons publishes an edition it keeps the closes from before that
+edition's date (close, change on the day and the week, a 30-day line), so each edition shows the numbers of its day. Not part of the index: a failed asset is left
 out with a note and never stops the index update.
 
 Usage: python markets.py [out.json]
@@ -22,22 +22,15 @@ ASSETS = [
     ("gold", "Gold", "GC=F", "usd"),
     ("usdinr", "USD/INR", "USDINR=X", "fx"),
 ]
-SPARK = 30
+KEEP = 45  # closes kept: a 30-day line plus room to cut at an edition's date and look a week back
 
 
 def snapshot(closes):
-    """Latest close, previous close, the last close at least 7 days before the latest, and the last 30 closes."""
+    """The latest close and its date, and the last KEEP closes as [date, close], oldest first."""
     days = sorted(d for d, v in closes.items() if v is not None)
     if len(days) < 2:
         return None
-    last = days[-1]
-    week = [d for d in days if d <= last - dt.timedelta(days=7)]
-    return {
-        "close": closes[last], "asOf": last.isoformat(),
-        "prevClose": closes[days[-2]], "prevDate": days[-2].isoformat(),
-        **({"weekClose": closes[week[-1]], "weekDate": week[-1].isoformat()} if week else {}),
-        "spark": [closes[d] for d in days[-SPARK:]],
-    }
+    return {"close": closes[days[-1]], "asOf": days[-1].isoformat(), "closes": [[d.isoformat(), closes[d]] for d in days[-KEEP:]]}
 
 
 def build(fetch=engine.fetch_yahoo):
