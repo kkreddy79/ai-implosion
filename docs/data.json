@@ -1,6 +1,6 @@
 {
  "asOf": "2026-10-26",
- "score": 29,
+ "score": 30,
  "band": "ELEVATED",
  "triggers": "1 of 9",
  "factorCount": 9,
@@ -9,9 +9,9 @@
  "prevDate": "2026-10-23",
  "prevScore": 32,
  "pillars": {
-  "Equity": 24.15251575840622,
-  "Financing": 46.556179109400226,
-  "Credit": 25.540012170903886
+  "Equity": 25.73041375576926,
+  "Financing": 47.46316651979656,
+  "Credit": 25.799497134028286
  },
  "prevPillars": {
   "Equity": 31.26479865901935,
@@ -70,7 +70,7 @@
  "exitRule": {
   "rebound": 0.2,
   "recoveryMode": false,
-  "currentRebound": 0.014786672425123104
+  "currentRebound": 0.010908216537658832
  },
  "factors": [
   {
@@ -87,22 +87,22 @@
    "lastDate": "2026-10-26",
    "stale": false,
    "ref": 31224.4707,
-   "current": 29385.7148,
-   "move": -0.05888829686390806,
+   "current": 29273.4043,
+   "move": -0.06248517128586595,
    "triggerPrice": 23418.353025,
    "band": null,
-   "levelStress": 0.0444414843195403,
+   "levelStress": 0.062425856429329726,
    "widenStress": null,
-   "stress": 0.0444414843195403,
+   "stress": 0.062425856429329726,
    "status": "WATCH",
    "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
    "descriptor": "Large-cap tech benchmark",
-   "points": 0.7999467177517254,
+   "points": 1.1236654157279349,
    "maxPoints": 18.0,
    "plus10": {
     "kind": "price",
-    "drawdown": -0.16999940797501917,
-    "price": 25916.32916666667
+    "drawdown": -0.17359628239697705,
+    "price": 25804.018666666667
    },
    "prevStress": 0.11300717821295235,
    "spark": [
@@ -316,7 +316,7 @@
     },
     {
      "date": "2026-10-26",
-     "stress": 0.0444414843195403
+     "stress": 0.062425856429329726
     }
    ]
   },
@@ -334,17 +334,17 @@
    "lastDate": "2026-10-26",
    "stale": false,
    "ref": 14634.7197,
-   "current": 11145.1396,
-   "move": -0.23844529799911363,
+   "current": 11083.4697,
+   "move": -0.2426592427321994,
    "triggerPrice": 8780.83182,
    "band": null,
-   "levelStress": 0.461484326663712,
+   "levelStress": 0.47553080910733125,
    "widenStress": null,
-   "stress": 0.461484326663712,
+   "stress": 0.47553080910733125,
    "status": "WATCH",
    "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
    "descriptor": "Chip stocks",
-   "points": 8.306717879946815,
+   "points": 8.559554563931963,
    "maxPoints": 18.0,
    "plus10": null,
    "prevStress": 0.5447747500532357,
@@ -559,7 +559,7 @@
     },
     {
      "date": "2026-10-26",
-     "stress": 0.461484326663712
+     "stress": 0.47553080910733125
     }
    ]
   },
@@ -577,17 +577,17 @@
    "lastDate": "2026-10-26",
    "stale": false,
    "ref": 70.14,
-   "current": 63.2001,
-   "move": -0.09894354148845164,
+   "current": 62.94,
+   "move": -0.10265183917878529,
    "triggerPrice": 49.098,
    "band": null,
-   "levelStress": 0.19577416595380653,
+   "levelStress": 0.21060735671514114,
    "widenStress": null,
-   "stress": 0.19577416595380653,
+   "stress": 0.21060735671514114,
    "status": "WATCH",
    "rationale": "A basket of AI and big-data companies. It moves closely with the Nasdaq-100, so it carries a smaller weight.",
    "descriptor": "AI & big-data stocks",
-   "points": 1.7619674935842586,
+   "points": 1.8954662104362703,
    "maxPoints": 9.0,
    "plus10": null,
    "prevStress": 0.2476760764185914,
@@ -802,7 +802,7 @@
     },
     {
      "date": "2026-10-26",
-     "stress": 0.19577416595380653
+     "stress": 0.21060735671514114
     }
    ]
   },
@@ -820,17 +820,17 @@
    "lastDate": "2026-10-26",
    "stale": false,
    "ref": 32.3415,
-   "current": 25.9,
-   "move": -0.19917134332050168,
+   "current": 25.68,
+   "move": -0.2059737488984742,
    "triggerPrice": 21.021975000000005,
    "band": null,
-   "levelStress": 0.39668537328200676,
+   "levelStress": 0.4238949955938968,
    "widenStress": null,
-   "stress": 0.39668537328200676,
+   "stress": 0.4238949955938968,
    "status": "WATCH",
    "rationale": "Data-center and digital-infrastructure companies: the physical AI build-out that much of the new debt is financing. Equity prices also reflect broader stock-market moves.",
    "descriptor": "Data-center infrastructure stocks",
-   "points": 2.3801122396920404,
+   "points": 2.543369973563381,
    "maxPoints": 6.0,
    "plus10": null,
    "prevStress": 0.45481502094831766,
@@ -1045,7 +1045,7 @@
     },
     {
      "date": "2026-10-26",
-     "stress": 0.39668537328200676
+     "stress": 0.4238949955938968
     }
    ]
   },
@@ -1549,17 +1549,17 @@
    "lastDate": "2026-10-26",
    "stale": false,
    "ref": 14.5819,
-   "current": 11.92,
-   "move": -0.18254822759722666,
+   "current": 11.9,
+   "move": -0.18391979097374134,
    "triggerPrice": 10.936425,
    "band": null,
-   "levelStress": 0.6627411379861333,
+   "levelStress": 0.6695989548687067,
    "widenStress": null,
-   "stress": 0.6627411379861333,
+   "stress": 0.6695989548687067,
    "status": "WARNING",
    "rationale": "Listed business development companies (BDCs), a market proxy for private credit, a major lender to growth and tech firms. Their share prices reflect credit concerns and broader stock-market moves.",
    "descriptor": "Listed BDCs \u00b7 private-credit proxy",
-   "points": 9.278375931805867,
+   "points": 9.374385368161894,
    "maxPoints": 14.000000000000002,
    "plus10": null,
    "prevStress": 0.6593122295448464,
@@ -1774,7 +1774,7 @@
     },
     {
      "date": "2026-10-26",
-     "stress": 0.6627411379861333
+     "stress": 0.6695989548687067
     }
    ]
   },
@@ -1792,8 +1792,8 @@
    "lastDate": "2026-10-26",
    "stale": false,
    "ref": 20.4533,
-   "current": 20.285,
-   "move": -0.008228501024284518,
+   "current": 20.3,
+   "move": -0.007495123036380336,
    "triggerPrice": 18.817035999999998,
    "band": null,
    "levelStress": 0.0,
@@ -3135,7 +3135,7 @@
    "date": "2026-04-27",
    "equity": 0.0,
    "financing": 0.4444444444444444,
-   "credit": 23.178559202328383,
+   "credit": 23.17985662714401,
    "score": 9
   },
   {
@@ -3289,7 +3289,7 @@
    "date": "2026-05-28",
    "equity": 0.0,
    "financing": 1.9444444444444444,
-   "credit": 24.90024193265883,
+   "credit": 24.90153935747445,
    "score": 10
   },
   {
@@ -3345,7 +3345,7 @@
    "date": "2026-06-09",
    "equity": 4.242164824194562,
    "financing": 2.8333333333333335,
-   "credit": 24.90024193265883,
+   "credit": 24.90153935747445,
    "score": 12
   },
   {
@@ -4015,10 +4015,10 @@
   },
   {
    "date": "2026-10-26",
-   "equity": 24.15251575840622,
-   "financing": 46.556179109400226,
-   "credit": 25.540012170903886,
-   "score": 29
+   "equity": 25.73041375576926,
+   "financing": 47.46316651979656,
+   "credit": 25.799497134028286,
+   "score": 30
   }
  ],
  "weekly": [
@@ -4124,12 +4124,12 @@
   },
   {
    "weekEnding": "2026-10-30",
-   "high": 29
+   "high": 30
   }
  ],
  "scoreRange": {
-  "tight": 40,
-  "loose": 21,
+  "tight": 41,
+  "loose": 22,
   "pct": 0.2
  },
  "sample": false,
@@ -4168,5 +4168,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-10-26T15:24+00:00"
+ "generatedAt": "2026-10-26T22:49+00:00"
 }
