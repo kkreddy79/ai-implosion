@@ -16,6 +16,7 @@ on:
       - "docs/backtest.json"
       - "docs/snapshots/**"
       - "docs/signal-log.csv"
+      - "docs/markets.json"
 
 permissions:
   contents: write
@@ -43,6 +44,10 @@ jobs:
             echo "::error title=Update failed::$(tail -n 6 run.log | tr '\n' ' ' | cut -c1-900)"
             exit 1
           fi
+      # KKReckons' market strip (docs/markets.json). Separate from the index: a failure here never stops it.
+      - name: Market snapshot
+        continue-on-error: true
+        run: python markets.py
       - name: Commit updated data
         run: |
           git config user.name "ai-implosion-bot"
@@ -50,6 +55,7 @@ jobs:
           git add docs/data.json docs/AI_Implosion_Dashboard.xlsx
           [ -d docs/snapshots ] && git add docs/snapshots docs/signal-log.csv
           [ -f data/fred.json ] && git add data/fred.json
+          [ -f docs/markets.json ] && git add docs/markets.json
           git add -u data
           if git diff --cached --quiet; then echo "No change"; exit 0; fi
           git commit -m "Data: $(date -u +%F)"
