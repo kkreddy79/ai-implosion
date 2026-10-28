@@ -6,3 +6,4 @@ asOf,calculatedAt,modelVersion,score,band,prevScore,equity,financing,credit,aler
 2026-10-26,2026-10-26T22:49+00:00,1.4,30,ELEVATED,32,25.73,47.46,25.8,None,0,22,41,,1,snapshots/2026-10-26.rev1.json
 2026-10-27,2026-10-27T22:49+00:00,1.4,25,ELEVATED,29,18.85,45.61,22.87,None,0,19,35,,0,snapshots/2026-10-27.json
 2026-10-28,2026-10-28T18:34+00:00,1.4,24,NORMAL,25,16.92,45.02,22.74,None,0,17,33,,0,snapshots/2026-10-28.json
+2026-10-28,2026-10-28T22:52+00:00,1.4,23,NORMAL,25,16.1,44.28,21.7,None,0,17,32,,1,snapshots/2026-10-28.rev1.json

@@ -1,6 +1,6 @@
 {
  "asOf": "2026-10-28",
- "score": 24,
+ "score": 23,
  "band": "NORMAL",
  "triggers": "0 of 9",
  "factorCount": 9,
@@ -9,9 +9,9 @@
  "prevDate": "2026-10-27",
  "prevScore": 25,
  "pillars": {
-  "Equity": 16.91739216549766,
-  "Financing": 45.01800649762247,
-  "Credit": 22.741327039463766
+  "Equity": 16.09685462519771,
+  "Financing": 44.27592588911638,
+  "Credit": 21.703387186966154
  },
  "prevPillars": {
   "Equity": 18.852328662621996,
@@ -70,7 +70,7 @@
  "exitRule": {
   "rebound": 0.2,
   "recoveryMode": false,
-  "currentRebound": 0.02669258112431594
+  "currentRebound": 0.02954764859721659
  },
  "factors": [
   {
@@ -87,8 +87,8 @@
    "lastDate": "2026-10-28",
    "stale": false,
    "ref": 31224.4707,
-   "current": 29730.4805,
-   "move": -0.047846774228906264,
+   "current": 29813.1562,
+   "move": -0.045198988753394675,
    "triggerPrice": 23418.353025,
    "band": null,
    "levelStress": 0.0,
@@ -334,22 +334,22 @@
    "lastDate": "2026-10-28",
    "stale": false,
    "ref": 14634.7197,
-   "current": 11639.0059,
-   "move": -0.20469908965868333,
+   "current": 11684.0,
+   "move": -0.20162461328179726,
    "triggerPrice": 8780.83182,
    "band": null,
-   "levelStress": 0.3489969655289444,
+   "levelStress": 0.3387487109393241,
    "widenStress": null,
-   "stress": 0.3489969655289444,
+   "stress": 0.3387487109393241,
    "status": "WATCH",
    "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
    "descriptor": "Chip stocks",
-   "points": 6.281945379520999,
+   "points": 6.097476796907833,
    "maxPoints": 18.0,
    "plus10": {
     "kind": "price",
-    "drawdown": -0.37136575632535007,
-    "price": 9199.88595
+    "drawdown": -0.368291279948464,
+    "price": 9244.880049999998
    },
    "prevStress": 0.38464413500177913,
    "spark": [
@@ -563,7 +563,7 @@
     },
     {
      "date": "2026-10-28",
-     "stress": 0.3489969655289444
+     "stress": 0.3387487109393241
     }
    ]
   },
@@ -581,17 +581,17 @@
    "lastDate": "2026-10-28",
    "stale": false,
    "ref": 70.14,
-   "current": 64.04,
-   "move": -0.08696891930424855,
+   "current": 64.4,
+   "move": -0.08183632734530932,
    "triggerPrice": 49.098,
    "band": null,
-   "levelStress": 0.14787567721699418,
+   "levelStress": 0.12734530938123728,
    "widenStress": null,
-   "stress": 0.14787567721699418,
+   "stress": 0.12734530938123728,
    "status": "WATCH",
    "rationale": "A basket of AI and big-data companies. It moves closely with the Nasdaq-100, so it carries a smaller weight.",
    "descriptor": "AI & big-data stocks",
-   "points": 1.3308810949529477,
+   "points": 1.1461077844311356,
    "maxPoints": 9.0,
    "plus10": null,
    "prevStress": 0.16954662104362733,
@@ -806,7 +806,7 @@
     },
     {
      "date": "2026-10-28",
-     "stress": 0.14787567721699418
+     "stress": 0.12734530938123728
     }
    ]
   },
@@ -824,17 +824,17 @@
    "lastDate": "2026-10-28",
    "stale": false,
    "ref": 32.3415,
-   "current": 26.25,
-   "move": -0.1883493344464543,
+   "current": 26.43,
+   "move": -0.18278372988265856,
    "triggerPrice": 21.021975000000005,
    "band": null,
-   "levelStress": 0.3533973377858172,
+   "levelStress": 0.3311349195306343,
    "widenStress": null,
-   "stress": 0.3533973377858172,
+   "stress": 0.3311349195306343,
    "status": "WATCH",
    "rationale": "Data-center and digital-infrastructure companies: the physical AI build-out that much of the new debt is financing. Equity prices also reflect broader stock-market moves.",
    "descriptor": "Data-center infrastructure stocks",
-   "points": 2.1203840267149032,
+   "points": 1.9868095171838056,
    "maxPoints": 6.0,
    "plus10": null,
    "prevStress": 0.3682389499559395,
@@ -1049,7 +1049,7 @@
     },
     {
      "date": "2026-10-28",
-     "stress": 0.3533973377858172
+     "stress": 0.3311349195306343
     }
    ]
   },
@@ -1553,17 +1553,17 @@
    "lastDate": "2026-10-28",
    "stale": false,
    "ref": 14.5819,
-   "current": 12.1,
-   "move": -0.17020415720859416,
+   "current": 12.18,
+   "move": -0.16471790370253536,
    "triggerPrice": 10.936425,
    "band": null,
-   "levelStress": 0.6010207860429708,
+   "levelStress": 0.5735895185126768,
    "widenStress": null,
-   "stress": 0.6010207860429708,
+   "stress": 0.5735895185126768,
    "status": "WARNING",
    "rationale": "Listed business development companies (BDCs), a market proxy for private credit, a major lender to growth and tech firms. Their share prices reflect credit concerns and broader stock-market moves.",
    "descriptor": "Listed BDCs \u00b7 private-credit proxy",
-   "points": 8.414291004601592,
+   "points": 8.030253259177476,
    "maxPoints": 14.000000000000002,
    "plus10": null,
    "prevStress": 0.6044496944842578,
@@ -1778,7 +1778,7 @@
     },
     {
      "date": "2026-10-28",
-     "stress": 0.6010207860429708
+     "stress": 0.5735895185126768
     }
    ]
   },
@@ -1796,8 +1796,8 @@
    "lastDate": "2026-10-28",
    "stale": false,
    "ref": 20.4533,
-   "current": 20.425,
-   "move": -0.0013836398038457043,
+   "current": 20.44,
+   "move": -0.0006502618159415219,
    "triggerPrice": 18.817035999999998,
    "band": null,
    "levelStress": 0.0,
@@ -4023,10 +4023,10 @@
   },
   {
    "date": "2026-10-28",
-   "equity": 16.91739216549766,
-   "financing": 45.01800649762247,
-   "credit": 22.741327039463766,
-   "score": 24
+   "equity": 16.09685462519771,
+   "financing": 44.27592588911638,
+   "credit": 21.703387186966154,
+   "score": 23
   }
  ],
  "weekly": [
@@ -4136,7 +4136,7 @@
   }
  ],
  "scoreRange": {
-  "tight": 33,
+  "tight": 32,
   "loose": 17,
   "pct": 0.2
  },
@@ -4176,5 +4176,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-10-28T18:34+00:00"
+ "generatedAt": "2026-10-28T22:52+00:00"
 }
