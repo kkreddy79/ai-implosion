@@ -4,6 +4,8 @@ Six headline numbers, each with its last 45 dated daily closes, read from Yahoo 
 as the index (engine.fetch_yahoo). When KKReckons publishes an edition it keeps the closes from before that
 edition's date (close, change on the day and the week, a 30-day line), so each edition shows the numbers of
 its day. Not part of the index: a failed asset is left out with a note and never stops the index update.
+Closes already in the previous markets.json are kept, so a feed that briefly drops its latest day (Yahoo's ^NSEI
+does) never moves an asset back to an older close.
 
 Usage: python markets.py [out.json]
 """
@@ -33,11 +35,23 @@ def snapshot(closes):
     return {"close": closes[days[-1]], "asOf": days[-1].isoformat(), "closes": [[d.isoformat(), closes[d]] for d in days[-KEEP:]]}
 
 
-def build(fetch=engine.fetch_yahoo):
+def previous_closes(path):
+    """{asset id: {date: close}} from an earlier markets.json; empty when there is none or it can't be read."""
+    try:
+        with open(path) as f:
+            assets = json.load(f)["assets"]
+        return {a["id"]: {dt.date.fromisoformat(d): v for d, v in a["closes"]} for a in assets}
+    except (OSError, ValueError, KeyError, TypeError):
+        return {}
+
+
+def build(fetch=engine.fetch_yahoo, previous=None):
     assets, notes = [], []
     for aid, name, symbol, unit in ASSETS:
         try:
-            snap = snapshot(fetch(symbol, "3mo"))
+            # Fresh closes win on the same date; earlier ones fill days the feed has dropped.
+            fresh = {d: v for d, v in fetch(symbol, "3mo").items() if v is not None}
+            snap = snapshot({**(previous or {}).get(aid, {}), **fresh})
         except Exception as e:  # one feed down must not sink the others
             snap, why = None, str(e)[:160]
         else:
@@ -51,7 +65,7 @@ def build(fetch=engine.fetch_yahoo):
 
 
 if __name__ == "__main__":
-    data = build()
+    data = build(previous=previous_closes(OUT))
     if not data["assets"]:
         print("markets: no asset could be fetched; keeping the previous markets.json")
         sys.exit(0)
