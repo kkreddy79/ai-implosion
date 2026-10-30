@@ -56,6 +56,21 @@ def _get(url, tries=4, timeout=60):
     raise RuntimeError(f"Could not fetch {url.split('api_key=')[0]}: {last}")
 
 
+SESSION_BUFFER = 15 * 60  # seconds after the official close before the day's last price counts as its close
+
+
+def _in_session(meta, ts, now=None):
+    """True when the bar at `ts` is today's and its exchange's regular session hasn't ended yet. Yahoo's daily
+    series includes the day still trading, priced at the latest trade; a run during market hours (a code push
+    triggers one) would otherwise publish that price as the day's close. Unknown session times keep the bar."""
+    reg = (meta.get("currentTradingPeriod") or {}).get("regular") or {}
+    start, end = reg.get("start"), reg.get("end")
+    if not isinstance(start, (int, float)) or not isinstance(end, (int, float)):
+        return False
+    now = time.time() if now is None else now
+    return ts >= start and now < end + SESSION_BUFFER
+
+
 def fetch_yahoo(symbol, rng="5y"):
     """Daily dividend-adjusted closes (falls back to raw close when no adjustment is published)."""
     sym = urllib.parse.quote(symbol)
@@ -76,8 +91,11 @@ def fetch_yahoo(symbol, rng="5y"):
     ind = j["indicators"]
     close = ind["quote"][0]["close"]
     adj = (ind.get("adjclose") or [{}])[0].get("adjclose") or close
+    stamps = j["timestamp"]
+    if stamps and _in_session(j.get("meta") or {}, stamps[-1]):
+        stamps = stamps[:-1]  # zip() below stops at the shorter list, dropping that bar's price too
     out, ratio = {}, 1.0
-    for t, a, c in zip(j["timestamp"], adj, close):
+    for t, a, c in zip(stamps, adj, close):
         if a is not None and c:
             ratio = a / c
         elif a is None and c is not None:
