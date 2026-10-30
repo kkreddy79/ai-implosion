@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-30T19:02:12+00:00",
+ "generatedAt": "2026-10-30T22:50:33+00:00",
  "source": "Yahoo Finance daily closes",
  "assets": [
   {
@@ -197,7 +197,7 @@
    "name": "S&P 500",
    "symbol": "^GSPC",
    "unit": "index",
-   "close": 7599.5698,
+   "close": 7580.0698,
    "asOf": "2026-10-30",
    "closes": [
     [
@@ -378,7 +378,7 @@
     ],
     [
      "2026-10-30",
-     7599.5698
+     7580.0698
     ]
    ]
   },
@@ -387,7 +387,7 @@
    "name": "US 10-year yield",
    "symbol": "^TNX",
    "unit": "yield",
-   "close": 4.947,
+   "close": 4.929,
    "asOf": "2026-10-30",
    "closes": [
     [
@@ -568,7 +568,7 @@
     ],
     [
      "2026-10-30",
-     4.947
+     4.929
     ]
    ]
   },
