@@ -66,3 +66,20 @@ jobs:
           done
           echo "::error title=Could not push data::$(tail -n 4 push.log | tr '\n' ' ')"
           exit 1
+      # Rebuild kkreckons.com's Home and /ai-stress-index now rather than when their hourly cache runs out, so the
+      # two never show different days. Waits for GitHub Pages to serve the new reading first (the site reads it
+      # from there), or the rebuild would pick up the old one. Never fails the run: the hourly cache is the fallback.
+      - name: Refresh KKReckons
+        continue-on-error: true
+        env:
+          SECRET: ${{ secrets.KKRECKONS_REVALIDATE_SECRET }}
+        run: |
+          if [ -z "$SECRET" ]; then echo "KKRECKONS_REVALIDATE_SECRET not set; skipping"; exit 0; fi
+          want=$(python -c "import json; print(json.load(open('docs/data.json'))['asOf'])")
+          for i in $(seq 1 40); do
+            got=$(curl -fsS https://kkreddy79.github.io/ai-implosion/data.json | python -c "import json,sys; print(json.load(sys.stdin)['asOf'])" || true)
+            [ "$got" = "$want" ] && break
+            sleep 15
+          done
+          if [ "$got" != "$want" ]; then echo "::warning title=Pages still on $got::Not refreshing KKReckons; its hourly cache will catch up"; exit 0; fi
+          curl -fsS -X POST -H "Authorization: Bearer $SECRET" https://www.kkreckons.com/api/revalidate
