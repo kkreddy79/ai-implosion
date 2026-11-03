@@ -3,9 +3,12 @@ name: Update dashboard data
 # Refreshes docs/data.json and the Excel workbook every weekday after the US close
 # (22:17 UTC = 3:17 pm PDT / 2:17 pm PST). GitHub Pages serves docs/, so the page updates
 # on its own. Also runs when the code changes, or by hand: Actions → "Run workflow".
+# 23:47 UTC is a backup: GitHub sometimes drops a scheduled run (it skipped Monday 2 November 2026),
+# so a second one runs 90 minutes later and does nothing if that day's reading is already saved.
 on:
   schedule:
     - cron: "17 22 * * 1-5"
+    - cron: "47 23 * * 1-5"
   workflow_dispatch:
   push:
     branches: [main]
@@ -26,7 +29,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Only the backup schedule is gated: it skips when docs/data.json already holds today's US trading date.
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: docs/data.json
+          sparse-checkout-cone-mode: false
+      - id: check
+        env:
+          BACKUP: ${{ github.event_name == 'schedule' && github.event.schedule == '47 23 * * 1-5' }}
+        run: |
+          if [ "$BACKUP" != "true" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          have=$(python3 -c "import json; print(json.load(open('docs/data.json')).get('asOf',''))")
+          today=$(TZ=America/New_York date +%F)
+          if [ "$have" = "$today" ]; then
+            echo "Today's reading ($today) is already saved; backup run not needed."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Saved reading is $have, today is $today: running the backup update."
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
   update:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
