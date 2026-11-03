@@ -9,9 +9,9 @@
  "prevDate": "2026-10-30",
  "prevScore": 33,
  "pillars": {
-  "Equity": 44.02558106870785,
-  "Financing": 46.86904117737568,
-  "Credit": 20.368756464121255
+  "Equity": 45.171859939537626,
+  "Financing": 49.5075500076196,
+  "Credit": 18.163134277563795
  },
  "prevPillars": {
   "Equity": 38.211166560347685,
@@ -574,20 +574,20 @@
    "trigger": -0.3,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-10-30",
+   "lastDate": "2026-11-02",
    "stale": false,
    "ref": 70.14,
-   "current": 60.14,
-   "move": -0.14257199885942395,
+   "current": 59.135,
+   "move": -0.15690048474479612,
    "triggerPrice": 49.098,
    "band": null,
-   "levelStress": 0.3702879954376958,
+   "levelStress": 0.42760193897918447,
    "widenStress": null,
-   "stress": 0.3702879954376958,
+   "stress": 0.42760193897918447,
    "status": "WATCH",
    "rationale": "A basket of AI and big-data companies. It moves closely with the Nasdaq-100, so it carries a smaller weight.",
    "descriptor": "AI & big-data stocks",
-   "points": 3.332591958939262,
+   "points": 3.84841745081266,
    "maxPoints": 9.0,
    "plus10": null,
    "prevStress": 0.3702879954376958,
@@ -802,7 +802,7 @@
     },
     {
      "date": "2026-11-02",
-     "stress": 0.3702879954376958
+     "stress": 0.42760193897918447
     }
    ]
   },
@@ -817,20 +817,20 @@
    "trigger": -0.35,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-10-30",
+   "lastDate": "2026-11-02",
    "stale": false,
    "ref": 32.3415,
-   "current": 25.57,
-   "move": -0.20937495168746045,
+   "current": 24.93,
+   "move": -0.22916376791428983,
    "triggerPrice": 21.021975000000005,
    "band": null,
-   "levelStress": 0.43749980674984185,
+   "levelStress": 0.5166550716571594,
    "widenStress": null,
-   "stress": 0.43749980674984185,
-   "status": "WATCH",
+   "stress": 0.5166550716571594,
+   "status": "WARNING",
    "rationale": "Data-center and digital-infrastructure companies: the physical AI build-out that much of the new debt is financing. Equity prices also reflect broader stock-market moves.",
    "descriptor": "Data-center infrastructure stocks",
-   "points": 2.624998840499051,
+   "points": 3.0999304299429564,
    "maxPoints": 6.0,
    "plus10": null,
    "prevStress": 0.43749980674984185,
@@ -1045,7 +1045,7 @@
     },
     {
      "date": "2026-11-02",
-     "stress": 0.43749980674984185
+     "stress": 0.5166550716571594
     }
    ]
   },
@@ -1546,20 +1546,20 @@
    "trigger": -0.25,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-10-30",
+   "lastDate": "2026-11-02",
    "stale": false,
    "ref": 14.5819,
-   "current": 12.39,
-   "move": -0.1503164882491307,
+   "current": 12.56,
+   "move": -0.13865819954875558,
    "triggerPrice": 10.936425,
    "band": null,
-   "levelStress": 0.5015824412456534,
+   "levelStress": 0.44329099774377784,
    "widenStress": null,
-   "stress": 0.5015824412456534,
-   "status": "WARNING",
+   "stress": 0.44329099774377784,
+   "status": "WATCH",
    "rationale": "Listed business development companies (BDCs), a market proxy for private credit, a major lender to growth and tech firms. Their share prices reflect credit concerns and broader stock-market moves.",
    "descriptor": "Listed BDCs \u00b7 private-credit proxy",
-   "points": 7.022154177439149,
+   "points": 6.20607396841289,
    "maxPoints": 14.000000000000002,
    "plus10": null,
    "prevStress": 0.5015824412456534,
@@ -1774,7 +1774,7 @@
     },
     {
      "date": "2026-11-02",
-     "stress": 0.5015824412456534
+     "stress": 0.44329099774377784
     }
    ]
   },
@@ -1789,11 +1789,11 @@
    "trigger": -0.08,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-10-30",
+   "lastDate": "2026-11-02",
    "stale": false,
    "ref": 20.46,
-   "current": 20.43,
-   "move": -0.0014662756598241566,
+   "current": 20.38,
+   "move": -0.003910068426197566,
    "triggerPrice": 18.8232,
    "band": null,
    "levelStress": 0.0,
@@ -3100,7 +3100,7 @@
    "date": "2026-04-27",
    "equity": 0.0,
    "financing": 0.4444444444444444,
-   "credit": 23.178559202328383,
+   "credit": 23.17985662714401,
    "score": 9
   },
   {
@@ -3254,7 +3254,7 @@
    "date": "2026-05-28",
    "equity": 0.0,
    "financing": 1.9444444444444444,
-   "credit": 24.90024193265883,
+   "credit": 24.90153935747445,
    "score": 10
   },
   {
@@ -3310,7 +3310,7 @@
    "date": "2026-06-09",
    "equity": 4.242164824194562,
    "financing": 2.8333333333333335,
-   "credit": 24.90024193265883,
+   "credit": 24.90153935747445,
    "score": 12
   },
   {
@@ -4015,9 +4015,9 @@
   },
   {
    "date": "2026-11-02",
-   "equity": 44.02558106870785,
-   "financing": 46.86904117737568,
-   "credit": 20.368756464121255,
+   "equity": 45.171859939537626,
+   "financing": 49.5075500076196,
+   "credit": 18.163134277563795,
    "score": 36
   }
  ],
@@ -4168,5 +4168,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-11-03T02:15+00:00"
+ "generatedAt": "2026-11-03T03:29+00:00"
 }
