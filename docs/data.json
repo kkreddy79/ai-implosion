@@ -1,22 +1,22 @@
 {
- "asOf": "2026-11-04",
- "score": 35,
+ "asOf": "2026-11-05",
+ "score": 45,
  "band": "ELEVATED",
  "triggers": "0 of 9",
  "factorCount": 9,
  "lookbackDays": 730,
  "widenDays": 365,
- "prevDate": "2026-11-03",
- "prevScore": 36,
+ "prevDate": "2026-11-04",
+ "prevScore": 34,
  "pillars": {
-  "Equity": 42.01186572352784,
-  "Financing": 44.25480751179932,
-  "Credit": 21.816452210791542
+  "Equity": 65.04533498824033,
+  "Financing": 42.44528370227552,
+  "Credit": 21.04425143859077
  },
  "prevPillars": {
-  "Equity": 41.01134262785447,
-  "Financing": 46.8108629410981,
-  "Credit": 25.075395682805446
+  "Equity": 42.01187627506162,
+  "Financing": 42.44528370227552,
+  "Credit": 21.04425143859077
  },
  "currentLevel": "None",
  "implosionDate": null,
@@ -56,9 +56,14 @@
  ],
  "concentrated": [
   {
+   "name": "Semiconductors",
+   "col": "SOX",
+   "stress": 0.9475434936641346
+  },
+  {
    "name": "CCC high-yield spread (bp)",
    "col": "CCC",
-   "stress": 0.9371428571428572
+   "stress": 0.8828571428571429
   }
  ],
  "shock": {
@@ -70,7 +75,7 @@
  "exitRule": {
   "rebound": 0.2,
   "recoveryMode": false,
-  "currentRebound": 0.01598244273115257
+  "currentRebound": 0.0
  },
  "factors": [
   {
@@ -84,27 +89,23 @@
    "trigger": -0.25,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-04",
+   "lastDate": "2026-11-05",
    "stale": false,
    "ref": 31224.4707,
-   "current": 28437.166,
-   "move": -0.08926667570380942,
+   "current": 26629.8086,
+   "move": -0.14714939907692337,
    "triggerPrice": 23418.353025,
    "band": null,
-   "levelStress": 0.19633337851904706,
+   "levelStress": 0.4857469953846168,
    "widenStress": null,
-   "stress": 0.19633337851904706,
+   "stress": 0.4857469953846168,
    "status": "WATCH",
    "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
    "descriptor": "Large-cap tech benchmark",
-   "points": 3.534000813342847,
+   "points": 8.743445916923102,
    "maxPoints": 18.0,
-   "plus10": {
-    "kind": "price",
-    "drawdown": -0.20037778681492052,
-    "price": 24967.780366666666
-   },
-   "prevStress": 0.23747197818792828,
+   "plus10": null,
+   "prevStress": 0.19633275400886127,
    "spark": [
     {
      "date": "2025-11-07",
@@ -315,8 +316,8 @@
      "stress": 0.20471084638754153
     },
     {
-     "date": "2026-11-04",
-     "stress": 0.19633337851904706
+     "date": "2026-11-05",
+     "stress": 0.4857469953846168
     }
    ]
   },
@@ -331,23 +332,23 @@
    "trigger": -0.4,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-04",
+   "lastDate": "2026-11-05",
    "stale": false,
    "ref": 14634.7197,
-   "current": 10268.6543,
-   "move": -0.2983361136735676,
+   "current": 9011.1377,
+   "move": -0.3842630480992404,
    "triggerPrice": 8780.83182,
    "band": null,
-   "levelStress": 0.6611203789118919,
+   "levelStress": 0.9475434936641346,
    "widenStress": null,
-   "stress": 0.6611203789118919,
+   "stress": 0.9475434936641346,
    "status": "WARNING",
    "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
    "descriptor": "Chip stocks",
-   "points": 11.900166820414054,
+   "points": 17.05578288595442,
    "maxPoints": 18.0,
    "plus10": null,
-   "prevStress": 0.5855589499264544,
+   "prevStress": 0.6611212672104222,
    "spark": [
     {
      "date": "2025-11-07",
@@ -558,8 +559,8 @@
      "stress": 0.5654243199023026
     },
     {
-     "date": "2026-11-04",
-     "stress": 0.6611203789118919
+     "date": "2026-11-05",
+     "stress": 0.9475434936641346
     }
    ]
   },
@@ -590,7 +591,7 @@
    "points": 3.4711719418306237,
    "maxPoints": 9.0,
    "plus10": null,
-   "prevStress": 0.4045052751639579,
+   "prevStress": 0.3856857713145138,
    "spark": [
     {
      "date": "2025-11-07",
@@ -801,7 +802,7 @@
      "stress": 0.3702879954376958
     },
     {
-     "date": "2026-11-04",
+     "date": "2026-11-05",
      "stress": 0.3856857713145138
     }
    ]
@@ -833,7 +834,7 @@
    "points": 2.3430082092667344,
    "maxPoints": 6.0,
    "plus10": null,
-   "prevStress": 0.4671830310900859,
+   "prevStress": 0.3905013682111224,
    "spark": [
     {
      "date": "2025-11-07",
@@ -1044,7 +1045,7 @@
      "stress": 0.43749980674984185
     },
     {
-     "date": "2026-11-04",
+     "date": "2026-11-05",
      "stress": 0.3905013682111224
     }
    ]
@@ -1060,11 +1061,11 @@
    "trigger": 250,
    "wcalm": 30,
    "wtrig": 100,
-   "lastDate": "2026-11-03",
+   "lastDate": "2026-11-04",
    "stale": false,
    "ref": 92,
-   "current": 116,
-   "move": 24,
+   "current": 113,
+   "move": 21,
    "triggerPrice": null,
    "band": null,
    "levelStress": 0.0,
@@ -1287,7 +1288,7 @@
      "stress": 0.0
     },
     {
-     "date": "2026-11-04",
+     "date": "2026-11-05",
      "stress": 0.0
     }
    ]
@@ -1303,23 +1304,23 @@
    "trigger": 1500,
    "wcalm": 150,
    "wtrig": 500,
-   "lastDate": "2026-11-03",
+   "lastDate": "2026-11-04",
    "stale": false,
    "ref": 838,
-   "current": 1316,
-   "move": 478,
+   "current": 1297,
+   "move": 459,
    "triggerPrice": null,
    "band": null,
-   "levelStress": 0.6933333333333334,
-   "widenStress": 0.9371428571428572,
-   "stress": 0.9371428571428572,
+   "levelStress": 0.6616666666666666,
+   "widenStress": 0.8828571428571429,
+   "stress": 0.8828571428571429,
    "status": "WARNING",
    "rationale": "Borrowing spreads on the riskiest rated corporate debt. It covers all CCC-rated borrowers rather than tech alone, but is a useful early-warning signal for vulnerable, highly leveraged companies.",
    "descriptor": "Risky corporate borrowing costs",
-   "points": 5.622857142857143,
+   "points": 5.297142857142857,
    "maxPoints": 6.0,
    "plus10": null,
-   "prevStress": 0.9371428571428572,
+   "prevStress": 0.8828571428571429,
    "spark": [
     {
      "date": "2025-11-07",
@@ -1530,8 +1531,8 @@
      "stress": 0.9828571428571429
     },
     {
-     "date": "2026-11-04",
-     "stress": 0.9371428571428572
+     "date": "2026-11-05",
+     "stress": 0.8828571428571429
     }
    ]
   },
@@ -1562,7 +1563,7 @@
    "points": 7.7863730322785845,
    "maxPoints": 14.000000000000002,
    "plus10": null,
-   "prevStress": 0.6422987226374091,
+   "prevStress": 0.5561695023056131,
    "spark": [
     {
      "date": "2025-11-07",
@@ -1773,7 +1774,7 @@
      "stress": 0.6456113849578629
     },
     {
-     "date": "2026-11-04",
+     "date": "2026-11-05",
      "stress": 0.5561695023056131
     }
    ]
@@ -2020,7 +2021,7 @@
      "stress": 0.0
     },
     {
-     "date": "2026-11-04",
+     "date": "2026-11-05",
      "stress": 0.0
     }
    ]
@@ -2036,23 +2037,27 @@
    "trigger": 600,
    "wcalm": 75,
    "wtrig": 250,
-   "lastDate": "2026-11-03",
+   "lastDate": "2026-11-04",
    "stale": false,
    "ref": 260,
-   "current": 340,
-   "move": 80,
+   "current": 332,
+   "move": 72,
    "triggerPrice": null,
    "band": "Normal",
    "levelStress": 0.0,
-   "widenStress": 0.02857142857142857,
-   "stress": 0.02857142857142857,
-   "status": "WATCH",
+   "widenStress": 0.0,
+   "stress": 0.0,
+   "status": "CALM",
    "rationale": "The broad junk-bond spread, the market-wide gauge of credit stress.",
    "descriptor": "Junk-bond borrowing costs",
-   "points": 0.2857142857142857,
+   "points": 0.0,
    "maxPoints": 10.0,
-   "plus10": null,
-   "prevStress": 0.02857142857142857,
+   "plus10": {
+    "kind": "spread",
+    "bp": 510.0,
+    "via": "widening"
+   },
+   "prevStress": 0.0,
    "spark": [
     {
      "date": "2025-11-07",
@@ -2263,20 +2268,13 @@
      "stress": 0.05142857142857143
     },
     {
-     "date": "2026-11-04",
-     "stress": 0.02857142857142857
+     "date": "2026-11-05",
+     "stress": 0.0
     }
    ]
   }
  ],
  "history": [
-  {
-   "date": "2025-11-06",
-   "equity": 0.0,
-   "financing": 4.761904761904762,
-   "credit": 18.51606336818612,
-   "score": 8
-  },
   {
    "date": "2025-11-07",
    "equity": 0.301742373844206,
@@ -4015,10 +4013,17 @@
   },
   {
    "date": "2026-11-04",
-   "equity": 42.01186572352784,
-   "financing": 44.25480751179932,
-   "credit": 21.816452210791542,
-   "score": 35
+   "equity": 42.01187627506162,
+   "financing": 42.44528370227552,
+   "credit": 21.04425143859077,
+   "score": 34
+  },
+  {
+   "date": "2026-11-05",
+   "equity": 65.04533498824033,
+   "financing": 42.44528370227552,
+   "credit": 21.04425143859077,
+   "score": 45
   }
  ],
  "weekly": [
@@ -4124,12 +4129,12 @@
   },
   {
    "weekEnding": "2026-11-06",
-   "high": 38
+   "high": 45
   }
  ],
  "scoreRange": {
-  "tight": 48,
-  "loose": 25,
+  "tight": 56,
+  "loose": 34,
   "pct": 0.2
  },
  "sample": false,
@@ -4168,5 +4173,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-11-05T02:30+00:00"
+ "generatedAt": "2026-11-06T01:00+00:00"
 }
