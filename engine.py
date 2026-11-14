@@ -146,10 +146,61 @@ def fetch_fred(series_ids, start, cache_path=FRED_CACHE):
     return cache
 
 
+def fetch_tiingo(symbol, start):
+    """Daily closes from Tiingo (free key in TIINGO_API_KEY): {date: (close, adjClose)}. Empty when no key is set."""
+    key = os.environ.get("TIINGO_API_KEY", "").strip()
+    if not key:
+        return {}
+    url = (f"https://api.tiingo.com/tiingo/daily/{urllib.parse.quote(symbol.lower())}/prices?"
+           f"startDate={start.isoformat()}&token={key}")
+    rows = json.loads(_get(url, tries=3, timeout=45))
+    return {dt.date.fromisoformat(r["date"][:10]): (r.get("close"), r.get("adjClose")) for r in rows
+            if r.get("close") is not None}
+
+
+def fill_late_closes(F, px, master):
+    """Yahoo sometimes publishes a small ETF's close hours after the bigger tickers'. For each Yahoo price whose
+    newest close is older than the master's, take the missing days from Tiingo, chained from Yahoo's last close by
+    Tiingo's adjusted day-on-day return (so Yahoo's dividend adjustment stays consistent). Indices (^NDX, ^SOX)
+    aren't on Tiingo and are left as they are. Anything still behind is noted and flagged in the Actions run."""
+    top = max(d for d, v in px[master].items() if v is not None)
+    for f in F:
+        if "yahoo" not in f or f["col"] == master:
+            continue
+        s = px[f["col"]]
+        have = [d for d, v in s.items() if v is not None]
+        last = max(have) if have else None
+        if last is None or last >= top:
+            continue
+        filled = []
+        if not f["yahoo"].startswith("^"):
+            try:
+                ti = fetch_tiingo(f["yahoo"], last - dt.timedelta(days=7))
+            except Exception as e:
+                ti = {}
+                print(f"Tiingo unavailable for {f['yahoo']}: {e}")
+            prev = ti.get(last)
+            for d in sorted(k for k in ti if last < k <= top):
+                c, a = ti[d]
+                pa = (prev[1] or prev[0]) if prev else None
+                if not pa or not (a or c):
+                    break
+                s[d] = round(s[last] * (a or c) / pa, 4)
+                last, prev = d, ti[d]
+                filled.append(d.isoformat())
+        if filled:
+            FETCH_NOTES.append(f"{f['name']}: Yahoo had no close yet for {', '.join(filled)}; taken from Tiingo.")
+            print(f"{f['yahoo']}: filled {', '.join(filled)} from Tiingo")
+        if last < top:
+            msg = f"{f['name']} ({f['yahoo']}) has no close for {top.isoformat()} yet; using {last.isoformat()}."
+            print(f"::warning title=Price a day behind::{msg} The backup run will retry.")
+
+
 def fetch_live(cfg):
     F = cfg["factors"]
     px = {f["col"]: fetch_yahoo(f["yahoo"]) for f in F if "yahoo" in f}
     master = F[0]["col"]
+    fill_late_closes(F, px, master)
     cutoff = max(px[master]) - dt.timedelta(days=keep_days(cfg))
     fred = fetch_fred([f["fred"] for f in F if "fred" in f], cutoff - dt.timedelta(days=10))
     for f in F:

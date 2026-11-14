@@ -30,7 +30,10 @@ three ICE BofA spreads from FRED (×100 for bp), then writes:
 - `data/fred.json` — cached spread history, so a FRED outage only carries the last value forward
 
 The spreads need a free FRED API key saved as the repository secret `FRED_API_KEY`
-(Settings → Secrets and variables → Actions). To refresh now: Actions → *Update dashboard data* → **Run workflow**.
+(Settings → Secrets and variables → Actions). Optional: a free Tiingo key as `TIINGO_API_KEY` is the fallback when
+Yahoo hasn't published an ETF's close yet (it sometimes lags hours behind on AIQ, DTCR and BIZD); the missing day is
+chained from Yahoo's last close by Tiingo's day-on-day return. Two backup runs (23:47 and 03:23 UTC) re-run the update
+whenever today's reading is missing or any stock/ETF price is still a day behind. To refresh now: Actions → *Update dashboard data* → **Run workflow**.
 
 ## Files
 | File | What it is |

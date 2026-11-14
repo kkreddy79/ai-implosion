@@ -9,6 +9,8 @@ on:
   schedule:
     - cron: "17 22 * * 1-5"
     - cron: "47 23 * * 1-5"
+    # Second backup (03:23 UTC = 7:23 pm PST / 8:23 pm PDT, same US day): catches closes Yahoo publishes late.
+    - cron: "23 3 * * 2-6"
   workflow_dispatch:
   push:
     branches: [main]
@@ -29,7 +31,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Only the backup schedule is gated: it skips when docs/data.json already holds today's US trading date.
+  # Only the backup schedules are gated: they skip when docs/data.json already holds today's US trading date AND
+  # every daily price (stocks/ETFs, not the FRED spreads, which always lag a day) is from that date too.
   gate:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -38,20 +41,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: docs/data.json
+          sparse-checkout: |
+            docs/data.json
+            config.json
           sparse-checkout-cone-mode: false
       - id: check
         env:
-          BACKUP: ${{ github.event_name == 'schedule' && github.event.schedule == '47 23 * * 1-5' }}
+          BACKUP: ${{ github.event_name == 'schedule' && github.event.schedule != '17 22 * * 1-5' }}
         run: |
           if [ "$BACKUP" != "true" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; exit 0; fi
-          have=$(python3 -c "import json; print(json.load(open('docs/data.json')).get('asOf',''))")
           today=$(TZ=America/New_York date +%F)
-          if [ "$have" = "$today" ]; then
-            echo "Today's reading ($today) is already saved; backup run not needed."
+          verdict=$(TODAY="$today" python3 - <<'EOF'
+          import json, os
+          d = json.load(open("docs/data.json"))
+          px = {f["col"] for f in json.load(open("config.json"))["factors"] if "yahoo" in f}
+          if d.get("asOf") != os.environ["TODAY"]:
+              print(f"Saved reading is {d.get('asOf')}, today is {os.environ['TODAY']}")
+          else:
+              late = [f"{f['name']} ({f.get('lastDate')})" for f in d["factors"]
+                      if f["col"] in px and f.get("lastDate") != d["asOf"]]
+              print("Prices behind: " + ", ".join(late) if late else "ok")
+          EOF
+          )
+          if [ "$verdict" = "ok" ]; then
+            echo "Today's reading ($today) is saved with every price current; backup run not needed."
             echo "run=false" >> "$GITHUB_OUTPUT"
           else
-            echo "Saved reading is $have, today is $today: running the backup update."
+            echo "$verdict: running the backup update."
             echo "run=true" >> "$GITHUB_OUTPUT"
           fi
 
@@ -69,6 +85,7 @@ jobs:
       - name: Fetch prices and rebuild data
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
         run: |
           set -o pipefail
           if ! python update_dashboard.py 2>&1 | tee run.log; then
