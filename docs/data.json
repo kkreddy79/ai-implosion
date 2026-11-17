@@ -9,7 +9,7 @@
  "prevDate": "2026-11-13",
  "prevScore": 36,
  "pillars": {
-  "Equity": 59.416687461350215,
+  "Equity": 59.41671694172519,
   "Financing": 49.53182517228713,
   "Credit": 18.978795074159862
  },
@@ -58,7 +58,7 @@
   {
    "name": "Semiconductors",
    "col": "SOX",
-   "stress": 0.8109927403210416
+   "stress": 0.8109931730818637
   },
   {
    "name": "CCC high-yield spread (bp)",
@@ -75,7 +75,7 @@
  "exitRule": {
   "rebound": 0.2,
   "recoveryMode": false,
-  "currentRebound": 0.02130476294602257
+  "currentRebound": 0.021304691597411107
  },
  "factors": [
   {
@@ -92,22 +92,22 @@
    "lastDate": "2026-11-16",
    "stale": false,
    "ref": 31224.4707,
-   "current": 27197.1523,
-   "move": -0.12897955704978536,
+   "current": 27197.1504,
+   "move": -0.12897961789949586,
    "triggerPrice": 23418.353025,
    "band": null,
-   "levelStress": 0.39489778524892677,
+   "levelStress": 0.39489808949747923,
    "widenStress": null,
-   "stress": 0.39489778524892677,
+   "stress": 0.39489808949747923,
    "status": "WATCH",
    "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
    "descriptor": "Large-cap tech benchmark",
-   "points": 7.1081601344806815,
+   "points": 7.108165610954625,
    "maxPoints": 18.0,
    "plus10": {
     "kind": "price",
-    "drawdown": -0.24009066816089647,
-    "price": 23727.766666666666
+    "drawdown": -0.24009072901060696,
+    "price": 23727.764766666667
    },
    "prevStress": 0.27534605494529646,
    "spark": [
@@ -321,7 +321,7 @@
     },
     {
      "date": "2026-11-16",
-     "stress": 0.39489778524892677
+     "stress": 0.39489808949747923
     }
    ]
   },
@@ -339,17 +339,17 @@
    "lastDate": "2026-11-16",
    "stale": false,
    "ref": 14634.7197,
-   "current": 9610.6523,
-   "move": -0.34329782209631254,
+   "current": 9610.6504,
+   "move": -0.34329795192455914,
    "triggerPrice": 8780.83182,
    "band": null,
-   "levelStress": 0.8109927403210416,
+   "levelStress": 0.8109931730818637,
    "widenStress": null,
-   "stress": 0.8109927403210416,
+   "stress": 0.8109931730818637,
    "status": "WARNING",
    "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
    "descriptor": "Chip stocks",
-   "points": 14.597869325778747,
+   "points": 14.597877115473546,
    "maxPoints": 18.0,
    "plus10": null,
    "prevStress": 0.6889842538858695,
@@ -564,7 +564,7 @@
     },
     {
      "date": "2026-11-16",
-     "stress": 0.8109927403210416
+     "stress": 0.8109931730818637
     }
    ]
   },
@@ -4024,7 +4024,7 @@
   },
   {
    "date": "2026-11-16",
-   "equity": 59.416687461350215,
+   "equity": 59.41671694172519,
    "financing": 49.53182517228713,
    "credit": 18.978795074159862,
    "score": 43
@@ -4177,5 +4177,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-11-17T04:32+00:00"
+ "generatedAt": "2026-11-17T05:15+00:00"
 }
