@@ -1,22 +1,22 @@
 {
- "asOf": "2026-11-13",
- "score": 36,
+ "asOf": "2026-11-16",
+ "score": 43,
  "band": "ELEVATED",
  "triggers": "0 of 9",
  "factorCount": 9,
  "lookbackDays": 730,
  "widenDays": 365,
- "prevDate": "2026-11-12",
- "prevScore": 33,
+ "prevDate": "2026-11-13",
+ "prevScore": 36,
  "pillars": {
-  "Equity": 47.59859016904362,
-  "Financing": 46.45547994873166,
-  "Credit": 17.55162777697562
+  "Equity": 59.416687461350215,
+  "Financing": 49.53182517228713,
+  "Credit": 18.978795074159862
  },
  "prevPillars": {
-  "Equity": 41.22460689608451,
-  "Financing": 45.301132335499965,
-  "Credit": 18.330082666348854
+  "Equity": 47.59859016904362,
+  "Financing": 46.64595613920785,
+  "Credit": 17.55162777697562
  },
  "currentLevel": "None",
  "implosionDate": null,
@@ -56,9 +56,14 @@
  ],
  "concentrated": [
   {
+   "name": "Semiconductors",
+   "col": "SOX",
+   "stress": 0.8109927403210416
+  },
+  {
    "name": "CCC high-yield spread (bp)",
    "col": "CCC",
-   "stress": 0.9314285714285714
+   "stress": 0.9371428571428572
   }
  ],
  "shock": {
@@ -70,7 +75,7 @@
  "exitRule": {
   "rebound": 0.2,
   "recoveryMode": false,
-  "currentRebound": 0.04934055764309697
+  "currentRebound": 0.02130476294602257
  },
  "factors": [
   {
@@ -84,27 +89,27 @@
    "trigger": -0.25,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-13",
+   "lastDate": "2026-11-16",
    "stale": false,
    "ref": 31224.4707,
-   "current": 27943.7402,
-   "move": -0.1050692109890593,
+   "current": 27197.1523,
+   "move": -0.12897955704978536,
    "triggerPrice": 23418.353025,
    "band": null,
-   "levelStress": 0.27534605494529646,
+   "levelStress": 0.39489778524892677,
    "widenStress": null,
-   "stress": 0.27534605494529646,
+   "stress": 0.39489778524892677,
    "status": "WATCH",
    "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
    "descriptor": "Large-cap tech benchmark",
-   "points": 4.956228989015337,
+   "points": 7.1081601344806815,
    "maxPoints": 18.0,
    "plus10": {
     "kind": "price",
-    "drawdown": -0.2161803221001704,
-    "price": 24474.35456666667
+    "drawdown": -0.24009066816089647,
+    "price": 23727.766666666666
    },
-   "prevStress": 0.22002897634386473,
+   "prevStress": 0.27534605494529646,
    "spark": [
     {
      "date": "2025-11-21",
@@ -313,6 +318,10 @@
     {
      "date": "2026-11-13",
      "stress": 0.27534605494529646
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.39489778524892677
     }
    ]
   },
@@ -327,23 +336,23 @@
    "trigger": -0.4,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-13",
+   "lastDate": "2026-11-16",
    "stale": false,
    "ref": 14634.7197,
-   "current": 10146.3203,
-   "move": -0.30669527616576087,
+   "current": 9610.6523,
+   "move": -0.34329782209631254,
    "triggerPrice": 8780.83182,
    "band": null,
-   "levelStress": 0.6889842538858695,
+   "levelStress": 0.8109927403210416,
    "widenStress": null,
-   "stress": 0.6889842538858695,
+   "stress": 0.8109927403210416,
    "status": "WARNING",
    "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
    "descriptor": "Chip stocks",
-   "points": 12.40171656994565,
+   "points": 14.597869325778747,
    "maxPoints": 18.0,
    "plus10": null,
-   "prevStress": 0.6069078384876749,
+   "prevStress": 0.6889842538858695,
    "spark": [
     {
      "date": "2025-11-21",
@@ -552,6 +561,10 @@
     {
      "date": "2026-11-13",
      "stress": 0.6889842538858695
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.8109927403210416
     }
    ]
   },
@@ -566,23 +579,23 @@
    "trigger": -0.3,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-13",
+   "lastDate": "2026-11-16",
    "stale": false,
    "ref": 70.14,
-   "current": 58.72,
-   "move": -0.16281722269746224,
+   "current": 56.83,
+   "move": -0.18976333048189342,
    "triggerPrice": 49.098,
    "band": null,
-   "levelStress": 0.45126889078984894,
+   "levelStress": 0.5590533219275737,
    "widenStress": null,
-   "stress": 0.45126889078984894,
-   "status": "WATCH",
+   "stress": 0.5590533219275737,
+   "status": "WARNING",
    "rationale": "A basket of AI and big-data companies. It moves closely with the Nasdaq-100, so it carries a smaller weight.",
    "descriptor": "AI & big-data stocks",
-   "points": 4.061420017108641,
+   "points": 5.031479897348164,
    "maxPoints": 9.0,
    "plus10": null,
-   "prevStress": 0.4073567151411461,
+   "prevStress": 0.45126889078984894,
    "spark": [
     {
      "date": "2025-11-21",
@@ -791,6 +804,10 @@
     {
      "date": "2026-11-13",
      "stress": 0.45126889078984894
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.5590533219275737
     }
    ]
   },
@@ -805,23 +822,23 @@
    "trigger": -0.35,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-13",
+   "lastDate": "2026-11-16",
    "stale": false,
    "ref": 32.3415,
-   "current": 25.37,
-   "move": -0.21555895675834458,
+   "current": 24.67,
+   "move": -0.23720297450643912,
    "triggerPrice": 21.021975000000005,
    "band": null,
-   "levelStress": 0.46223582703337834,
+   "levelStress": 0.5488118980257566,
    "widenStress": null,
-   "stress": 0.46223582703337834,
-   "status": "WATCH",
+   "stress": 0.5488118980257566,
+   "status": "WARNING",
    "rationale": "Data-center and digital-infrastructure companies: the physical AI build-out that much of the new debt is financing. Equity prices also reflect broader stock-market moves.",
    "descriptor": "Data-center infrastructure stocks",
-   "points": 2.77341496220027,
+   "points": 3.292871388154539,
    "maxPoints": 6.0,
    "plus10": null,
-   "prevStress": 0.4276053986364276,
+   "prevStress": 0.46223582703337834,
    "spark": [
     {
      "date": "2025-11-21",
@@ -1030,6 +1047,10 @@
     {
      "date": "2026-11-13",
      "stress": 0.46223582703337834
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.5488118980257566
     }
    ]
   },
@@ -1044,7 +1065,7 @@
    "trigger": 250,
    "wcalm": 30,
    "wtrig": 100,
-   "lastDate": "2026-11-12",
+   "lastDate": "2026-11-13",
    "stale": false,
    "ref": 92,
    "current": 111,
@@ -1269,6 +1290,10 @@
     {
      "date": "2026-11-13",
      "stress": 0.0
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.0
     }
    ]
   },
@@ -1283,23 +1308,23 @@
    "trigger": 1500,
    "wcalm": 150,
    "wtrig": 500,
-   "lastDate": "2026-11-12",
+   "lastDate": "2026-11-13",
    "stale": false,
    "ref": 838,
-   "current": 1314,
-   "move": 476,
+   "current": 1316,
+   "move": 478,
    "triggerPrice": null,
    "band": null,
-   "levelStress": 0.69,
-   "widenStress": 0.9314285714285714,
-   "stress": 0.9314285714285714,
+   "levelStress": 0.6933333333333334,
+   "widenStress": 0.9371428571428572,
+   "stress": 0.9371428571428572,
    "status": "WARNING",
    "rationale": "Borrowing spreads on the riskiest rated corporate debt. It covers all CCC-rated borrowers rather than tech alone, but is a useful early-warning signal for vulnerable, highly leveraged companies.",
    "descriptor": "Risky corporate borrowing costs",
-   "points": 5.588571428571428,
+   "points": 5.622857142857143,
    "maxPoints": 6.0,
    "plus10": null,
-   "prevStress": 0.9314285714285714,
+   "prevStress": 0.9371428571428572,
    "spark": [
     {
      "date": "2025-11-21",
@@ -1507,7 +1532,11 @@
     },
     {
      "date": "2026-11-13",
-     "stress": 0.9314285714285714
+     "stress": 0.9371428571428572
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.9371428571428572
     }
    ]
   },
@@ -1522,23 +1551,23 @@
    "trigger": -0.25,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-13",
+   "lastDate": "2026-11-16",
    "stale": false,
    "ref": 14.5819,
-   "current": 12.5,
-   "move": -0.1427728896782997,
+   "current": 12.39,
+   "move": -0.1503164882491307,
    "triggerPrice": 10.936425,
    "band": null,
-   "levelStress": 0.4638644483914985,
+   "levelStress": 0.5015824412456534,
    "widenStress": null,
-   "stress": 0.4638644483914985,
-   "status": "WATCH",
+   "stress": 0.5015824412456534,
+   "status": "WARNING",
    "rationale": "Listed business development companies (BDCs), a market proxy for private credit, a major lender to growth and tech firms. Their share prices reflect credit concerns and broader stock-market moves.",
    "descriptor": "Listed BDCs \u00b7 private-credit proxy",
-   "points": 6.49410227748098,
+   "points": 7.022154177439149,
    "maxPoints": 14.000000000000002,
    "plus10": null,
-   "prevStress": 0.4844378990392197,
+   "prevStress": 0.4638644483914985,
    "spark": [
     {
      "date": "2025-11-21",
@@ -1747,6 +1776,10 @@
     {
      "date": "2026-11-13",
      "stress": 0.4638644483914985
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.5015824412456534
     }
    ]
   },
@@ -1761,11 +1794,11 @@
    "trigger": -0.08,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-13",
+   "lastDate": "2026-11-16",
    "stale": false,
    "ref": 20.56,
-   "current": 20.52,
-   "move": -0.0019455252918287869,
+   "current": 20.5,
+   "move": -0.0029182879377431803,
    "triggerPrice": 18.9152,
    "band": null,
    "levelStress": 0.0,
@@ -1990,6 +2023,10 @@
     {
      "date": "2026-11-13",
      "stress": 0.0
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.0
     }
    ]
   },
@@ -2004,11 +2041,11 @@
    "trigger": 600,
    "wcalm": 75,
    "wtrig": 250,
-   "lastDate": "2026-11-12",
+   "lastDate": "2026-11-13",
    "stale": false,
    "ref": 260,
-   "current": 320,
-   "move": 60,
+   "current": 323,
+   "move": 63,
    "triggerPrice": null,
    "band": "Normal",
    "levelStress": 0.0,
@@ -2233,18 +2270,15 @@
     {
      "date": "2026-11-13",
      "stress": 0.0
+    },
+    {
+     "date": "2026-11-16",
+     "stress": 0.0
     }
    ]
   }
  ],
  "history": [
-  {
-   "date": "2025-11-17",
-   "equity": 2.1710156142866737,
-   "financing": 6.476190476190477,
-   "credit": 20.24248684457573,
-   "score": 10
-  },
   {
    "date": "2025-11-18",
    "equity": 6.291889665355371,
@@ -3963,7 +3997,7 @@
   {
    "date": "2026-11-10",
    "equity": 50.611825833098415,
-   "financing": 46.169765663017365,
+   "financing": 48.07452756777928,
    "credit": 15.08652062729377,
    "score": 37
   },
@@ -3984,16 +4018,19 @@
   {
    "date": "2026-11-13",
    "equity": 47.59859016904362,
-   "financing": 46.45547994873166,
+   "financing": 46.64595613920785,
    "credit": 17.55162777697562,
    "score": 36
+  },
+  {
+   "date": "2026-11-16",
+   "equity": 59.416687461350215,
+   "financing": 49.53182517228713,
+   "credit": 18.978795074159862,
+   "score": 43
   }
  ],
  "weekly": [
-  {
-   "weekEnding": "2026-05-22",
-   "high": 11
-  },
   {
    "weekEnding": "2026-05-29",
    "high": 10
@@ -4093,11 +4130,15 @@
   {
    "weekEnding": "2026-11-13",
    "high": 37
+  },
+  {
+   "weekEnding": "2026-11-20",
+   "high": 43
   }
  ],
  "scoreRange": {
-  "tight": 49,
-  "loose": 27,
+  "tight": 55,
+  "loose": 32,
   "pct": 0.2
  },
  "sample": false,
@@ -4136,5 +4177,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-11-14T05:09+00:00"
+ "generatedAt": "2026-11-17T04:30+00:00"
 }
