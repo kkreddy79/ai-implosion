@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-18T03:43:23+00:00",
+ "generatedAt": "2026-11-18T11:59:18+00:00",
  "source": "Yahoo Finance daily closes",
  "assets": [
   {
@@ -7,7 +7,7 @@
    "name": "Nifty 50",
    "symbol": "^NSEI",
    "unit": "index",
-   "close": 25323.1504,
+   "close": 25227.9492,
    "asOf": "2026-11-18",
    "closes": [
     [
@@ -188,7 +188,7 @@
     ],
     [
      "2026-11-18",
-     25323.1504
+     25227.9492
     ]
    ]
   },
