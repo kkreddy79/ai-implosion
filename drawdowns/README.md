@@ -50,6 +50,7 @@ the headline numbers match the rows · no more than 5 stocks missing.
    Software and data companies whose record came in the 2021 boom and that aren't AI plays are out
    (Adobe, Salesforce, Snowflake, MongoDB, UiPath were dropped on 20 Nov 2026).
 5. **Conglomerates stay out** when AI is a small part of the business (Samsung was left out for that reason).
+   The exception is a company that owns a frontier lab and trades as an AI stock: SpaceX (SPCX), owner of xAI, is in.
 6. **New listings join on their first day.** Mark them with `"ipo": {"date": …, "price": …}` so the page says the
    peak is recent (Anthropic, ANT, listed 19 Nov 2026 at $83).
 7. **Non-US listings** need `"currency"` (only `"KRW"` is set up; add others to `CURRENCY` in `drawdowns.py`).
