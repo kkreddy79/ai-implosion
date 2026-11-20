@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-20T22:39:54+00:00",
+ "generatedAt": "2026-11-20T23:58:21+00:00",
  "asOf": "2026-11-20",
  "source": "Yahoo Finance daily closes, split-adjusted, not dividend-adjusted",
  "summary": {
@@ -521,21 +521,6 @@
    "ipo": false
   },
   {
-   "t": "TEM",
-   "symbol": "TEM",
-   "n": "Tempus AI",
-   "g": "Software",
-   "ath": 103.25,
-   "d": "2025-10-08",
-   "c": 54.04,
-   "asOf": "2026-11-20",
-   "dd": -0.4766,
-   "day": -0.0934,
-   "old": false,
-   "cur": "$",
-   "ipo": false
-  },
-  {
    "t": "ANET",
    "symbol": "ANET",
    "n": "Arista Networks",
@@ -760,6 +745,21 @@
    "cur": "$",
    "ipo": true,
    "ipoPrice": 83
+  },
+  {
+   "t": "SPCX",
+   "symbol": "SPCX",
+   "n": "SpaceX",
+   "g": "Frontier AI",
+   "ath": 211.39,
+   "d": "2026-06-16",
+   "c": 127.79,
+   "asOf": "2026-11-20",
+   "dd": -0.3955,
+   "day": -0.0769,
+   "old": false,
+   "cur": "$",
+   "ipo": false
   }
  ],
  "missing": [],
