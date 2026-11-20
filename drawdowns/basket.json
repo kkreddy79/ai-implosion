@@ -30,6 +30,16 @@
     "PATH"
    ],
    "why": "Cover the main holdings of the DTCR and AIQ gauges and add Anthropic after its 19 Nov IPO; drop pre-2025 peakers that are not AI plays. Samsung left out as mainly a phone and electronics conglomerate."
+  },
+  {
+   "date": "2026-11-20",
+   "added": [
+    "SPCX"
+   ],
+   "dropped": [
+    "TEM"
+   ],
+   "why": "SpaceX owns xAI (Grok) since February 2026 and listed on 12 June 2026, so it trades as the closest listed peer to Anthropic. Tempus AI is a healthcare company using AI, the least tied to the AI build-out."
   }
  ],
  "stocks": [
@@ -239,12 +249,6 @@
    "segment": "Software"
   },
   {
-   "symbol": "TEM",
-   "ticker": "TEM",
-   "name": "Tempus AI",
-   "segment": "Software"
-  },
-  {
    "symbol": "ANET",
    "ticker": "ANET",
    "name": "Arista Networks",
@@ -337,6 +341,12 @@
     "date": "2026-11-19",
     "price": 83
    }
+  },
+  {
+   "symbol": "SPCX",
+   "ticker": "SPCX",
+   "name": "SpaceX",
+   "segment": "Frontier AI"
   }
  ]
 }
