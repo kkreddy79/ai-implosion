@@ -26,6 +26,9 @@ three ICE BofA spreads from FRED (×100 for bp), then writes:
 - `docs/markets.json` — not part of the index: six headline numbers for KKReckons' edition strip (Nifty 50, S&P 500,
   US 10-year yield, Brent, gold, USD/INR: the latest close and the last 45 dated closes), from
   Yahoo Finance by `markets.py` in the same daily run. A failed asset is left out with a note; it never stops the index.
+- `docs/drawdowns.json` and `docs/drawdowns.html` — not part of the index: the AI drawdown monitor, 50 AI-linked stocks
+  measured from their highest-ever close, by `drawdowns.py` in the same daily run. The page is served at
+  https://kkreddy79.github.io/ai-implosion/drawdowns.html. Basket, template and rules: [`drawdowns/README.md`](drawdowns/README.md).
 - `docs/AI_Implosion_Dashboard.xlsx` — the full Excel 365 workbook (live formulas, 4 charts), downloadable from the page
 - `data/fred.json` — cached spread history, so a FRED outage only carries the last value forward
 
@@ -42,6 +45,7 @@ whenever today's reading is missing or any stock/ETF price is still a day behind
 | `engine.py` | Data fetch + the scoring rules |
 | `update_dashboard.py` | Runs the engine and builds the Excel workbook |
 | `docs/index.html` | The dashboard page |
+| `drawdowns.py`, `drawdowns/` | AI drawdown monitor: basket (`basket.json`), page template (`template.html`) and instructions (`README.md`) |
 | `backtest.py`, `docs/backtest.html` | Replays the rules on daily data since 1997 (stand-ins before an ETF existed); results at [/backtest.html](https://kkreddy79.github.io/ai-implosion/backtest.html). Runs on rule changes and monthly. |
 
 ## Rules

@@ -22,6 +22,8 @@ on:
       - "docs/snapshots/**"
       - "docs/signal-log.csv"
       - "docs/markets.json"
+      - "docs/drawdowns.json"
+      - "docs/drawdowns.html"
 
 permissions:
   contents: write
@@ -96,6 +98,11 @@ jobs:
       - name: Market snapshot
         continue-on-error: true
         run: python markets.py
+      # KKReckons' AI drawdown monitor (docs/drawdowns.json + docs/drawdowns.html). Not part of the index either:
+      # a failure here never stops it. Rules and the basket: drawdowns/README.md.
+      - name: AI drawdown monitor
+        continue-on-error: true
+        run: python drawdowns.py
       - name: Commit updated data
         run: |
           git config user.name "ai-implosion-bot"
@@ -104,6 +111,7 @@ jobs:
           [ -d docs/snapshots ] && git add docs/snapshots docs/signal-log.csv
           [ -f data/fred.json ] && git add data/fred.json
           [ -f docs/markets.json ] && git add docs/markets.json
+          [ -f docs/drawdowns.json ] && git add docs/drawdowns.json docs/drawdowns.html
           git add -u data
           if git diff --cached --quiet; then echo "No change"; exit 0; fi
           git commit -m "Data: $(date -u +%F)"

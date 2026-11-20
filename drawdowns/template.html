@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!-- KKReckons AI drawdown monitor. Template: drawdowns.py fills every __PLACEHOLDER__ and writes docs/drawdowns.html.
+     Edit the look here; edit the stocks in drawdowns/basket.json. Rules: drawdowns/README.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Stocks: Distance from the Peak | KKReckons</title>
+<style>
+.kkdd{--bg:#14111b;--panel:#1c1826;--panel2:#231e30;--line:#2f2940;--ink:#f3eff8;--muted:#a59fb3;--dim:#6f6882;
+  --green:#3ecf8e;--amber:#f5b83d;--orange:#ff7a2f;--red:#ff4757;--accent:#ff7a2f;
+  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.45;padding:clamp(18px,4vw,40px);border-radius:18px;max-width:1080px;margin:0 auto;box-sizing:border-box;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.kkdd *{box-sizing:border-box}
+.kkdd .eyebrow{display:flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.kkdd .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(255,71,87,.6);animation:kkpulse 2s infinite}
+@keyframes kkpulse{0%{box-shadow:0 0 0 0 rgba(255,71,87,.55)}70%{box-shadow:0 0 0 10px rgba(255,71,87,0)}100%{box-shadow:0 0 0 0 rgba(255,71,87,0)}}
+.kkdd h2{font-size:clamp(28px,5vw,46px);line-height:1.05;margin:12px 0 10px;letter-spacing:-.02em;font-weight:800}
+.kkdd h2 em{font-style:normal;background:linear-gradient(90deg,var(--amber),var(--orange) 45%,var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+.kkdd .lede{color:var(--muted);font-size:clamp(15px,2vw,17px);max-width:720px;margin:0}
+.kkdd .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0 18px}
+.kkdd .kpi{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;position:relative;overflow:hidden}
+.kkdd .kpi::after{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--c,var(--orange))}
+.kkdd .kpi .v{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.02em;color:var(--c,var(--ink))}
+.kkdd .kpi .v small{font-size:.5em;color:var(--muted);font-weight:600;margin-left:2px}
+.kkdd .kpi .l{font-size:13px;color:var(--muted);margin-top:2px}
+.kkdd .bands{margin:6px 0 26px}
+.kkdd .bands .bar{display:flex;height:34px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.kkdd .bands .seg{border:0;font-family:inherit;cursor:pointer;padding:0;transition:flex-grow .6s,opacity .2s;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#14111b;min-width:0;transition:flex-grow .6s}
+.kkdd .bands .seg.off{opacity:.25}
+.kkdd .bands .seg.on{box-shadow:inset 0 0 0 2px #fff}
+.kkdd .bands .legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:9px;font-size:12.5px;color:var(--muted)}
+.kkdd .bands .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.kkdd .sectitle{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700;margin:0 0 10px}
+.kkdd .segs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.kkdd .segcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;transition:border-color .2s,transform .2s;text-align:left;color:inherit;font:inherit}
+.kkdd .segcard:hover{transform:translateY(-2px);border-color:#4a4160}
+.kkdd .segcard.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.kkdd .segcard .n{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kkdd .segcard .m{font-size:22px;font-weight:800;margin-top:2px}
+.kkdd .segcard .c{font-size:11.5px;color:var(--dim)}
+.kkdd .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.kkdd .pills{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px}
+.kkdd .pills button{background:none;border:0;color:var(--muted);font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:999px;cursor:pointer}
+.kkdd .pills button.on{background:var(--ink);color:#14111b}
+.kkdd .toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;user-select:none}
+.kkdd .toggle input{appearance:none;width:36px;height:20px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;transition:background .2s;margin:0}
+.kkdd .toggle input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--ink);transition:left .2s}
+.kkdd .toggle input:checked{background:var(--accent)}
+.kkdd .toggle input:checked::after{left:18px}
+.kkdd .ctl{display:flex;align-items:center;gap:8px}
+.kkdd .ctl-l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700}
+.kkdd .sel{position:relative}
+.kkdd .sel::after{content:"";position:absolute;right:14px;top:50%;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.kkdd select{appearance:none;-webkit-appearance:none;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:999px;font:inherit;font-size:13px;font-weight:600;padding:9px 36px 9px 14px;cursor:pointer}
+.kkdd select:focus-visible,.kkdd button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.kkdd .list{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.kkdd .row{display:grid;grid-template-columns:28px 150px 1fr 74px 140px 66px;gap:14px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);transition:background .15s}
+.kkdd .row:first-child{border-top:0}
+.kkdd .row:hover{background:var(--panel2)}
+.kkdd .row.head{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:700;background:#191522}
+.kkdd .rk{color:var(--dim);font-size:12px;text-align:right}
+.kkdd .nm b{display:block;font-size:15px;letter-spacing:.01em}
+.kkdd .nm .sub{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kkdd .track{position:relative;height:12px;background:#15121d;border-radius:6px;overflow:hidden}
+.kkdd .track .ticks{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(25% - 1px),#2a2438 calc(25% - 1px) 25%)}
+.kkdd .track .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:6px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.kkdd .track .old{position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.12) 0 4px,transparent 4px 8px);mix-blend-mode:overlay}
+.kkdd .dd{font-weight:800;font-size:16px;text-align:right}
+.kkdd .px{font-size:12px;color:var(--muted);text-align:right;line-height:1.3}
+.kkdd .px b{color:var(--ink);font-weight:600}
+.kkdd .td{font-size:13px;font-weight:700;text-align:right}
+.kkdd .tag.ipo{background:rgba(62,207,142,.15);color:var(--green)}
+.kkdd .up{color:var(--green)}.kkdd .down{color:var(--red)}
+.kkdd .tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.06em;white-space:nowrap;padding:1px 6px;border-radius:5px;background:#2b2539;color:var(--muted);margin-left:6px;vertical-align:2px}
+.kkdd .note{font-size:12.5px;color:var(--dim);margin:12px 2px 0}
+.kkdd .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:flex-end;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+.kkdd .brand{font-size:15px;font-weight:700}
+.kkdd .brand span{color:var(--accent)}
+.kkdd .brand small{display:block;font-size:12.5px;color:var(--muted);font-weight:500;margin-top:2px}
+.kkdd .disc{font-size:11.5px;color:var(--dim);max-width:560px;text-align:right}
+@media (max-width:860px){
+ .kkdd .controls{flex-direction:column;align-items:flex-start}
+ .kkdd .kpis{grid-template-columns:repeat(2,1fr)}
+ .kkdd .segs{grid-template-columns:repeat(2,1fr)}
+ .kkdd .row{grid-template-columns:22px 1fr 64px 58px;gap:10px;row-gap:6px;padding:10px 12px}
+ .kkdd .row .trackcell{grid-column:2 / 5;order:5}
+ .kkdd .row .px{display:none}
+ .kkdd .row.head .h-bar,.kkdd .row.head .h-px{display:none}
+ .kkdd .disc{text-align:left}
+}
+@media (max-width:420px){.kkdd .segs{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion:reduce){.kkdd *{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body style="margin:0;background:#14111b">
+<section class="kkdd" id="kkdd" aria-labelledby="kkdd-title">
+  <div class="eyebrow"><span class="dot"></span>AI Market Stress Index · Drawdown Monitor</div>
+  <h2 id="kkdd-title">__TITLE__</h2>
+  <p class="lede">__COUNT__ AI stocks across __SEGLIST__, each measured from its highest-ever close to the close on <b style="color:var(--ink)">__ASOF__</b>.</p>
+
+  <div class="kpis">
+    <div class="kpi" style="--c:var(--orange)"><div class="v" id="k-med">–</div><div class="l">Median distance from peak</div></div>
+    <div class="kpi" style="--c:var(--amber)"><div class="v" id="k-50">–</div><div class="l">Down 50% or more</div></div>
+    <div class="kpi" style="--c:var(--red)"><div class="v" id="k-75">–</div><div class="l">Down 75% or more</div></div>
+    <div class="kpi" style="--c:var(--red)"><div class="v" id="k-day">–</div><div class="l">Median move, __DAY__</div></div>
+  </div>
+
+  <div class="bands" aria-label="Distribution by drawdown band">
+    <p class="sectitle">How deep the damage goes · tap to filter</p>
+    <div class="bar" id="bandbar"></div>
+    <div class="legend">
+      <span><i style="background:var(--green)"></i>0–24% off peak</span>
+      <span><i style="background:var(--amber)"></i>25–49%</span>
+      <span><i style="background:var(--orange)"></i>50–74%</span>
+      <span><i style="background:var(--red)"></i>75–100%</span>
+    </div>
+  </div>
+
+  <p class="sectitle">Median by segment · tap to filter</p>
+  <div class="segs" id="segs"></div>
+
+  <div class="controls">
+    <div class="ctl">
+      <span class="ctl-l">Sort</span>
+      <div class="sel"><select id="sortby" aria-label="Sort by">
+        <option value="deep">Biggest drop from peak</option>
+        <option value="shallow">Smallest drop from peak</option>
+        <option value="dayworst">Today: worst first</option>
+        <option value="daybest">Today: best first</option>
+        <option value="recent">Most recent peak</option>
+        <option value="oldest">Oldest peak</option>
+        <option value="az">Ticker A–Z</option>
+      </select></div>
+    </div>
+    <label class="toggle"><input type="checkbox" id="recent"> Only peaks set in 2025–26</label>
+  </div>
+
+  <div class="list" id="list" role="table" aria-label="AI stock drawdowns"></div>
+  <p class="note">Striped bars mark stocks whose all-time high came before 2025, so part of their fall predates the AI boom. __NOTES__ The # column is each stock's rank by drop from peak among all 50, so it stays the same however you sort or filter. Daily closing prices, split-adjusted, not dividend-adjusted.</p>
+
+  <div class="foot">
+    <div class="brand">KK<span>Reckons</span><small>Analysis by KK Reddy · Data: Yahoo Finance, closes as of __ASOF__</small></div>
+    <div class="disc">For information only, not investment advice. Drawdowns are measured from each stock's own record close, which fell on different dates. __BASKET__</div>
+  </div>
+</section>
+<script>
+(function(){
+const DATA=__DATA__;
+const root=document.getElementById('kkdd');
+const col=d=>{const m=-d*100;return m>=75?'var(--red)':m>=50?'var(--orange)':m>=25?'var(--amber)':'var(--green)'};
+const pct=(v,dp=1)=>(v>0?'+':v<0?'−':'')+Math.abs(v*100).toFixed(dp)+'%';
+const med=a=>{if(!a.length)return 0;const s=[...a].sort((x,y)=>x-y),n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2};
+const fmt=(n,cur)=>{const dp=cur==='₩'?0:2;return n.toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp})};
+const fday=s=>new Date(s+'T12:00:00').toLocaleDateString('en-US',{day:'numeric',month:'short'});
+const fdate=s=>{const d=new Date(s+'T12:00:00');return d.toLocaleDateString('en-US',{month:'short',year:'numeric'})};
+const SEGS=__SEGMENTS__;
+let state={seg:null,band:null,sort:'deep',recent:false};
+[...DATA].sort((a,b)=>a.dd-b.dd).forEach((r,i)=>r.rk=i+1);
+const BANDS=[{k:3,n:'Critical',d:'75–100% off peak',c:'var(--red)'},{k:2,n:'Severe',d:'50–74%',c:'var(--orange)'},{k:1,n:'Elevated',d:'25–49%',c:'var(--amber)'},{k:0,n:'Normal',d:'0–24%',c:'var(--green)'}];
+const band=r=>{const m=-r.dd*100;return m>=75?3:m>=50?2:m>=25?1:0};
+const SORTS={deep:(a,b)=>a.dd-b.dd,shallow:(a,b)=>b.dd-a.dd,dayworst:(a,b)=>a.day-b.day,daybest:(a,b)=>b.day-a.day,recent:(a,b)=>b.d.localeCompare(a.d),oldest:(a,b)=>a.d.localeCompare(b.d),az:(a,b)=>a.t.localeCompare(b.t)};
+
+function filtered(){return DATA.filter(r=>(!state.seg||r.g===state.seg)&&(state.band===null||band(r)===state.band)&&(!state.recent||!r.old))}
+
+function kpis(rows){
+  const dd=rows.map(r=>r.dd);
+  document.getElementById('k-med').textContent=pct(med(dd));
+  document.getElementById('k-50').innerHTML=dd.filter(v=>v<=-.5).length+'<small>/ '+rows.length+'</small>';
+  document.getElementById('k-75').innerHTML=dd.filter(v=>v<=-.75).length+'<small>/ '+rows.length+'</small>';
+  document.getElementById('k-day').textContent=pct(med(rows.map(r=>r.day)));
+  const base=DATA.filter(r=>(!state.seg||r.g===state.seg)&&(!state.recent||!r.old));
+  const b=[0,0,0,0];base.forEach(r=>b[band(r)]++);
+  const cs=['var(--green)','var(--amber)','var(--orange)','var(--red)'],nm=['Normal','Elevated','Severe','Critical'];
+  document.getElementById('bandbar').innerHTML=b.map((n,i)=>n?`<button class="seg${state.band===null?'':state.band===i?' on':' off'}" data-band="${i}" style="flex-grow:${n};background:${cs[i]}" title="${nm[i]}: ${n} stocks" aria-pressed="${state.band===i}">${n}</button>`:'').join('');
+  root.querySelectorAll('#bandbar .seg').forEach(el=>el.onclick=()=>{const k=+el.dataset.band;state.band=state.band===k?null:k;render()});
+}
+
+function segs(){
+  const base=DATA.filter(r=>!state.recent||!r.old);
+  document.getElementById('segs').innerHTML=SEGS.map(s=>{const rs=base.filter(r=>r.g===s);const m=med(rs.map(r=>r.dd));
+    return `<button class="segcard${state.seg===s?' on':''}" data-seg="${s}"><div class="n">${s}</div><div class="m" style="color:${col(m)}">${pct(m,0)}</div><div class="c">${rs.length} stocks</div></button>`}).join('');
+  root.querySelectorAll('.segcard').forEach(b=>b.onclick=()=>{state.seg=state.seg===b.dataset.seg?null:b.dataset.seg;render()});
+}
+
+function rowHtml(r){return `
+   <div class="row" role="row">
+    <div class="rk" title="Rank by drop from peak, of all 50">${r.rk}</div>
+    <div class="nm"><b>${r.t}${r.old?'<span class="tag">PRE-2025 PEAK</span>':''}${r.ipo?'<span class="tag ipo">NEW IPO</span>':''}${r.stale?'<span class="tag" title="Last available close: '+r.asOf+'">STALE</span>':''}</b><span class="sub">${r.n} · ${r.g}</span></div>
+    <div class="trackcell"><div class="track"><div class="ticks"></div><div class="fill" data-w="${(-r.dd*100).toFixed(1)}" style="background:${col(r.dd)}">${r.old?'<div class="old"></div>':''}</div></div></div>
+    <div class="dd" style="color:${col(r.dd)}">${pct(r.dd)}</div>
+    <div class="px"><b>${r.cur}${fmt(r.ath,r.cur)}</b> ${r.ipo?fday(r.d):fdate(r.d)}<br>→ ${r.cur}${fmt(r.c,r.cur)}</div>
+    <div class="td ${r.day>=0?'up':'down'}">${pct(r.day)}</div>
+   </div>`}
+
+function list(rows){
+  const s=[...rows].sort(SORTS[state.sort]);
+  const head=`<div class="row head" role="row"><div class="rk" title="Rank by drop from peak, of all 50">#</div><div>Stock</div><div class="h-bar">Distance from all-time high</div><div class="dd" style="font-size:11px">Off peak</div><div class="h-px" style="text-align:right">Peak → now</div><div style="text-align:right">Today</div></div>`;
+  const body=s.map(rowHtml).join('')||'<div class="row" style="display:block;color:var(--muted)">No stocks match these filters.</div>';
+  document.getElementById('list').innerHTML=head+body;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>root.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%')));
+}
+
+function render(){const rows=filtered();kpis(rows);segs();list(rows)}
+document.getElementById('sortby').onchange=e=>{state.sort=e.target.value;render()};
+document.getElementById('recent').onchange=e=>{state.recent=e.target.checked;render()};
+render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!-- KKReckons AI drawdown monitor. Template: drawdowns.py fills every __PLACEHOLDER__ and writes docs/drawdowns.html.
+     Edit the look here; edit the stocks in drawdowns/basket.json. Rules: drawdowns/README.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Stocks: Distance from the Peak | KKReckons</title>
+<style>
+.kkdd{--bg:#14111b;--panel:#1c1826;--panel2:#231e30;--line:#2f2940;--ink:#f3eff8;--muted:#a59fb3;--dim:#6f6882;
+  --green:#3ecf8e;--amber:#f5b83d;--orange:#ff7a2f;--red:#ff4757;--accent:#ff7a2f;
+  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.45;padding:clamp(18px,4vw,40px);border-radius:18px;max-width:1080px;margin:0 auto;box-sizing:border-box;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.kkdd *{box-sizing:border-box}
+.kkdd .eyebrow{display:flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.kkdd .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(255,71,87,.6);animation:kkpulse 2s infinite}
+@keyframes kkpulse{0%{box-shadow:0 0 0 0 rgba(255,71,87,.55)}70%{box-shadow:0 0 0 10px rgba(255,71,87,0)}100%{box-shadow:0 0 0 0 rgba(255,71,87,0)}}
+.kkdd h2{font-size:clamp(28px,5vw,46px);line-height:1.05;margin:12px 0 10px;letter-spacing:-.02em;font-weight:800}
+.kkdd h2 em{font-style:normal;background:linear-gradient(90deg,var(--amber),var(--orange) 45%,var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+.kkdd .lede{color:var(--muted);font-size:clamp(15px,2vw,17px);max-width:720px;margin:0}
+.kkdd .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0 18px}
+.kkdd .kpi{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;position:relative;overflow:hidden}
+.kkdd .kpi::after{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--c,var(--orange))}
+.kkdd .kpi .v{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.02em;color:var(--c,var(--ink))}
+.kkdd .kpi .v small{font-size:.5em;color:var(--muted);font-weight:600;margin-left:2px}
+.kkdd .kpi .l{font-size:13px;color:var(--muted);margin-top:2px}
+.kkdd .bands{margin:6px 0 26px}
+.kkdd .bands .bar{display:flex;height:34px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.kkdd .bands .seg{border:0;font-family:inherit;cursor:pointer;padding:0;transition:flex-grow .6s,opacity .2s;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#14111b;min-width:0;transition:flex-grow .6s}
+.kkdd .bands .seg.off{opacity:.25}
+.kkdd .bands .seg.on{box-shadow:inset 0 0 0 2px #fff}
+.kkdd .bands .legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:9px;font-size:12.5px;color:var(--muted)}
+.kkdd .bands .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.kkdd .sectitle{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700;margin:0 0 10px}
+.kkdd .segs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.kkdd .segcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;transition:border-color .2s,transform .2s;text-align:left;color:inherit;font:inherit}
+.kkdd .segcard:hover{transform:translateY(-2px);border-color:#4a4160}
+.kkdd .segcard.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.kkdd .segcard .n{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kkdd .segcard .m{font-size:22px;font-weight:800;margin-top:2px}
+.kkdd .segcard .c{font-size:11.5px;color:var(--dim)}
+.kkdd .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.kkdd .pills{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px}
+.kkdd .pills button{background:none;border:0;color:var(--muted);font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:999px;cursor:pointer}
+.kkdd .pills button.on{background:var(--ink);color:#14111b}
+.kkdd .toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;user-select:none}
+.kkdd .toggle input{appearance:none;width:36px;height:20px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;transition:background .2s;margin:0}
+.kkdd .toggle input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--ink);transition:left .2s}
+.kkdd .toggle input:checked{background:var(--accent)}
+.kkdd .toggle input:checked::after{left:18px}
+.kkdd .ctl{display:flex;align-items:center;gap:8px}
+.kkdd .ctl-l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700}
+.kkdd .sel{position:relative}
+.kkdd .sel::after{content:"";position:absolute;right:14px;top:50%;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.kkdd select{appearance:none;-webkit-appearance:none;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:999px;font:inherit;font-size:13px;font-weight:600;padding:9px 36px 9px 14px;cursor:pointer}
+.kkdd select:focus-visible,.kkdd button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.kkdd .list{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.kkdd .row{display:grid;grid-template-columns:28px 150px 1fr 74px 140px 66px;gap:14px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);transition:background .15s}
+.kkdd .row:first-child{border-top:0}
+.kkdd .row:hover{background:var(--panel2)}
+.kkdd .row.head{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:700;background:#191522}
+.kkdd .rk{color:var(--dim);font-size:12px;text-align:right}
+.kkdd .nm b{display:block;font-size:15px;letter-spacing:.01em}
+.kkdd .nm .sub{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kkdd .track{position:relative;height:12px;background:#15121d;border-radius:6px;overflow:hidden}
+.kkdd .track .ticks{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(25% - 1px),#2a2438 calc(25% - 1px) 25%)}
+.kkdd .track .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:6px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.kkdd .track .old{position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.12) 0 4px,transparent 4px 8px);mix-blend-mode:overlay}
+.kkdd .dd{font-weight:800;font-size:16px;text-align:right}
+.kkdd .px{font-size:12px;color:var(--muted);text-align:right;line-height:1.3}
+.kkdd .px b{color:var(--ink);font-weight:600}
+.kkdd .td{font-size:13px;font-weight:700;text-align:right}
+.kkdd .tag.ipo{background:rgba(62,207,142,.15);color:var(--green)}
+.kkdd .up{color:var(--green)}.kkdd .down{color:var(--red)}
+.kkdd .tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.06em;white-space:nowrap;padding:1px 6px;border-radius:5px;background:#2b2539;color:var(--muted);margin-left:6px;vertical-align:2px}
+.kkdd .note{font-size:12.5px;color:var(--dim);margin:12px 2px 0}
+.kkdd .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:flex-end;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+.kkdd .brand{font-size:15px;font-weight:700}
+.kkdd .brand span{color:var(--accent)}
+.kkdd .brand small{display:block;font-size:12.5px;color:var(--muted);font-weight:500;margin-top:2px}
+.kkdd .disc{font-size:11.5px;color:var(--dim);max-width:560px;text-align:right}
+@media (max-width:860px){
+ .kkdd .controls{flex-direction:column;align-items:flex-start}
+ .kkdd .kpis{grid-template-columns:repeat(2,1fr)}
+ .kkdd .segs{grid-template-columns:repeat(2,1fr)}
+ .kkdd .row{grid-template-columns:22px 1fr 64px 58px;gap:10px;row-gap:6px;padding:10px 12px}
+ .kkdd .row .trackcell{grid-column:2 / 5;order:5}
+ .kkdd .row .px{display:none}
+ .kkdd .row.head .h-bar,.kkdd .row.head .h-px{display:none}
+ .kkdd .disc{text-align:left}
+}
+@media (max-width:420px){.kkdd .segs{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion:reduce){.kkdd *{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body style="margin:0;background:#14111b">
+<section class="kkdd" id="kkdd" aria-labelledby="kkdd-title">
+  <div class="eyebrow"><span class="dot"></span>AI Market Stress Index · Drawdown Monitor</div>
+  <h2 id="kkdd-title">How far the AI trade has <em>fallen from its peak</em></h2>
+  <p class="lede">50 AI stocks across chips, cloud, software, networking, data centers, power, hardware and frontier AI, each measured from its highest-ever close to the close on <b style="color:var(--ink)">20 Nov 2026</b>.</p>
+
+  <div class="kpis">
+    <div class="kpi" style="--c:var(--orange)"><div class="v" id="k-med">–</div><div class="l">Median distance from peak</div></div>
+    <div class="kpi" style="--c:var(--amber)"><div class="v" id="k-50">–</div><div class="l">Down 50% or more</div></div>
+    <div class="kpi" style="--c:var(--red)"><div class="v" id="k-75">–</div><div class="l">Down 75% or more</div></div>
+    <div class="kpi" style="--c:var(--red)"><div class="v" id="k-day">–</div><div class="l">Median move, 20 Nov</div></div>
+  </div>
+
+  <div class="bands" aria-label="Distribution by drawdown band">
+    <p class="sectitle">How deep the damage goes · tap to filter</p>
+    <div class="bar" id="bandbar"></div>
+    <div class="legend">
+      <span><i style="background:var(--green)"></i>0–24% off peak</span>
+      <span><i style="background:var(--amber)"></i>25–49%</span>
+      <span><i style="background:var(--orange)"></i>50–74%</span>
+      <span><i style="background:var(--red)"></i>75–100%</span>
+    </div>
+  </div>
+
+  <p class="sectitle">Median by segment · tap to filter</p>
+  <div class="segs" id="segs"></div>
+
+  <div class="controls">
+    <div class="ctl">
+      <span class="ctl-l">Sort</span>
+      <div class="sel"><select id="sortby" aria-label="Sort by">
+        <option value="deep">Biggest drop from peak</option>
+        <option value="shallow">Smallest drop from peak</option>
+        <option value="dayworst">Today: worst first</option>
+        <option value="daybest">Today: best first</option>
+        <option value="recent">Most recent peak</option>
+        <option value="oldest">Oldest peak</option>
+        <option value="az">Ticker A–Z</option>
+      </select></div>
+    </div>
+    <label class="toggle"><input type="checkbox" id="recent"> Only peaks set in 2025–26</label>
+  </div>
+
+  <div class="list" id="list" role="table" aria-label="AI stock drawdowns"></div>
+  <p class="note">Striped bars mark stocks whose all-time high came before 2025, so part of their fall predates the AI boom. Anthropic (ANT) listed on 19 Nov 2026 after pricing its IPO at $83, so its peak is recent. SK hynix is in Korean won. The # column is each stock's rank by drop from peak among all 50, so it stays the same however you sort or filter. Daily closing prices, split-adjusted, not dividend-adjusted.</p>
+
+  <div class="foot">
+    <div class="brand">KK<span>Reckons</span><small>Analysis by KK Reddy · Data: Yahoo Finance, closes as of 20 Nov 2026</small></div>
+    <div class="disc">For information only, not investment advice. Drawdowns are measured from each stock's own record close, which fell on different dates. The basket is KKReckons' selection of 50 large AI-linked stocks, all US-listed except SK hynix.</div>
+  </div>
+</section>
+<script>
+(function(){
+const DATA=[{"t":"SK hynix","symbol":"000660.KS","n":"SK hynix","g":"Chips","ath":2919000.0,"d":"2026-06-22","c":1113000.0,"asOf":"2026-11-20","dd":-0.6187,"day":-0.0592,"old":false,"cur":"₩","ipo":false},{"t":"ALAB","symbol":"ALAB","n":"Astera Labs","g":"Chips","ath":483.02,"d":"2026-06-30","c":180.35,"asOf":"2026-11-20","dd":-0.6266,"day":-0.1477,"old":false,"cur":"$","ipo":false},{"t":"AMAT","symbol":"AMAT","n":"Applied Materials","g":"Chips","ath":723.0,"d":"2026-06-30","c":302.63,"asOf":"2026-11-20","dd":-0.5814,"day":-0.1071,"old":false,"cur":"$","ipo":false},{"t":"AMD","symbol":"AMD","n":"AMD","g":"Chips","ath":649.42,"d":"2026-10-06","c":424.39,"asOf":"2026-11-20","dd":-0.3465,"day":-0.1325,"old":false,"cur":"$","ipo":false},{"t":"ARM","symbol":"ARM","n":"Arm","g":"Chips","ath":439.46,"d":"2026-06-18","c":152.2,"asOf":"2026-11-20","dd":-0.6537,"day":-0.1409,"old":false,"cur":"$","ipo":false},{"t":"ASML","symbol":"ASML","n":"ASML","g":"Chips","ath":1989.44,"d":"2026-06-30","c":1266.22,"asOf":"2026-11-20","dd":-0.3635,"day":-0.0663,"old":false,"cur":"$","ipo":false},{"t":"AVGO","symbol":"AVGO","n":"Broadcom","g":"Chips","ath":481.57,"d":"2026-06-02","c":304.41,"asOf":"2026-11-20","dd":-0.3679,"day":-0.1219,"old":false,"cur":"$","ipo":false},{"t":"CRDO","symbol":"CRDO","n":"Credo Technology","g":"Chips","ath":302.52,"d":"2026-06-22","c":99.86,"asOf":"2026-11-20","dd":-0.6699,"day":-0.152,"old":false,"cur":"$","ipo":false},{"t":"INTC","symbol":"INTC","n":"Intel","g":"Chips","ath":140.94,"d":"2026-06-22","c":51.28,"asOf":"2026-11-20","dd":-0.6362,"day":-0.0797,"old":false,"cur":"$","ipo":false},{"t":"KLAC","symbol":"KLAC","n":"KLA","g":"Chips","ath":301.71,"d":"2026-06-30","c":126.87,"asOf":"2026-11-20","dd":-0.5795,"day":-0.1033,"old":false,"cur":"$","ipo":false},{"t":"LRCX","symbol":"LRCX","n":"Lam Research","g":"Chips","ath":433.33,"d":"2026-06-30","c":183.27,"asOf":"2026-11-20","dd":-0.5771,"day":-0.1002,"old":false,"cur":"$","ipo":false},{"t":"MRVL","symbol":"MRVL","n":"Marvell","g":"Chips","ath":316.43,"d":"2026-06-04","c":122.28,"asOf":"2026-11-20","dd":-0.6136,"day":-0.1169,"old":false,"cur":"$","ipo":false},{"t":"MU","symbol":"MU","n":"Micron","g":"Chips","ath":1213.56,"d":"2026-06-25","c":594.51,"asOf":"2026-11-20","dd":-0.5101,"day":-0.1389,"old":false,"cur":"$","ipo":false},{"t":"NVDA","symbol":"NVDA","n":"Nvidia","g":"Chips","ath":239.24,"d":"2026-10-06","c":125.53,"asOf":"2026-11-20","dd":-0.4753,"day":-0.1401,"old":false,"cur":"$","ipo":false},{"t":"QCOM","symbol":"QCOM","n":"Qualcomm","g":"Chips","ath":251.02,"d":"2026-05-29","c":149.94,"asOf":"2026-11-20","dd":-0.4027,"day":-0.0745,"old":false,"cur":"$","ipo":false},{"t":"SMCI","symbol":"SMCI","n":"Super Micro","g":"Chips","ath":118.81,"d":"2024-03-13","c":21.65,"asOf":"2026-11-20","dd":-0.8178,"day":-0.0919,"old":true,"cur":"$","ipo":false},{"t":"SNDK","symbol":"SNDK","n":"Sandisk","g":"Chips","ath":291.88,"d":"2026-06-25","c":79.24,"asOf":"2026-11-20","dd":-0.7285,"day":-0.1605,"old":false,"cur":"$","ipo":false},{"t":"STX","symbol":"STX","n":"Seagate","g":"Chips","ath":1094.04,"d":"2026-06-22","c":457.01,"asOf":"2026-11-20","dd":-0.5823,"day":-0.1235,"old":false,"cur":"$","ipo":false},{"t":"TSM","symbol":"TSM","n":"TSMC","g":"Chips","ath":485.8,"d":"2026-10-05","c":318.71,"asOf":"2026-11-20","dd":-0.3439,"day":-0.0948,"old":false,"cur":"$","ipo":false},{"t":"WDC","symbol":"WDC","n":"Western Digital","g":"Chips","ath":746.23,"d":"2026-06-18","c":261.11,"asOf":"2026-11-20","dd":-0.6501,"day":-0.1202,"old":false,"cur":"$","ipo":false},{"t":"AMZN","symbol":"AMZN","n":"Amazon","g":"Cloud/neocloud","ath":284.02,"d":"2026-08-03","c":246.82,"asOf":"2026-11-20","dd":-0.131,"day":-0.041,"old":false,"cur":"$","ipo":false},{"t":"CRWV","symbol":"CRWV","n":"CoreWeave","g":"Cloud/neocloud","ath":183.58,"d":"2025-06-20","c":39.51,"asOf":"2026-11-20","dd":-0.7848,"day":-0.1202,"old":false,"cur":"$","ipo":false},{"t":"GOOGL","symbol":"GOOGL","n":"Alphabet","g":"Cloud/neocloud","ath":402.62,"d":"2026-05-13","c":265.29,"asOf":"2026-11-20","dd":-0.3411,"day":-0.027,"old":false,"cur":"$","ipo":false},{"t":"IREN","symbol":"IREN","n":"IREN","g":"Cloud/neocloud","ath":76.41,"d":"2025-11-05","c":11.82,"asOf":"2026-11-20","dd":-0.8453,"day":-0.1797,"old":false,"cur":"$","ipo":false},{"t":"META","symbol":"META","n":"Meta","g":"Cloud/neocloud","ath":790.0,"d":"2025-08-12","c":560.84,"asOf":"2026-11-20","dd":-0.2901,"day":-0.0593,"old":false,"cur":"$","ipo":false},{"t":"MSFT","symbol":"MSFT","n":"Microsoft","g":"Cloud/neocloud","ath":555.8,"d":"2026-11-04","c":484.52,"asOf":"2026-11-20","dd":-0.1282,"day":-0.0277,"old":false,"cur":"$","ipo":false},{"t":"NBIS","symbol":"NBIS","n":"Nebius","g":"Cloud/neocloud","ath":286.69,"d":"2026-06-18","c":81.31,"asOf":"2026-11-20","dd":-0.7164,"day":-0.1611,"old":false,"cur":"$","ipo":false},{"t":"ORCL","symbol":"ORCL","n":"Oracle","g":"Cloud/neocloud","ath":328.33,"d":"2025-09-10","c":101.19,"asOf":"2026-11-20","dd":-0.6918,"day":-0.0848,"old":false,"cur":"$","ipo":false},{"t":"AI","symbol":"AI","n":"C3.ai","g":"Software","ath":177.47,"d":"2020-12-22","c":9.13,"asOf":"2026-11-20","dd":-0.9486,"day":-0.0906,"old":true,"cur":"$","ipo":false},{"t":"APP","symbol":"APP","n":"AppLovin","g":"Software","ath":733.6,"d":"2025-12-22","c":348.29,"asOf":"2026-11-20","dd":-0.5252,"day":-0.0811,"old":false,"cur":"$","ipo":false},{"t":"DDOG","symbol":"DDOG","n":"Datadog","g":"Software","ath":293.26,"d":"2026-10-09","c":157.37,"asOf":"2026-11-20","dd":-0.4634,"day":-0.0546,"old":false,"cur":"$","ipo":false},{"t":"NOW","symbol":"NOW","n":"ServiceNow","g":"Software","ath":234.08,"d":"2025-01-28","c":87.61,"asOf":"2026-11-20","dd":-0.6257,"day":-0.0142,"old":false,"cur":"$","ipo":false},{"t":"PLTR","symbol":"PLTR","n":"Palantir","g":"Software","ath":209.05,"d":"2026-10-09","c":143.49,"asOf":"2026-11-20","dd":-0.3136,"day":-0.0663,"old":false,"cur":"$","ipo":false},{"t":"SOUN","symbol":"SOUN","n":"SoundHound AI","g":"Software","ath":24.23,"d":"2024-12-26","c":2.61,"asOf":"2026-11-20","dd":-0.8923,"day":-0.1031,"old":true,"cur":"$","ipo":false},{"t":"TEM","symbol":"TEM","n":"Tempus AI","g":"Software","ath":103.25,"d":"2025-10-08","c":54.04,"asOf":"2026-11-20","dd":-0.4766,"day":-0.0934,"old":false,"cur":"$","ipo":false},{"t":"ANET","symbol":"ANET","n":"Arista Networks","g":"Networking/optical","ath":216.74,"d":"2026-10-09","c":167.62,"asOf":"2026-11-20","dd":-0.2266,"day":-0.1159,"old":false,"cur":"$","ipo":false},{"t":"CIEN","symbol":"CIEN","n":"Ciena","g":"Networking/optical","ath":1046.5,"d":"2000-10-20","c":234.37,"asOf":"2026-11-20","dd":-0.776,"day":-0.1076,"old":true,"cur":"$","ipo":false},{"t":"COHR","symbol":"COHR","n":"Coherent","g":"Networking/optical","ath":426.89,"d":"2026-06-02","c":187.22,"asOf":"2026-11-20","dd":-0.5614,"day":-0.129,"old":false,"cur":"$","ipo":false},{"t":"LITE","symbol":"LITE","n":"Lumentum","g":"Networking/optical","ath":1133.4,"d":"2026-10-06","c":460.54,"asOf":"2026-11-20","dd":-0.5937,"day":-0.1394,"old":false,"cur":"$","ipo":false},{"t":"APLD","symbol":"APLD","n":"Applied Digital","g":"Data centers","ath":49.65,"d":"2026-05-28","c":11.49,"asOf":"2026-11-20","dd":-0.7686,"day":-0.1781,"old":false,"cur":"$","ipo":false},{"t":"DLR","symbol":"DLR","n":"Digital Realty","g":"Data centers","ath":203.91,"d":"2026-04-20","c":162.46,"asOf":"2026-11-20","dd":-0.2033,"day":-0.0664,"old":false,"cur":"$","ipo":false},{"t":"EQIX","symbol":"EQIX","n":"Equinix","g":"Data centers","ath":1115.94,"d":"2026-06-22","c":968.22,"asOf":"2026-11-20","dd":-0.1324,"day":-0.0489,"old":false,"cur":"$","ipo":false},{"t":"CEG","symbol":"CEG","n":"Constellation Energy","g":"Power","ath":403.95,"d":"2025-10-15","c":237.41,"asOf":"2026-11-20","dd":-0.4123,"day":-0.058,"old":false,"cur":"$","ipo":false},{"t":"ETN","symbol":"ETN","n":"Eaton","g":"Power","ath":459.96,"d":"2026-08-12","c":311.33,"asOf":"2026-11-20","dd":-0.3231,"day":-0.0582,"old":false,"cur":"$","ipo":false},{"t":"GEV","symbol":"GEV","n":"GE Vernova","g":"Power","ath":1174.86,"d":"2026-06-30","c":699.33,"asOf":"2026-11-20","dd":-0.4048,"day":-0.0753,"old":false,"cur":"$","ipo":false},{"t":"VRT","symbol":"VRT","n":"Vertiv","g":"Power","ath":376.23,"d":"2026-05-14","c":166.24,"asOf":"2026-11-20","dd":-0.5581,"day":-0.1014,"old":false,"cur":"$","ipo":false},{"t":"VST","symbol":"VST","n":"Vistra","g":"Power","ath":217.92,"d":"2025-09-22","c":115.25,"asOf":"2026-11-20","dd":-0.4711,"day":-0.0717,"old":false,"cur":"$","ipo":false},{"t":"DELL","symbol":"DELL","n":"Dell","g":"Hardware","ath":588.4,"d":"2026-09-17","c":278.02,"asOf":"2026-11-20","dd":-0.5275,"day":-0.1104,"old":false,"cur":"$","ipo":false},{"t":"HPE","symbol":"HPE","n":"Hewlett Packard Ent.","g":"Hardware","ath":73.46,"d":"2026-10-09","c":40.91,"asOf":"2026-11-20","dd":-0.4431,"day":-0.1007,"old":false,"cur":"$","ipo":false},{"t":"ANT","symbol":"ANT","n":"Anthropic","g":"Frontier AI","ath":97.17,"d":"2026-11-19","c":88.91,"asOf":"2026-11-20","dd":-0.085,"day":-0.085,"old":false,"cur":"$","ipo":true,"ipoPrice":83}];
+const root=document.getElementById('kkdd');
+const col=d=>{const m=-d*100;return m>=75?'var(--red)':m>=50?'var(--orange)':m>=25?'var(--amber)':'var(--green)'};
+const pct=(v,dp=1)=>(v>0?'+':v<0?'−':'')+Math.abs(v*100).toFixed(dp)+'%';
+const med=a=>{if(!a.length)return 0;const s=[...a].sort((x,y)=>x-y),n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2};
+const fmt=(n,cur)=>{const dp=cur==='₩'?0:2;return n.toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp})};
+const fday=s=>new Date(s+'T12:00:00').toLocaleDateString('en-US',{day:'numeric',month:'short'});
+const fdate=s=>{const d=new Date(s+'T12:00:00');return d.toLocaleDateString('en-US',{month:'short',year:'numeric'})};
+const SEGS=["Chips", "Cloud/neocloud", "Software", "Networking/optical", "Data centers", "Power", "Hardware", "Frontier AI"];
+let state={seg:null,band:null,sort:'deep',recent:false};
+[...DATA].sort((a,b)=>a.dd-b.dd).forEach((r,i)=>r.rk=i+1);
+const BANDS=[{k:3,n:'Critical',d:'75–100% off peak',c:'var(--red)'},{k:2,n:'Severe',d:'50–74%',c:'var(--orange)'},{k:1,n:'Elevated',d:'25–49%',c:'var(--amber)'},{k:0,n:'Normal',d:'0–24%',c:'var(--green)'}];
+const band=r=>{const m=-r.dd*100;return m>=75?3:m>=50?2:m>=25?1:0};
+const SORTS={deep:(a,b)=>a.dd-b.dd,shallow:(a,b)=>b.dd-a.dd,dayworst:(a,b)=>a.day-b.day,daybest:(a,b)=>b.day-a.day,recent:(a,b)=>b.d.localeCompare(a.d),oldest:(a,b)=>a.d.localeCompare(b.d),az:(a,b)=>a.t.localeCompare(b.t)};
+
+function filtered(){return DATA.filter(r=>(!state.seg||r.g===state.seg)&&(state.band===null||band(r)===state.band)&&(!state.recent||!r.old))}
+
+function kpis(rows){
+  const dd=rows.map(r=>r.dd);
+  document.getElementById('k-med').textContent=pct(med(dd));
+  document.getElementById('k-50').innerHTML=dd.filter(v=>v<=-.5).length+'<small>/ '+rows.length+'</small>';
+  document.getElementById('k-75').innerHTML=dd.filter(v=>v<=-.75).length+'<small>/ '+rows.length+'</small>';
+  document.getElementById('k-day').textContent=pct(med(rows.map(r=>r.day)));
+  const base=DATA.filter(r=>(!state.seg||r.g===state.seg)&&(!state.recent||!r.old));
+  const b=[0,0,0,0];base.forEach(r=>b[band(r)]++);
+  const cs=['var(--green)','var(--amber)','var(--orange)','var(--red)'],nm=['Normal','Elevated','Severe','Critical'];
+  document.getElementById('bandbar').innerHTML=b.map((n,i)=>n?`<button class="seg${state.band===null?'':state.band===i?' on':' off'}" data-band="${i}" style="flex-grow:${n};background:${cs[i]}" title="${nm[i]}: ${n} stocks" aria-pressed="${state.band===i}">${n}</button>`:'').join('');
+  root.querySelectorAll('#bandbar .seg').forEach(el=>el.onclick=()=>{const k=+el.dataset.band;state.band=state.band===k?null:k;render()});
+}
+
+function segs(){
+  const base=DATA.filter(r=>!state.recent||!r.old);
+  document.getElementById('segs').innerHTML=SEGS.map(s=>{const rs=base.filter(r=>r.g===s);const m=med(rs.map(r=>r.dd));
+    return `<button class="segcard${state.seg===s?' on':''}" data-seg="${s}"><div class="n">${s}</div><div class="m" style="color:${col(m)}">${pct(m,0)}</div><div class="c">${rs.length} stocks</div></button>`}).join('');
+  root.querySelectorAll('.segcard').forEach(b=>b.onclick=()=>{state.seg=state.seg===b.dataset.seg?null:b.dataset.seg;render()});
+}
+
+function rowHtml(r){return `
+   <div class="row" role="row">
+    <div class="rk" title="Rank by drop from peak, of all 50">${r.rk}</div>
+    <div class="nm"><b>${r.t}${r.old?'<span class="tag">PRE-2025 PEAK</span>':''}${r.ipo?'<span class="tag ipo">NEW IPO</span>':''}${r.stale?'<span class="tag" title="Last available close: '+r.asOf+'">STALE</span>':''}</b><span class="sub">${r.n} · ${r.g}</span></div>
+    <div class="trackcell"><div class="track"><div class="ticks"></div><div class="fill" data-w="${(-r.dd*100).toFixed(1)}" style="background:${col(r.dd)}">${r.old?'<div class="old"></div>':''}</div></div></div>
+    <div class="dd" style="color:${col(r.dd)}">${pct(r.dd)}</div>
+    <div class="px"><b>${r.cur}${fmt(r.ath,r.cur)}</b> ${r.ipo?fday(r.d):fdate(r.d)}<br>→ ${r.cur}${fmt(r.c,r.cur)}</div>
+    <div class="td ${r.day>=0?'up':'down'}">${pct(r.day)}</div>
+   </div>`}
+
+function list(rows){
+  const s=[...rows].sort(SORTS[state.sort]);
+  const head=`<div class="row head" role="row"><div class="rk" title="Rank by drop from peak, of all 50">#</div><div>Stock</div><div class="h-bar">Distance from all-time high</div><div class="dd" style="font-size:11px">Off peak</div><div class="h-px" style="text-align:right">Peak → now</div><div style="text-align:right">Today</div></div>`;
+  const body=s.map(rowHtml).join('')||'<div class="row" style="display:block;color:var(--muted)">No stocks match these filters.</div>';
+  document.getElementById('list').innerHTML=head+body;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>root.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%')));
+}
+
+function render(){const rows=filtered();kpis(rows);segs();list(rows)}
+document.getElementById('sortby').onchange=e=>{state.sort=e.target.value;render()};
+document.getElementById('recent').onchange=e=>{state.recent=e.target.checked;render()};
+render();
+})();
+</script>
+</body>
+</html>

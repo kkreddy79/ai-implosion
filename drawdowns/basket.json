@@ -1,0 +1,342 @@
+{
+ "_about": "The 50 stocks the drawdown monitor tracks. Edit here; the next daily run applies it. Rules for changing it are in drawdowns/README.md.",
+ "title": "How far the AI trade has *fallen from its peak*",
+ "segments": [
+  "Chips",
+  "Cloud/neocloud",
+  "Software",
+  "Networking/optical",
+  "Data centers",
+  "Power",
+  "Hardware",
+  "Frontier AI"
+ ],
+ "reviewed": "2026-11-20",
+ "changes": [
+  {
+   "date": "2026-11-20",
+   "added": [
+    "EQIX",
+    "DLR",
+    "APLD",
+    "000660.KS",
+    "ANT"
+   ],
+   "dropped": [
+    "ADBE",
+    "CRM",
+    "SNOW",
+    "MDB",
+    "PATH"
+   ],
+   "why": "Cover the main holdings of the DTCR and AIQ gauges and add Anthropic after its 19 Nov IPO; drop pre-2025 peakers that are not AI plays. Samsung left out as mainly a phone and electronics conglomerate."
+  }
+ ],
+ "stocks": [
+  {
+   "symbol": "000660.KS",
+   "ticker": "SK hynix",
+   "name": "SK hynix",
+   "segment": "Chips",
+   "currency": "KRW"
+  },
+  {
+   "symbol": "ALAB",
+   "ticker": "ALAB",
+   "name": "Astera Labs",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "AMAT",
+   "ticker": "AMAT",
+   "name": "Applied Materials",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "AMD",
+   "ticker": "AMD",
+   "name": "AMD",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "ARM",
+   "ticker": "ARM",
+   "name": "Arm",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "ASML",
+   "ticker": "ASML",
+   "name": "ASML",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "AVGO",
+   "ticker": "AVGO",
+   "name": "Broadcom",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "CRDO",
+   "ticker": "CRDO",
+   "name": "Credo Technology",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "INTC",
+   "ticker": "INTC",
+   "name": "Intel",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "KLAC",
+   "ticker": "KLAC",
+   "name": "KLA",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "LRCX",
+   "ticker": "LRCX",
+   "name": "Lam Research",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "MRVL",
+   "ticker": "MRVL",
+   "name": "Marvell",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "MU",
+   "ticker": "MU",
+   "name": "Micron",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "NVDA",
+   "ticker": "NVDA",
+   "name": "Nvidia",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "QCOM",
+   "ticker": "QCOM",
+   "name": "Qualcomm",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "SMCI",
+   "ticker": "SMCI",
+   "name": "Super Micro",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "SNDK",
+   "ticker": "SNDK",
+   "name": "Sandisk",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "STX",
+   "ticker": "STX",
+   "name": "Seagate",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "TSM",
+   "ticker": "TSM",
+   "name": "TSMC",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "WDC",
+   "ticker": "WDC",
+   "name": "Western Digital",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "AMZN",
+   "ticker": "AMZN",
+   "name": "Amazon",
+   "segment": "Cloud/neocloud"
+  },
+  {
+   "symbol": "CRWV",
+   "ticker": "CRWV",
+   "name": "CoreWeave",
+   "segment": "Cloud/neocloud"
+  },
+  {
+   "symbol": "GOOGL",
+   "ticker": "GOOGL",
+   "name": "Alphabet",
+   "segment": "Cloud/neocloud"
+  },
+  {
+   "symbol": "IREN",
+   "ticker": "IREN",
+   "name": "IREN",
+   "segment": "Cloud/neocloud"
+  },
+  {
+   "symbol": "META",
+   "ticker": "META",
+   "name": "Meta",
+   "segment": "Cloud/neocloud"
+  },
+  {
+   "symbol": "MSFT",
+   "ticker": "MSFT",
+   "name": "Microsoft",
+   "segment": "Cloud/neocloud"
+  },
+  {
+   "symbol": "NBIS",
+   "ticker": "NBIS",
+   "name": "Nebius",
+   "segment": "Cloud/neocloud"
+  },
+  {
+   "symbol": "ORCL",
+   "ticker": "ORCL",
+   "name": "Oracle",
+   "segment": "Cloud/neocloud"
+  },
+  {
+   "symbol": "AI",
+   "ticker": "AI",
+   "name": "C3.ai",
+   "segment": "Software"
+  },
+  {
+   "symbol": "APP",
+   "ticker": "APP",
+   "name": "AppLovin",
+   "segment": "Software"
+  },
+  {
+   "symbol": "DDOG",
+   "ticker": "DDOG",
+   "name": "Datadog",
+   "segment": "Software"
+  },
+  {
+   "symbol": "NOW",
+   "ticker": "NOW",
+   "name": "ServiceNow",
+   "segment": "Software"
+  },
+  {
+   "symbol": "PLTR",
+   "ticker": "PLTR",
+   "name": "Palantir",
+   "segment": "Software"
+  },
+  {
+   "symbol": "SOUN",
+   "ticker": "SOUN",
+   "name": "SoundHound AI",
+   "segment": "Software"
+  },
+  {
+   "symbol": "TEM",
+   "ticker": "TEM",
+   "name": "Tempus AI",
+   "segment": "Software"
+  },
+  {
+   "symbol": "ANET",
+   "ticker": "ANET",
+   "name": "Arista Networks",
+   "segment": "Networking/optical"
+  },
+  {
+   "symbol": "CIEN",
+   "ticker": "CIEN",
+   "name": "Ciena",
+   "segment": "Networking/optical"
+  },
+  {
+   "symbol": "COHR",
+   "ticker": "COHR",
+   "name": "Coherent",
+   "segment": "Networking/optical"
+  },
+  {
+   "symbol": "LITE",
+   "ticker": "LITE",
+   "name": "Lumentum",
+   "segment": "Networking/optical"
+  },
+  {
+   "symbol": "APLD",
+   "ticker": "APLD",
+   "name": "Applied Digital",
+   "segment": "Data centers"
+  },
+  {
+   "symbol": "DLR",
+   "ticker": "DLR",
+   "name": "Digital Realty",
+   "segment": "Data centers"
+  },
+  {
+   "symbol": "EQIX",
+   "ticker": "EQIX",
+   "name": "Equinix",
+   "segment": "Data centers"
+  },
+  {
+   "symbol": "CEG",
+   "ticker": "CEG",
+   "name": "Constellation Energy",
+   "segment": "Power"
+  },
+  {
+   "symbol": "ETN",
+   "ticker": "ETN",
+   "name": "Eaton",
+   "segment": "Power"
+  },
+  {
+   "symbol": "GEV",
+   "ticker": "GEV",
+   "name": "GE Vernova",
+   "segment": "Power"
+  },
+  {
+   "symbol": "VRT",
+   "ticker": "VRT",
+   "name": "Vertiv",
+   "segment": "Power"
+  },
+  {
+   "symbol": "VST",
+   "ticker": "VST",
+   "name": "Vistra",
+   "segment": "Power"
+  },
+  {
+   "symbol": "DELL",
+   "ticker": "DELL",
+   "name": "Dell",
+   "segment": "Hardware"
+  },
+  {
+   "symbol": "HPE",
+   "ticker": "HPE",
+   "name": "Hewlett Packard Ent.",
+   "segment": "Hardware"
+  },
+  {
+   "symbol": "ANT",
+   "ticker": "ANT",
+   "name": "Anthropic",
+   "segment": "Frontier AI",
+   "ipo": {
+    "date": "2026-11-19",
+    "price": 83
+   }
+  }
+ ]
+}
