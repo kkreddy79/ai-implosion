@@ -1,7 +1,7 @@
 {
  "asOf": "2026-11-19",
- "score": 50,
- "band": "SEVERE",
+ "score": 49,
+ "band": "ELEVATED",
  "triggers": "1 of 9",
  "factorCount": 9,
  "lookbackDays": 730,
@@ -9,9 +9,9 @@
  "prevDate": "2026-11-18",
  "prevScore": 46,
  "pillars": {
-  "Equity": 68.26119659651904,
-  "Financing": 56.285680420924635,
-  "Credit": 25.11357881899443
+  "Equity": 66.65298444938473,
+  "Financing": 54.14189199635147,
+  "Credit": 24.075638966496797
  },
  "prevPillars": {
   "Equity": 60.69140322561769,
@@ -575,20 +575,20 @@
    "trigger": -0.3,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-19",
+   "lastDate": "2026-11-18",
    "stale": false,
    "ref": 70.14,
-   "current": 54.42,
-   "move": -0.22412318220701455,
+   "current": 55.83,
+   "move": -0.20402053036783574,
    "triggerPrice": 49.098,
    "band": null,
-   "levelStress": 0.6964927288280582,
+   "levelStress": 0.616082121471343,
    "widenStress": null,
-   "stress": 0.6964927288280582,
+   "stress": 0.616082121471343,
    "status": "WARNING",
    "rationale": "A basket of AI and big-data companies. It moves closely with the Nasdaq-100, so it carries a smaller weight.",
    "descriptor": "AI & big-data stocks",
-   "points": 6.2684345594525235,
+   "points": 5.544739093242087,
    "maxPoints": 9.0,
    "plus10": null,
    "prevStress": 0.616082121471343,
@@ -803,7 +803,7 @@
     },
     {
      "date": "2026-11-19",
-     "stress": 0.6964927288280582
+     "stress": 0.616082121471343
     }
    ]
   },
@@ -818,20 +818,20 @@
    "trigger": -0.35,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-19",
+   "lastDate": "2026-11-18",
    "stale": false,
    "ref": 32.3415,
-   "current": 23.54,
-   "move": -0.2721426031569347,
+   "current": 24.06,
+   "move": -0.2560641899726359,
    "triggerPrice": 21.021975000000005,
    "band": null,
-   "levelStress": 0.688570412627739,
+   "levelStress": 0.6242567598905437,
    "widenStress": null,
-   "stress": 0.688570412627739,
+   "stress": 0.6242567598905437,
    "status": "WARNING",
    "rationale": "Data-center and digital-infrastructure companies: the physical AI build-out that much of the new debt is financing. Equity prices also reflect broader stock-market moves.",
    "descriptor": "Data-center infrastructure stocks",
-   "points": 4.131422475766434,
+   "points": 3.7455405593432625,
    "maxPoints": 6.0,
    "plus10": null,
    "prevStress": 0.6242567598905437,
@@ -1046,7 +1046,7 @@
     },
     {
      "date": "2026-11-19",
-     "stress": 0.688570412627739
+     "stress": 0.6242567598905437
     }
    ]
   },
@@ -1547,20 +1547,20 @@
    "trigger": -0.25,
    "wcalm": null,
    "wtrig": null,
-   "lastDate": "2026-11-19",
+   "lastDate": "2026-11-18",
    "stale": false,
    "ref": 14.5819,
-   "current": 12.06,
-   "move": -0.17294728396162362,
+   "current": 12.14,
+   "move": -0.1674610304555647,
    "triggerPrice": 10.936425,
    "band": null,
-   "levelStress": 0.6147364198081181,
+   "levelStress": 0.5873051522778235,
    "widenStress": null,
-   "stress": 0.6147364198081181,
+   "stress": 0.5873051522778235,
    "status": "WARNING",
    "rationale": "Listed business development companies (BDCs), a market proxy for private credit, a major lender to growth and tech firms. Their share prices reflect credit concerns and broader stock-market moves.",
    "descriptor": "Listed BDCs \u00b7 private-credit proxy",
-   "points": 8.606309877313654,
+   "points": 8.222272131889529,
    "maxPoints": 14.000000000000002,
    "plus10": null,
    "prevStress": 0.5873051522778235,
@@ -1775,7 +1775,7 @@
     },
     {
      "date": "2026-11-19",
-     "stress": 0.6147364198081181
+     "stress": 0.5873051522778235
     }
    ]
   },
@@ -4016,10 +4016,10 @@
   },
   {
    "date": "2026-11-19",
-   "equity": 68.26119659651904,
-   "financing": 56.285680420924635,
-   "credit": 25.11357881899443,
-   "score": 50
+   "equity": 66.65298444938473,
+   "financing": 54.14189199635147,
+   "credit": 24.075638966496797,
+   "score": 49
   }
  ],
  "weekly": [
@@ -4125,12 +4125,12 @@
   },
   {
    "weekEnding": "2026-11-20",
-   "high": 50
+   "high": 49
   }
  ],
  "scoreRange": {
-  "tight": 64,
-  "loose": 38,
+  "tight": 62,
+  "loose": 37,
   "pct": 0.2
  },
  "sample": false,
@@ -4169,5 +4169,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-11-19T22:54+00:00"
+ "generatedAt": "2026-11-20T03:22+00:00"
 }
