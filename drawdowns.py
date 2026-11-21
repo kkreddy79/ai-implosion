@@ -216,7 +216,7 @@ def render(data, basket, template_path=TEMPLATE):
     as_of = dt.date.fromisoformat(data["asOf"])
     fill = {"__DATA__": json.dumps(data["stocks"], separators=(",", ":"), ensure_ascii=False),
             "__SEGMENTS__": json.dumps(segs), "__BENCH__": json.dumps(data.get("benchmarks", []), separators=(",", ":")), "__TITLE__": title, "__COUNT__": str(len(data["stocks"])),
-            "__SEGLIST__": seglist, "__NOTES__": " ".join(notes), "__BASKET__": basket_note,
+            "__SEGLIST__": seglist, "__SEGCOUNT__": str(len(segs)), "__NOTES__": " ".join(notes), "__BASKET__": basket_note,
             "__ASOF__": as_of.strftime("%-d %b %Y"), "__DAY__": as_of.strftime("%-d %b")}
     for k, v in fill.items():
         h = h.replace(k, v)
