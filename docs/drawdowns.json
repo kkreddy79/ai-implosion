@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-21T00:50:33+00:00",
+ "generatedAt": "2026-11-21T03:15:04+00:00",
  "asOf": "2026-11-20",
  "source": "Yahoo Finance daily closes, split-adjusted, not dividend-adjusted",
  "summary": {
@@ -9,7 +9,7 @@
   "down50_25": 26,
   "down50": 26,
   "down75": 5,
-  "medianDay": -0.0933
+  "medianDay": -0.0885
  },
  "stocks": [
   {
@@ -307,13 +307,13 @@
    "g": "Chips",
    "ath": 291.88,
    "d": "2026-06-25",
-   "c": 79.24,
-   "asOf": "2026-11-20",
-   "dd": -0.7285,
-   "day": -0.1605,
+   "c": 94.39,
+   "asOf": "2026-11-19",
+   "dd": -0.6766,
+   "day": -0.0271,
    "ath25": 291.88,
    "d25": "2026-06-25",
-   "dd25": -0.7285,
+   "dd25": -0.6766,
    "old": false,
    "cur": "$",
    "ipo": false
@@ -830,7 +830,7 @@
    "g": "Chips",
    "ath": 483.84,
    "d": "2026-06-30",
-   "c": 204.77,
+   "c": 204.78,
    "asOf": "2026-11-20",
    "dd": -0.5768,
    "day": -0.0996,
@@ -919,13 +919,13 @@
    "id": "basket",
    "name": "AI basket as one portfolio",
    "symbol": "equal-weight",
-   "dd": -0.386,
+   "dd": -0.3838,
    "d": "2026-10-06",
-   "dd25": -0.386,
+   "dd25": -0.3838,
    "d25": "2026-10-06",
-   "day": -0.0941,
+   "day": -0.0909,
    "asOf": "2026-11-20",
-   "level": 207.49,
+   "level": 208.23,
    "since": "2025-01-01",
    "method": "equal-weight, rebalanced daily, price only, 100 on 2 Jan 2025"
   },
@@ -964,5 +964,7 @@
   }
  ],
  "missing": [],
- "notes": []
+ "notes": [
+  "Close not yet current for SNDK"
+ ]
 }
