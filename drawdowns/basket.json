@@ -9,6 +9,7 @@
   "Data centers",
   "Power",
   "Hardware",
+  "Autonomy & robotics",
   "Frontier AI"
  ],
  "reviewed": "2026-11-20",
@@ -40,6 +41,26 @@
     "TEM"
    ],
    "why": "SpaceX owns xAI (Grok) since February 2026 and listed on 12 June 2026, so it trades as the closest listed peer to Anthropic. Tempus AI is a healthcare company using AI, the least tied to the AI build-out."
+  },
+  {
+   "date": "2026-11-20",
+   "added": [
+    "CBRS",
+    "TER",
+    "CLS",
+    "PWR",
+    "TSLA",
+    "OKLO"
+   ],
+   "dropped": [
+    "SOUN",
+    "AI",
+    "APLD",
+    "DELL",
+    "APP",
+    "WDC"
+   ],
+   "why": "After an outside review: Cerebras (AI chips, listed May 2026) was missing; Teradyne (chip testing), Celestica (AI networking and server hardware) and Quanta Services (grid and data-center power construction) fill infrastructure gaps. Dropped SoundHound and C3.ai (record closes from before the AI cycle), Applied Digital (Data centers keeps Equinix and Digital Realty) and Dell (Celestica covers AI hardware). Also added Tesla (a top AIQ holding whose value rests largely on self-driving and robots) and Oklo (nuclear power for data centers); dropped AppLovin (ad tech, the weakest AI link) and Western Digital (Seagate and Sandisk cover storage). Considered and left out: Apple (AI a small part of the business), NextEra (broad utility), Caterpillar (construction equipment), Adobe, Salesforce and Snowflake (record closes from 2021–24; a possible future 'disrupted by AI' group)."
   }
  ],
  "stocks": [
@@ -159,12 +180,6 @@
    "segment": "Chips"
   },
   {
-   "symbol": "WDC",
-   "ticker": "WDC",
-   "name": "Western Digital",
-   "segment": "Chips"
-  },
-  {
    "symbol": "AMZN",
    "ticker": "AMZN",
    "name": "Amazon",
@@ -213,18 +228,6 @@
    "segment": "Cloud/neocloud"
   },
   {
-   "symbol": "AI",
-   "ticker": "AI",
-   "name": "C3.ai",
-   "segment": "Software"
-  },
-  {
-   "symbol": "APP",
-   "ticker": "APP",
-   "name": "AppLovin",
-   "segment": "Software"
-  },
-  {
    "symbol": "DDOG",
    "ticker": "DDOG",
    "name": "Datadog",
@@ -240,12 +243,6 @@
    "symbol": "PLTR",
    "ticker": "PLTR",
    "name": "Palantir",
-   "segment": "Software"
-  },
-  {
-   "symbol": "SOUN",
-   "ticker": "SOUN",
-   "name": "SoundHound AI",
    "segment": "Software"
   },
   {
@@ -271,12 +268,6 @@
    "ticker": "LITE",
    "name": "Lumentum",
    "segment": "Networking/optical"
-  },
-  {
-   "symbol": "APLD",
-   "ticker": "APLD",
-   "name": "Applied Digital",
-   "segment": "Data centers"
   },
   {
    "symbol": "DLR",
@@ -321,12 +312,6 @@
    "segment": "Power"
   },
   {
-   "symbol": "DELL",
-   "ticker": "DELL",
-   "name": "Dell",
-   "segment": "Hardware"
-  },
-  {
    "symbol": "HPE",
    "ticker": "HPE",
    "name": "Hewlett Packard Ent.",
@@ -347,6 +332,42 @@
    "ticker": "SPCX",
    "name": "SpaceX",
    "segment": "Frontier AI"
+  },
+  {
+   "symbol": "CBRS",
+   "ticker": "CBRS",
+   "name": "Cerebras",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "TER",
+   "ticker": "TER",
+   "name": "Teradyne",
+   "segment": "Chips"
+  },
+  {
+   "symbol": "CLS",
+   "ticker": "CLS",
+   "name": "Celestica",
+   "segment": "Hardware"
+  },
+  {
+   "symbol": "PWR",
+   "ticker": "PWR",
+   "name": "Quanta Services",
+   "segment": "Power"
+  },
+  {
+   "symbol": "TSLA",
+   "ticker": "TSLA",
+   "name": "Tesla",
+   "segment": "Autonomy & robotics"
+  },
+  {
+   "symbol": "OKLO",
+   "ticker": "OKLO",
+   "name": "Oklo",
+   "segment": "Power"
   }
  ]
 }
