@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-21T00:18:05+00:00",
+ "generatedAt": "2026-11-21T00:50:33+00:00",
  "asOf": "2026-11-20",
  "source": "Yahoo Finance daily closes, split-adjusted, not dividend-adjusted",
  "summary": {
@@ -915,6 +915,20 @@
   }
  ],
  "benchmarks": [
+  {
+   "id": "basket",
+   "name": "AI basket as one portfolio",
+   "symbol": "equal-weight",
+   "dd": -0.386,
+   "d": "2026-10-06",
+   "dd25": -0.386,
+   "d25": "2026-10-06",
+   "day": -0.0941,
+   "asOf": "2026-11-20",
+   "level": 207.49,
+   "since": "2025-01-01",
+   "method": "equal-weight, rebalanced daily, price only, 100 on 2 Jan 2025"
+  },
   {
    "id": "spx",
    "name": "S&P 500",
