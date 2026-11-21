@@ -27,8 +27,13 @@ and commits `docs/drawdowns.json` and `docs/drawdowns.html`. Like `markets.py`, 
   to any quote screen. (The index itself uses dividend-adjusted closes over 2 years; the two are meant to differ.)
 - **Drawdown** = latest close ÷ highest close since listing − 1. A second measure, **from the 2025–26 peak**, uses the highest
   close since 1 Jan 2025 (`dd25`), so record closes from before the AI cycle don't distort comparisons. Readers switch between them.
-- **Benchmarks:** the S&P 500, Nasdaq-100 and SOX, measured both ways, shown beside the basket's median so readers can tell an
-  AI-specific fall from a broad one. A benchmark that fails to fetch is left out with a note.
+- **Benchmarks:** the S&P 500, Nasdaq-100 and SOX, measured both ways, so readers can tell an AI-specific fall from a broad one.
+  A benchmark that fails to fetch is left out with a note.
+- **AI basket as one portfolio** (`benchmarks[0]`, id `basket`): the like-for-like comparison with those indexes. All stocks in equal
+  amounts, rebalanced daily, price only, 100 on the first US trading day of 2025 (`basket_index()`): each day's return is the plain
+  average of the returns of every stock that traded on both days (a stock with no close that day carries its last close; a new listing
+  joins on its second day). Its drawdown is from the portfolio's own peak. The headline median is a different number: the middle of 50
+  separate drawdowns from 50 different peak dates, which gives a small stock the same say as Microsoft and so always reads worse.
 - **Today** = latest close ÷ previous close − 1.
 - **Severity bands** match the Stress Index: Normal 0–24% off peak (green), Elevated 25–49% (amber),
   Severe 50–74% (orange), Critical 75–100% (red).

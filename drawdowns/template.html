@@ -67,6 +67,7 @@
 .kkdd .row:hover{background:var(--panel2)}
 .kkdd .row.head{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:700;background:#191522}
 .kkdd .rk{color:var(--dim);font-size:12px;text-align:right}
+.kkdd .nm{min-width:0}
 .kkdd .nm b{display:block;font-size:15px;letter-spacing:.01em}
 .kkdd .nm .sub{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kkdd .track{position:relative;height:12px;background:#15121d;border-radius:6px;overflow:hidden}
@@ -91,7 +92,7 @@
  .kkdd .kpis{grid-template-columns:repeat(2,1fr)}
  .kkdd .bgrid{grid-template-columns:repeat(2,1fr)}
  .kkdd .segs{grid-template-columns:repeat(2,1fr)}
- .kkdd .row{grid-template-columns:22px 1fr 64px 58px;gap:10px;row-gap:6px;padding:10px 12px}
+ .kkdd .row{grid-template-columns:20px minmax(0,1fr) 62px 56px;gap:8px;row-gap:6px;padding:10px 12px}
  .kkdd .row .trackcell{grid-column:2 / 5;order:5}
  .kkdd .row .px{display:none}
  .kkdd .row.head .h-bar,.kkdd .row.head .h-px{display:none}
@@ -105,7 +106,7 @@
 <section class="kkdd" id="kkdd" aria-labelledby="kkdd-title">
   <div class="eyebrow"><span class="dot"></span>AI Market Stress Index · Drawdown Monitor</div>
   <h2 id="kkdd-title">__TITLE__</h2>
-  <p class="lede">__COUNT__ AI stocks across __SEGLIST__, each measured from its highest-ever close to the close on <b style="color:var(--ink)">__ASOF__</b>.</p>
+  <p class="lede">__COUNT__ AI stocks. __SEGCOUNT__ sectors. Each stock’s fall from its all-time closing high to its <b style="color:var(--ink)">__ASOF__</b> close.</p>
 
   <div class="kpis">
     <div class="kpi" style="--c:var(--orange)"><div class="v" id="k-med">–</div><div class="l">Median distance from peak</div></div>
@@ -153,7 +154,7 @@
   </div>
 
   <div class="list" id="list" role="table" aria-label="AI stock drawdowns"></div>
-  <p class="note">Striped bars mark stocks whose all-time high came before 2025, so part of their fall predates the AI boom; "2025–26 peak" measures every stock from its highest close since 1 Jan 2025 instead. __NOTES__ The # column is each stock's rank by drop among all __COUNT__ on the chosen measure, so it stays the same however you sort or filter. Daily closing prices, split-adjusted, not dividend-adjusted.</p>
+  <p class="note">Striped bars mark stocks whose all-time high came before 2025, so part of their fall predates the AI boom; "2025–26 peak" measures every stock from its highest close since 1 Jan 2025 instead. "AI basket as one portfolio" holds all the stocks in equal amounts, rebalanced daily from 2 Jan 2025, so it compares like for like with the indexes; the median above treats each stock on its own. __NOTES__ The # column is each stock's rank by drop among all __COUNT__ on the chosen measure, so it stays the same however you sort or filter. Daily closing prices, split-adjusted, not dividend-adjusted.</p>
 
   <div class="foot">
     <div class="brand">KK<span>Reckons</span><small>Analysis by KK Reddy · Data: Yahoo Finance, closes as of __ASOF__</small></div>
@@ -184,10 +185,9 @@ function filtered(){return DATA.filter(r=>(!state.seg||r.g===state.seg)&&(state.
 function bench(){
   const el=document.getElementById('bench');
   if(!BENCH.length){el.style.display='none';return}
-  const k=state.metric==='cyc'?'dd25':'dd',m=med(DATA.map(r=>r.dd));
-  el.innerHTML=`<p class="sectitle">Against the market · same measure</p><div class="bgrid">`+
-    `<div class="bitem me"><span>AI basket (median)</span><b style="color:${col(m)}">${pct(m)}</b></div>`+
-    BENCH.map(b=>`<div class="bitem"><span>${b.name}</span><b style="color:${col(b[k])}">${pct(b[k])}</b></div>`).join('')+`</div>`;
+  const k=state.metric==='cyc'?'dd25':'dd';
+  el.innerHTML=`<p class="sectitle">Against the market · fall from each one's own peak</p><div class="bgrid">`+
+    BENCH.map(b=>`<div class="bitem${b.id==='basket'?' me':''}"><span>${b.name}</span><b style="color:${col(b[k])}">${pct(b[k])}</b></div>`).join('')+`</div>`;
 }
 
 function kpis(rows){
