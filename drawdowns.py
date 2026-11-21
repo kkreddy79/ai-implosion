@@ -78,10 +78,13 @@ def previous_rows(path=OUT_JSON):
 
 
 def build(basket, fetch=fetch_closes, previous=None):
+    series = {}  # each fetched stock's closes, for the equal-weight basket index
     rows, notes, missing = [], [], []
     for s in basket["stocks"]:
         try:
-            rows.append(row(s, fetch(s["symbol"])))
+            closes = fetch(s["symbol"])
+            rows.append(row(s, closes))
+            series[s["symbol"]] = closes
         except Exception as e:  # one feed down must not sink the others
             old = (previous or {}).get(s["symbol"])
             missing.append(s["symbol"])
@@ -103,19 +106,56 @@ def build(basket, fetch=fetch_closes, previous=None):
                "medianDay": round(statistics.median(r["day"] for r in rows), 4)}
     return {"generatedAt": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "asOf": as_of,
             "source": "Yahoo Finance daily closes, split-adjusted, not dividend-adjusted",
-            "summary": summary, "stocks": rows, "benchmarks": benchmarks(fetch, notes), "missing": missing, "notes": notes}
+            "summary": summary, "stocks": rows, "benchmarks": benchmarks(fetch, notes, series), "missing": missing, "notes": notes}
 
 
-def benchmarks(fetch, notes):
-    """Drawdowns of the broad indexes, measured the same two ways as the stocks."""
-    out = []
+def basket_index(series, calendar):
+    """The basket as one equal-weight portfolio, rebalanced daily, from CYCLE_START = 100.
+
+    Each day's return is the plain average of that day's return of every stock trading on both days (US trading
+    days; a stock with no close that day, such as SK hynix on a Korean holiday, carries its last close). A stock
+    joins on its second trading day, so new listings count from then on. Price only, like the rest of the page."""
+    days = sorted(d for d in calendar if d.isoformat() >= CYCLE_START)
+    last = {}
+    for sym, closes in series.items():  # carry the last close up to each calendar day
+        ks, i, cur = sorted(closes), 0, None
+        filled = {}
+        for d in days:
+            while i < len(ks) and ks[i] <= d:
+                cur = closes[ks[i]]; i += 1
+            filled[d] = cur
+        last[sym] = filled
+    level, out = 100.0, {}
+    for prev, d in zip(days, days[1:]):
+        rets = [last[s][d] / last[s][prev] - 1 for s in last if last[s][prev] and last[s][d]]
+        if rets:
+            level *= 1 + sum(rets) / len(rets)
+        out[d] = level
+    return out
+
+
+def benchmarks(fetch, notes, series=None):
+    """Drawdowns of the broad indexes, measured the same two ways as the stocks, after the basket as one portfolio."""
+    out, calendar = [], None
     for bid, name, symbol in BENCHMARKS:
         try:
-            r = row({"ticker": bid, "symbol": symbol, "name": name, "segment": "Benchmark"}, fetch(symbol))
+            closes = fetch(symbol)
+            calendar = calendar or set(closes)
+            r = row({"ticker": bid, "symbol": symbol, "name": name, "segment": "Benchmark"}, closes)
             out.append({"id": bid, "name": name, "symbol": symbol, "dd": r["dd"], "d": r["d"], "dd25": r["dd25"], "d25": r["d25"],
                         "day": r["day"], "asOf": r["asOf"]})
         except Exception as e:
             notes.append(f"Benchmark {name} left out: {str(e)[:80]}")
+    if series:
+        try:
+            cal = calendar or {d for s in series.values() for d in s}
+            idx = basket_index(series, cal)
+            r = row({"ticker": "basket", "symbol": "basket", "name": "AI basket", "segment": "Benchmark"}, idx)
+            out.insert(0, {"id": "basket", "name": "AI basket as one portfolio", "symbol": "equal-weight", "dd": r["dd"], "d": r["d"],
+                           "dd25": r["dd25"], "d25": r["d25"], "day": r["day"], "asOf": r["asOf"], "level": round(idx[max(idx)], 2),
+                           "since": CYCLE_START, "method": "equal-weight, rebalanced daily, price only, 100 on 2 Jan 2025"})
+        except Exception as e:
+            notes.append(f"Equal-weight basket index left out: {str(e)[:80]}")
     return out
 
 
