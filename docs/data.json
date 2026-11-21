@@ -9,7 +9,7 @@
  "prevDate": "2026-11-19",
  "prevScore": 50,
  "pillars": {
-  "Equity": 87.49135704481347,
+  "Equity": 87.49136921475554,
   "Financing": 60.8618441733789,
   "Credit": 27.702174333066047
  },
@@ -102,17 +102,17 @@
    "lastDate": "2026-11-20",
    "stale": false,
    "ref": 31224.4707,
-   "current": 25028.9824,
-   "move": -0.19841772049637985,
+   "current": 25028.9805,
+   "move": -0.19841778134609023,
    "triggerPrice": 23418.353025,
    "band": null,
-   "levelStress": 0.7420886024818992,
+   "levelStress": 0.7420889067304511,
    "widenStress": null,
-   "stress": 0.7420886024818992,
+   "stress": 0.7420889067304511,
    "status": "WARNING",
    "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
    "descriptor": "Large-cap tech benchmark",
-   "points": 13.357594844674187,
+   "points": 13.35760032114812,
    "maxPoints": 18.0,
    "plus10": null,
    "prevStress": 0.5038029940087987,
@@ -323,7 +323,7 @@
     },
     {
      "date": "2026-11-20",
-     "stress": 0.7420886024818992
+     "stress": 0.7420889067304511
     }
    ]
   },
@@ -341,8 +341,8 @@
    "lastDate": "2026-11-20",
    "stale": false,
    "ref": 14634.7197,
-   "current": 8408.5908,
-   "move": -0.4254354731508797,
+   "current": 8408.5898,
+   "move": -0.42543554148153584,
    "triggerPrice": 8780.83182,
    "band": null,
    "levelStress": 1.0,
@@ -3990,7 +3990,7 @@
   },
   {
    "date": "2026-11-20",
-   "equity": 87.49135704481347,
+   "equity": 87.49136921475554,
    "financing": 60.8618441733789,
    "credit": 27.702174333066047,
    "score": 61
@@ -4143,5 +4143,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-11-21T03:14+00:00"
+ "generatedAt": "2026-11-21T11:29+00:00"
 }
