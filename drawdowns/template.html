@@ -19,6 +19,12 @@
 .kkdd h2{font-size:clamp(28px,5vw,46px);line-height:1.05;margin:12px 0 10px;letter-spacing:-.02em;font-weight:800}
 .kkdd h2 em{font-style:normal;background:linear-gradient(90deg,var(--amber),var(--orange) 45%,var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
 .kkdd .lede{color:var(--muted);font-size:clamp(15px,2vw,17px);max-width:720px;margin:0}
+.kkdd .bench{margin:0 0 22px}
+.kkdd .bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kkdd .bitem{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kkdd .bitem span{display:block;font-size:12px;color:var(--muted)}
+.kkdd .bitem b{font-size:20px}
+.kkdd .bitem.me{border-color:var(--accent)}
 .kkdd .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0 18px}
 .kkdd .kpi{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;position:relative;overflow:hidden}
 .kkdd .kpi::after{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--c,var(--orange))}
@@ -33,7 +39,7 @@
 .kkdd .bands .legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:9px;font-size:12.5px;color:var(--muted)}
 .kkdd .bands .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .kkdd .sectitle{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700;margin:0 0 10px}
-.kkdd .segs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.kkdd .segs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
 .kkdd .segcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;transition:border-color .2s,transform .2s;text-align:left;color:inherit;font:inherit}
 .kkdd .segcard:hover{transform:translateY(-2px);border-color:#4a4160}
 .kkdd .segcard.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
@@ -83,6 +89,7 @@
 @media (max-width:860px){
  .kkdd .controls{flex-direction:column;align-items:flex-start}
  .kkdd .kpis{grid-template-columns:repeat(2,1fr)}
+ .kkdd .bgrid{grid-template-columns:repeat(2,1fr)}
  .kkdd .segs{grid-template-columns:repeat(2,1fr)}
  .kkdd .row{grid-template-columns:22px 1fr 64px 58px;gap:10px;row-gap:6px;padding:10px 12px}
  .kkdd .row .trackcell{grid-column:2 / 5;order:5}
@@ -106,6 +113,8 @@
     <div class="kpi" style="--c:var(--red)"><div class="v" id="k-75">–</div><div class="l">Down 75% or more</div></div>
     <div class="kpi" style="--c:var(--red)"><div class="v" id="k-day">–</div><div class="l">Median move, __DAY__</div></div>
   </div>
+
+  <div class="bench" id="bench" aria-label="Benchmarks"></div>
 
   <div class="bands" aria-label="Distribution by drawdown band">
     <p class="sectitle">How deep the damage goes · tap to filter</p>
@@ -134,11 +143,17 @@
         <option value="az">Ticker A–Z</option>
       </select></div>
     </div>
-    <label class="toggle"><input type="checkbox" id="recent"> Only peaks set in 2025–26</label>
+    <div class="ctl">
+      <span class="ctl-l">Measure from</span>
+      <div class="pills" role="group" aria-label="Measure drops from">
+        <button data-m="ath" class="on" aria-pressed="true">All-time high</button>
+        <button data-m="cyc" aria-pressed="false">2025–26 peak</button>
+      </div>
+    </div>
   </div>
 
   <div class="list" id="list" role="table" aria-label="AI stock drawdowns"></div>
-  <p class="note">Striped bars mark stocks whose all-time high came before 2025, so part of their fall predates the AI boom. __NOTES__ The # column is each stock's rank by drop from peak among all 50, so it stays the same however you sort or filter. Daily closing prices, split-adjusted, not dividend-adjusted.</p>
+  <p class="note">Striped bars mark stocks whose all-time high came before 2025, so part of their fall predates the AI boom; "2025–26 peak" measures every stock from its highest close since 1 Jan 2025 instead. __NOTES__ The # column is each stock's rank by drop among all __COUNT__ on the chosen measure, so it stays the same however you sort or filter. Daily closing prices, split-adjusted, not dividend-adjusted.</p>
 
   <div class="foot">
     <div class="brand">KK<span>Reckons</span><small>Analysis by KK Reddy · Data: Yahoo Finance, closes as of __ASOF__</small></div>
@@ -156,13 +171,24 @@ const fmt=(n,cur)=>{const dp=cur==='₩'?0:2;return n.toLocaleString('en-US',{mi
 const fday=s=>new Date(s+'T12:00:00').toLocaleDateString('en-US',{day:'numeric',month:'short'});
 const fdate=s=>{const d=new Date(s+'T12:00:00');return d.toLocaleDateString('en-US',{month:'short',year:'numeric'})};
 const SEGS=__SEGMENTS__;
-let state={seg:null,band:null,sort:'deep',recent:false};
-[...DATA].sort((a,b)=>a.dd-b.dd).forEach((r,i)=>r.rk=i+1);
+let state={seg:null,band:null,sort:'deep',metric:'ath'};
+const BENCH=__BENCH__;
+DATA.forEach(r=>{r.A={dd:r.dd,d:r.d,ath:r.ath,old:r.old};r.C={dd:r.dd25??r.dd,d:r.d25??r.d,ath:r.ath25??r.ath,old:false}});
+function useMetric(){const k=state.metric==='cyc'?'C':'A';DATA.forEach(r=>Object.assign(r,r[k]));[...DATA].sort((a,b)=>a.dd-b.dd).forEach((r,i)=>r.rk=i+1)}
 const BANDS=[{k:3,n:'Critical',d:'75–100% off peak',c:'var(--red)'},{k:2,n:'Severe',d:'50–74%',c:'var(--orange)'},{k:1,n:'Elevated',d:'25–49%',c:'var(--amber)'},{k:0,n:'Normal',d:'0–24%',c:'var(--green)'}];
 const band=r=>{const m=-r.dd*100;return m>=75?3:m>=50?2:m>=25?1:0};
 const SORTS={deep:(a,b)=>a.dd-b.dd,shallow:(a,b)=>b.dd-a.dd,dayworst:(a,b)=>a.day-b.day,daybest:(a,b)=>b.day-a.day,recent:(a,b)=>b.d.localeCompare(a.d),oldest:(a,b)=>a.d.localeCompare(b.d),az:(a,b)=>a.t.localeCompare(b.t)};
 
-function filtered(){return DATA.filter(r=>(!state.seg||r.g===state.seg)&&(state.band===null||band(r)===state.band)&&(!state.recent||!r.old))}
+function filtered(){return DATA.filter(r=>(!state.seg||r.g===state.seg)&&(state.band===null||band(r)===state.band))}
+
+function bench(){
+  const el=document.getElementById('bench');
+  if(!BENCH.length){el.style.display='none';return}
+  const k=state.metric==='cyc'?'dd25':'dd',m=med(DATA.map(r=>r.dd));
+  el.innerHTML=`<p class="sectitle">Against the market · same measure</p><div class="bgrid">`+
+    `<div class="bitem me"><span>AI basket (median)</span><b style="color:${col(m)}">${pct(m)}</b></div>`+
+    BENCH.map(b=>`<div class="bitem"><span>${b.name}</span><b style="color:${col(b[k])}">${pct(b[k])}</b></div>`).join('')+`</div>`;
+}
 
 function kpis(rows){
   const dd=rows.map(r=>r.dd);
@@ -170,7 +196,7 @@ function kpis(rows){
   document.getElementById('k-50').innerHTML=dd.filter(v=>v<=-.5).length+'<small>/ '+rows.length+'</small>';
   document.getElementById('k-75').innerHTML=dd.filter(v=>v<=-.75).length+'<small>/ '+rows.length+'</small>';
   document.getElementById('k-day').textContent=pct(med(rows.map(r=>r.day)));
-  const base=DATA.filter(r=>(!state.seg||r.g===state.seg)&&(!state.recent||!r.old));
+  const base=DATA.filter(r=>!state.seg||r.g===state.seg);
   const b=[0,0,0,0];base.forEach(r=>b[band(r)]++);
   const cs=['var(--green)','var(--amber)','var(--orange)','var(--red)'],nm=['Normal','Elevated','Severe','Critical'];
   document.getElementById('bandbar').innerHTML=b.map((n,i)=>n?`<button class="seg${state.band===null?'':state.band===i?' on':' off'}" data-band="${i}" style="flex-grow:${n};background:${cs[i]}" title="${nm[i]}: ${n} stocks" aria-pressed="${state.band===i}">${n}</button>`:'').join('');
@@ -178,15 +204,15 @@ function kpis(rows){
 }
 
 function segs(){
-  const base=DATA.filter(r=>!state.recent||!r.old);
+  const base=DATA;
   document.getElementById('segs').innerHTML=SEGS.map(s=>{const rs=base.filter(r=>r.g===s);const m=med(rs.map(r=>r.dd));
-    return `<button class="segcard${state.seg===s?' on':''}" data-seg="${s}"><div class="n">${s}</div><div class="m" style="color:${col(m)}">${pct(m,0)}</div><div class="c">${rs.length} stocks</div></button>`}).join('');
+    return `<button class="segcard${state.seg===s?' on':''}" data-seg="${s}"><div class="n">${s}</div><div class="m" style="color:${col(m)}">${pct(m,0)}</div><div class="c">${rs.length} ${rs.length===1?'stock':'stocks'}</div></button>`}).join('');
   root.querySelectorAll('.segcard').forEach(b=>b.onclick=()=>{state.seg=state.seg===b.dataset.seg?null:b.dataset.seg;render()});
 }
 
 function rowHtml(r){return `
    <div class="row" role="row">
-    <div class="rk" title="Rank by drop from peak, of all 50">${r.rk}</div>
+    <div class="rk" title="Rank by drop from peak, of all __COUNT__">${r.rk}</div>
     <div class="nm"><b>${r.t}${r.old?'<span class="tag">PRE-2025 PEAK</span>':''}${r.ipo?'<span class="tag ipo">NEW IPO</span>':''}${r.stale?'<span class="tag" title="Last available close: '+r.asOf+'">STALE</span>':''}</b><span class="sub">${r.n} · ${r.g}</span></div>
     <div class="trackcell"><div class="track"><div class="ticks"></div><div class="fill" data-w="${(-r.dd*100).toFixed(1)}" style="background:${col(r.dd)}">${r.old?'<div class="old"></div>':''}</div></div></div>
     <div class="dd" style="color:${col(r.dd)}">${pct(r.dd)}</div>
@@ -196,15 +222,15 @@ function rowHtml(r){return `
 
 function list(rows){
   const s=[...rows].sort(SORTS[state.sort]);
-  const head=`<div class="row head" role="row"><div class="rk" title="Rank by drop from peak, of all 50">#</div><div>Stock</div><div class="h-bar">Distance from all-time high</div><div class="dd" style="font-size:11px">Off peak</div><div class="h-px" style="text-align:right">Peak → now</div><div style="text-align:right">Today</div></div>`;
+  const head=`<div class="row head" role="row"><div class="rk" title="Rank by drop from peak, of all __COUNT__">#</div><div>Stock</div><div class="h-bar">${state.metric==='cyc'?'Distance from 2025–26 peak':'Distance from all-time high'}</div><div class="dd" style="font-size:11px">Off peak</div><div class="h-px" style="text-align:right">Peak → now</div><div style="text-align:right">Today</div></div>`;
   const body=s.map(rowHtml).join('')||'<div class="row" style="display:block;color:var(--muted)">No stocks match these filters.</div>';
   document.getElementById('list').innerHTML=head+body;
   requestAnimationFrame(()=>requestAnimationFrame(()=>root.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%')));
 }
 
-function render(){const rows=filtered();kpis(rows);segs();list(rows)}
+function render(){useMetric();const rows=filtered();kpis(rows);bench();segs();list(rows)}
 document.getElementById('sortby').onchange=e=>{state.sort=e.target.value;render()};
-document.getElementById('recent').onchange=e=>{state.recent=e.target.checked;render()};
+root.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{state.metric=b.dataset.m;root.querySelectorAll('[data-m]').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});render()});
 render();
 })();
 </script>

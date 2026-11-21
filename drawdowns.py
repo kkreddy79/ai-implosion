@@ -22,6 +22,9 @@ OUT_HTML = os.path.join(HERE, "docs", "drawdowns.html")
 MAX_MISSING = 5
 PRE_AI_BOOM = "2025-01-01"  # peaks before this date are flagged: part of the fall predates the AI trade
 CURRENCY = {"USD": "$", "KRW": "₩"}
+CYCLE_START = "2025-01-01"  # the "2025–26 peak" measure: highest close on or after this date
+# Benchmarks shown beside the basket, so readers can tell an AI-specific fall from a broad one. Optional: a failure leaves one out.
+BENCHMARKS = [("spx", "S&P 500", "^GSPC"), ("ndx", "Nasdaq-100", "^NDX"), ("sox", "Semiconductors (SOX)", "^SOX")]
 
 
 def fetch_closes(symbol):
@@ -53,9 +56,12 @@ def row(stock, closes):
     peak_day = max(days, key=lambda d: closes[d])
     last, prev = closes[days[-1]], closes[days[-2]]
     peak = closes[peak_day]
+    cyc = [d for d in days if d.isoformat() >= CYCLE_START] or days
+    cyc_day = max(cyc, key=lambda d: closes[d])
     r = {"t": stock["ticker"], "symbol": stock["symbol"], "n": stock["name"], "g": stock["segment"],
          "ath": round(peak, 2), "d": peak_day.isoformat(), "c": round(last, 2), "asOf": days[-1].isoformat(),
          "dd": round(last / peak - 1, 4), "day": round(last / prev - 1, 4),
+         "ath25": round(closes[cyc_day], 2), "d25": cyc_day.isoformat(), "dd25": round(last / closes[cyc_day] - 1, 4),
          "old": peak_day.isoformat() < PRE_AI_BOOM, "cur": CURRENCY[stock.get("currency", "USD")],
          "ipo": bool(stock.get("ipo"))}
     if stock.get("ipo"):
@@ -80,7 +86,7 @@ def build(basket, fetch=fetch_closes, previous=None):
             old = (previous or {}).get(s["symbol"])
             missing.append(s["symbol"])
             if old:
-                rows.append({**old, "stale": True})
+                rows.append({"ath25": old["ath"], "d25": old["d"], "dd25": old["dd"], **old, "stale": True})  # rows saved before the 2025–26 measure
                 notes.append(f"{s['ticker']}: kept the {old['asOf']} close ({str(e)[:80]})")
             else:
                 notes.append(f"{s['ticker']} left out: {str(e)[:80]}")
@@ -90,12 +96,27 @@ def build(basket, fetch=fetch_closes, previous=None):
     if behind:
         notes.append("Close not yet current for " + ", ".join(behind))
     dd = [r["dd"] for r in rows]
+    dd25 = [r["dd25"] for r in rows]
     summary = {"count": len(rows), "medianDrawdown": round(statistics.median(dd), 4),
+               "medianDrawdown25": round(statistics.median(dd25), 4), "down50_25": sum(v <= -0.5 for v in dd25),
                "down50": sum(v <= -0.5 for v in dd), "down75": sum(v <= -0.75 for v in dd),
                "medianDay": round(statistics.median(r["day"] for r in rows), 4)}
     return {"generatedAt": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "asOf": as_of,
             "source": "Yahoo Finance daily closes, split-adjusted, not dividend-adjusted",
-            "summary": summary, "stocks": rows, "missing": missing, "notes": notes}
+            "summary": summary, "stocks": rows, "benchmarks": benchmarks(fetch, notes), "missing": missing, "notes": notes}
+
+
+def benchmarks(fetch, notes):
+    """Drawdowns of the broad indexes, measured the same two ways as the stocks."""
+    out = []
+    for bid, name, symbol in BENCHMARKS:
+        try:
+            r = row({"ticker": bid, "symbol": symbol, "name": name, "segment": "Benchmark"}, fetch(symbol))
+            out.append({"id": bid, "name": name, "symbol": symbol, "dd": r["dd"], "d": r["d"], "dd25": r["dd25"], "d25": r["d25"],
+                        "day": r["day"], "asOf": r["asOf"]})
+        except Exception as e:
+            notes.append(f"Benchmark {name} left out: {str(e)[:80]}")
+    return out
 
 
 def check(data, basket):
@@ -117,6 +138,8 @@ def check(data, basket):
             errs.append(f"{r['t']}: segment {r['g']} not in basket.segments")
         if r["d"] > r["asOf"]:
             errs.append(f"{r['t']}: peak date after latest close")
+        if "dd25" in r and not (r["dd"] - 1e-9 <= r["dd25"] <= 0):
+            errs.append(f"{r['t']}: 2025–26 drawdown {r.get('dd25')} inconsistent")
         if abs(r["c"] / r["ath"] - 1 - r["dd"]) > 0.0002:
             errs.append(f"{r['t']}: drawdown does not match its prices")
         if abs(r["day"]) > 0.6:
@@ -152,7 +175,7 @@ def render(data, basket, template_path=TEMPLATE):
                    + (f", all US-listed except {', '.join(foreign)}." if foreign else ", all US-listed."))
     as_of = dt.date.fromisoformat(data["asOf"])
     fill = {"__DATA__": json.dumps(data["stocks"], separators=(",", ":"), ensure_ascii=False),
-            "__SEGMENTS__": json.dumps(segs), "__TITLE__": title, "__COUNT__": str(len(data["stocks"])),
+            "__SEGMENTS__": json.dumps(segs), "__BENCH__": json.dumps(data.get("benchmarks", []), separators=(",", ":")), "__TITLE__": title, "__COUNT__": str(len(data["stocks"])),
             "__SEGLIST__": seglist, "__NOTES__": " ".join(notes), "__BASKET__": basket_note,
             "__ASOF__": as_of.strftime("%-d %b %Y"), "__DAY__": as_of.strftime("%-d %b")}
     for k, v in fill.items():

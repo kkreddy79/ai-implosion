@@ -25,13 +25,16 @@ and commits `docs/drawdowns.json` and `docs/drawdowns.html`. Like `markets.py`, 
 
 - **Prices:** daily closes from Yahoo Finance, **split-adjusted, not dividend-adjusted**, so readers can match them
   to any quote screen. (The index itself uses dividend-adjusted closes over 2 years; the two are meant to differ.)
-- **Drawdown** = latest close ÷ highest close since listing − 1.
+- **Drawdown** = latest close ÷ highest close since listing − 1. A second measure, **from the 2025–26 peak**, uses the highest
+  close since 1 Jan 2025 (`dd25`), so record closes from before the AI cycle don't distort comparisons. Readers switch between them.
+- **Benchmarks:** the S&P 500, Nasdaq-100 and SOX, measured both ways, shown beside the basket's median so readers can tell an
+  AI-specific fall from a broad one. A benchmark that fails to fetch is left out with a note.
 - **Today** = latest close ÷ previous close − 1.
 - **Severity bands** match the Stress Index: Normal 0–24% off peak (green), Elevated 25–49% (amber),
   Severe 50–74% (orange), Critical 75–100% (red).
-- **Pre-2025 peak:** a stock whose record close came before 1 Jan 2025 is tagged and its bar striped, because part of
-  its fall predates the AI trade. The page's toggle hides these.
-- **Rank (#):** each stock's rank by drawdown among the whole basket. It never changes with sorting or filters.
+- **Pre-2025 peak:** a stock whose record close came before 1 Jan 2025 is tagged and its bar striped (all-time measure only),
+  because part of its fall predates the AI trade.
+- **Rank (#):** each stock's rank by drawdown among the whole basket on the chosen measure. It never changes with sorting or filters.
 - **As-of date:** the latest US close. SK hynix trades in Seoul, so its close is from earlier the same day.
 
 ### Checks before publishing (`check()` in `drawdowns.py`)
@@ -54,7 +57,9 @@ the headline numbers match the rows · no more than 5 stocks missing.
 6. **New listings join on their first day.** Mark them with `"ipo": {"date": …, "price": …}` so the page says the
    peak is recent (Anthropic, ANT, listed 19 Nov 2026 at $83).
 7. **Non-US listings** need `"currency"` (only `"KRW"` is set up; add others to `CURRENCY` in `drawdowns.py`).
-8. **Log every change** in `basket.json` → `changes`: date, added, dropped, and why.
+8. **Never pick a stock because it has fallen.** The basket measures stress across the AI ecosystem, so it keeps names that are
+   holding up (Microsoft, Amazon, Equinix) as well as the casualties. Choosing by drawdown would bias the headline numbers.
+9. **Log every change** in `basket.json` → `changes`: date, added, dropped, and why.
 
 To change a stock: edit `basket.json` (`symbol` is the Yahoo symbol, `ticker` the label shown, `segment` one of
 `segments`), then run the workflow. A new segment needs adding to `segments`, which also sets the order of the
@@ -65,8 +70,9 @@ segment cards.
 - **Brand:** dark theme `#14111b`, the Stress Index band colors, "KK**Reckons**" wordmark and **"Analysis by KK Reddy"**
   in the footer, with the data source and date. Keep the "not investment advice" line.
 - **Controls:** a sort dropdown (biggest/smallest drop, today worst/best, most recent/oldest peak, ticker A–Z);
-  tap-to-filter on the severity bar and the segment cards (tap again to clear); the "Only peaks set in 2025–26"
-  toggle. Filters stack, and the four headline cards recompute for what's showing.
+  tap-to-filter on the severity bar and the segment cards (tap again to clear); the
+  measure switch (all-time high or 2025–26 peak), which re-ranks everything. Filters stack, and the four headline cards
+  recompute for what's showing. The benchmark row follows the measure.
   No separate "group by" control: the cards already do that job (decided 20 Nov 2026).
 - **Mobile first:** most readers are on phones. Each row collapses to ticker, drop and today's move, with the bar
   underneath. Check any change at 390 px wide as well as desktop.
