@@ -9,7 +9,7 @@
  "prevDate": "2026-11-23",
  "prevScore": 49,
  "pillars": {
-  "Equity": 76.32685562164924,
+  "Equity": 76.32685256246133,
   "Financing": 59.25400285494903,
   "Credit": 25.63848406660385
  },
@@ -58,7 +58,7 @@
   {
    "name": "Semiconductors",
    "col": "SOX",
-   "stress": 0.9882313700890354
+   "stress": 0.9882315978578895
   },
   {
    "name": "Data-center infrastructure ETF",
@@ -80,7 +80,7 @@
  "exitRule": {
   "rebound": 0.2,
   "recoveryMode": false,
-  "currentRebound": 0.047352607909858735
+  "currentRebound": 0.047352683821860087
  },
  "factors": [
   {
@@ -97,17 +97,17 @@
    "lastDate": "2026-11-24",
    "stale": false,
    "ref": 31224.4707,
-   "current": 26214.168,
-   "move": -0.160460772838657,
+   "current": 26214.1699,
+   "move": -0.16046071198894651,
    "triggerPrice": 23418.353025,
    "band": null,
-   "levelStress": 0.552303864193285,
+   "levelStress": 0.5523035599447326,
    "widenStress": null,
-   "stress": 0.552303864193285,
+   "stress": 0.5523035599447326,
    "status": "WARNING",
    "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
    "descriptor": "Large-cap tech benchmark",
-   "points": 9.94146955547913,
+   "points": 9.941464079005186,
    "maxPoints": 18.0,
    "plus10": null,
    "prevStress": 0.46712522255821637,
@@ -322,7 +322,7 @@
     },
     {
      "date": "2026-11-24",
-     "stress": 0.552303864193285
+     "stress": 0.5523035599447326
     }
    ]
   },
@@ -340,17 +340,17 @@
    "lastDate": "2026-11-24",
    "stale": false,
    "ref": 14634.7197,
-   "current": 8832.501,
-   "move": -0.3964694110267106,
+   "current": 8832.5,
+   "move": -0.39646947935736687,
    "triggerPrice": 8780.83182,
    "band": null,
-   "levelStress": 0.9882313700890354,
+   "levelStress": 0.9882315978578895,
    "widenStress": null,
-   "stress": 0.9882313700890354,
+   "stress": 0.9882315978578895,
    "status": "WARNING",
    "rationale": "Semiconductors are a major AI-infrastructure exposure and can be sensitive to changes in technology-sector risk appetite.",
    "descriptor": "Chip stocks",
-   "points": 17.788164661602636,
+   "points": 17.788168761442012,
    "maxPoints": 18.0,
    "plus10": null,
    "prevStress": 0.8161408858414962,
@@ -565,7 +565,7 @@
     },
     {
      "date": "2026-11-24",
-     "stress": 0.9882313700890354
+     "stress": 0.9882315978578895
     }
    ]
   },
@@ -4021,7 +4021,7 @@
   },
   {
    "date": "2026-11-24",
-   "equity": 76.32685562164924,
+   "equity": 76.32685256246133,
    "financing": 59.25400285494903,
    "credit": 25.63848406660385,
    "score": 54
@@ -4174,5 +4174,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-11-25T04:54+00:00"
+ "generatedAt": "2026-11-25T05:41+00:00"
 }
