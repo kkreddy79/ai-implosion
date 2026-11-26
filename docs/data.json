@@ -9,7 +9,7 @@
  "prevDate": "2026-11-24",
  "prevScore": 55,
  "pillars": {
-  "Equity": 78.16556345318017,
+  "Equity": 78.16553847277274,
   "Financing": 59.04786935258621,
   "Credit": 24.952565751569995
  },
@@ -85,7 +85,7 @@
  "exitRule": {
   "rebound": 0.2,
   "recoveryMode": false,
-  "currentRebound": 0.04066949510788098
+  "currentRebound": 0.040669650927251944
  },
  "factors": [
   {
@@ -102,17 +102,17 @@
    "lastDate": "2026-11-25",
    "stale": false,
    "ref": 31224.4707,
-   "current": 26046.8965,
-   "move": -0.16581783722598065,
+   "current": 26046.9004,
+   "move": -0.1658177123239435,
    "triggerPrice": 23418.353025,
    "band": null,
-   "levelStress": 0.5790891861299032,
+   "levelStress": 0.5790885616197174,
    "widenStress": null,
-   "stress": 0.5790891861299032,
+   "stress": 0.5790885616197174,
    "status": "WARNING",
    "rationale": "The broad benchmark for large US tech and AI-exposed companies. A 25% fall from its 2-year high is a common bear-market yardstick.",
    "descriptor": "Large-cap tech benchmark",
-   "points": 10.423605350338258,
+   "points": 10.423594109154914,
    "maxPoints": 18.0,
    "plus10": null,
    "prevStress": 0.5523035599447326,
@@ -327,7 +327,7 @@
     },
     {
      "date": "2026-11-25",
-     "stress": 0.5790891861299032
+     "stress": 0.5790885616197174
     }
    ]
   },
@@ -345,8 +345,8 @@
    "lastDate": "2026-11-25",
    "stale": false,
    "ref": 14634.7197,
-   "current": 8774.8623,
-   "move": -0.4004079012186341,
+   "current": 8774.8604,
+   "move": -0.40040803104688094,
    "triggerPrice": 8780.83182,
    "band": null,
    "levelStress": 1.0,
@@ -2992,7 +2992,7 @@
    "date": "2026-04-27",
    "equity": 0.0,
    "financing": 0.4444444444444444,
-   "credit": 23.17985662714401,
+   "credit": 23.178559202328383,
    "score": 9
   },
   {
@@ -3146,7 +3146,7 @@
    "date": "2026-05-28",
    "equity": 0.0,
    "financing": 1.9444444444444444,
-   "credit": 24.90153935747445,
+   "credit": 24.90024193265883,
    "score": 10
   },
   {
@@ -3202,7 +3202,7 @@
    "date": "2026-06-09",
    "equity": 4.242164824194562,
    "financing": 2.8333333333333335,
-   "credit": 24.90153935747445,
+   "credit": 24.90024193265883,
    "score": 12
   },
   {
@@ -4026,7 +4026,7 @@
   },
   {
    "date": "2026-11-25",
-   "equity": 78.16556345318017,
+   "equity": 78.16553847277274,
    "financing": 59.04786935258621,
    "credit": 24.952565751569995,
    "score": 55
@@ -4179,5 +4179,5 @@
   "outOfSampleFrom": "2026-10-16"
  },
  "notes": [],
- "generatedAt": "2026-11-26T04:11+00:00"
+ "generatedAt": "2026-11-26T05:28+00:00"
 }
