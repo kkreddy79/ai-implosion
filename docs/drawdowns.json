@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T05:22:45+00:00",
+ "generatedAt": "2026-11-27T12:51:49+00:00",
  "asOf": "2026-11-25",
  "source": "Yahoo Finance daily closes, split-adjusted, not dividend-adjusted",
  "summary": {
@@ -19,13 +19,13 @@
    "g": "Chips",
    "ath": 2919000.0,
    "d": "2026-06-22",
-   "c": 1053000.0,
-   "asOf": "2026-11-26",
-   "dd": -0.6393,
-   "day": 0.0223,
+   "c": 1110000.0,
+   "asOf": "2026-11-27",
+   "dd": -0.6197,
+   "day": 0.0541,
    "ath25": 2919000.0,
    "d25": "2026-06-22",
-   "dd25": -0.6393,
+   "dd25": -0.6197,
    "old": false,
    "cur": "₩",
    "ipo": false
