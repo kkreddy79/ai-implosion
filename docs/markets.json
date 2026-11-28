@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-28T03:55:52+00:00",
+ "generatedAt": "2026-11-28T12:03:07+00:00",
  "source": "Yahoo Finance daily closes",
  "assets": [
   {
@@ -577,7 +577,7 @@
    "name": "Brent crude",
    "symbol": "BZ=F",
    "unit": "usd",
-   "close": 90.84,
+   "close": 95.44,
    "asOf": "2026-11-27",
    "closes": [
     [
@@ -758,7 +758,7 @@
     ],
     [
      "2026-11-27",
-     90.84
+     95.44
     ]
    ]
   },
@@ -767,7 +767,7 @@
    "name": "Gold",
    "symbol": "GC=F",
    "unit": "usd",
-   "close": 3668.5,
+   "close": 3639.6001,
    "asOf": "2026-11-27",
    "closes": [
     [
@@ -948,7 +948,7 @@
     ],
     [
      "2026-11-27",
-     3668.5
+     3639.6001
     ]
    ]
   },
